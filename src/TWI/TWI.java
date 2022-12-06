@@ -2,9 +2,8 @@ package TWI;
 
 import javax.swing.JFrame;
 
-import TWI.manager.TWIPreviewMgr;
-import TWI.manager.TWIScenarioMgr;
-import TWI.manager.TWITileMgr;
+import TWI.tile.TWISquareTileMgr;
+import TWI.tile.TWITileMgr;
 import x.XApp;
 import x.XLogMgr;
 
@@ -24,10 +23,22 @@ public class TWI extends XApp {
         return this.mCanvas2D;
     }
 
+    private TWIXform mXform = null;
+
+    public TWIXform getXform() {
+        return this.mXform;
+    }
+
     private TWIEventListener mEventListener = null;
 
     public TWIEventListener getEventListener() {
         return this.mEventListener;
+    }
+
+    private TWIGeomMgr mGeomMgr = null;
+
+    public TWIGeomMgr getGeomMgr() {
+        return this.mGeomMgr;
     }
 
     private TWITileMgr mTileMgr = null;
@@ -66,11 +77,13 @@ public class TWI extends XApp {
         // 2) canvas
         this.mCanvas2D = new TWICanvas2D(this);
         // 3) other components
+        this.mXform = new TWIXform();
         // 4) event listenters
         this.mEventListener = new TWIEventListener(this);
         // 5) managers
         // TODO: Add scene for selecting tile type
-        this.mTileMgr = new TWITileMgr(TWITileMgr.TILE_SHAPE.SQUARE);
+        this.mTileMgr = new TWISquareTileMgr();
+        this.mGeomMgr = new TWIGeomMgr(this);
         this.mPreviewMgr = new TWIPreviewMgr(this);
         this.mScenarioMgr = new TWIScenarioMgr(this);
         this.mLogMgr = new XLogMgr();

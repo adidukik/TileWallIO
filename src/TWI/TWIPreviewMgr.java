@@ -1,6 +1,4 @@
-package TWI.manager;
-
-import TWI.TWI;
+package TWI;
 
 public class TWIPreviewMgr {
     // fields

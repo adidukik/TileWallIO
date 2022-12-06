@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import TWI.TWI;
 import TWI.TWIScene;
 import x.XApp;
+import x.XCmdToChangeScene;
 import x.XScenario;
 
 public class TWIPreviewScenario extends XScenario {
@@ -32,7 +33,7 @@ public class TWIPreviewScenario extends XScenario {
 
     @Override
     protected void addScenes() {
-        this.addScene(TWIPreviewScenario.PreviewScene.createSingleton(this));
+        this.addScene(TWIPreviewScenario.PreviewCtrlScene.createSingleton(this));
     }
 
     // scenes
@@ -67,37 +68,88 @@ public class TWIPreviewScenario extends XScenario {
         public void handleMouseRelease(MouseEvent e) {}
 
         @Override
-        public void handleKeyDown(KeyEvent e) {}
-
-        @Override
-        public void handleKeyUp(KeyEvent e) {
-            // TODO: Move this to TWICmdToExport
-            //Export (Save) the image
+        public void handleKeyDown(KeyEvent e) {
             TWI twi = (TWI) this.mScenario.getApp();
 
             int code = e.getKeyCode();
             switch(code) {
-                case KeyEvent.VK_CONTROL, KeyEvent.VK_S -> {
-                //     //
-                //     //HD Resolution
-                //     int width = 1280;
-                //     int height = 720;
-                //     BufferedImage image =
-                //         new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
-                //     Graphics g = image.getGraphics();
+                case KeyEvent.VK_CONTROL -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        TWIPreviewScenario.PreviewCtrlScene.getSingleton(),
+                        this
+                    );
+                }
+            }
+        }
 
-                //     g2.paintComponent(g);
+        @Override
+        public void handleKeyUp(KeyEvent e) {}
 
-                //     try {
-                //         ImageIO.write(image, "png", new File(filename));
-                //     } catch (IOException exception) {
-                //         // TODO: Log
-                //     }
+        @Override
+        public void updateSupportObjects(Graphics2D g2) {}
 
+        @Override
+        public void renderWorldObjects(Graphics2D g2) {}
 
+        @Override
+        public void renderScreenObjects(Graphics2D g2) {}
 
-                //     //TODO: Implement the solution
-                //     //TWICmdToHome.execute(TWI);
+        @Override
+        public void getReady() {}
+
+        @Override
+        public void wrapUp() {}
+    }
+
+    public static class PreviewCtrlScene extends TWIScene {
+        // singleton pattern
+        private static PreviewCtrlScene mSingleton = null;
+
+        public static PreviewCtrlScene createSingleton(XScenario scenario) {
+            assert(PreviewCtrlScene.mSingleton == null);
+
+            PreviewCtrlScene.mSingleton = new PreviewCtrlScene(scenario);
+            return PreviewCtrlScene.mSingleton;
+        }
+
+        public static PreviewCtrlScene getSingleton() {
+            assert(PreviewCtrlScene.mSingleton != null);
+
+            return PreviewCtrlScene.mSingleton;
+        }
+
+        private PreviewCtrlScene(XScenario scenario) {
+            super(scenario);
+        }
+
+        @Override
+        public void handleMousePress(MouseEvent e) {}
+
+        @Override
+        public void handleMouseDrag(MouseEvent e) {}
+
+        @Override
+        public void handleMouseRelease(MouseEvent e) {}
+
+        @Override
+        public void handleKeyDown(KeyEvent e) {}
+
+        @Override
+        public void handleKeyUp(KeyEvent e) {
+            TWI twi = (TWI) this.mScenario.getApp();
+
+            int code = e.getKeyCode();
+            switch(code) {
+                case KeyEvent.VK_S -> {
+                    // TODO: Implement TWICmdToSavePreview
+                }
+                case KeyEvent.VK_CONTROL -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        this.mReturnScene,
+                        null
+                    );
                 }
             }
         }
