@@ -28,11 +28,14 @@ public class TWIGeomMgr {
     }
 
     // methods
-    public void createLine(Point pt) {
+    public boolean createLine(Point pt) {
         TWIDot dotToAdd = new TWIDot(pt);
 
         TWITileMgr tileMgr = this.mTwi.getTileMgr();
         TWIDot newDot = tileMgr.addDot(dotToAdd);
+        if (newDot == null) {
+             return false;
+        }
 
         Point2D newPt = newDot.getPoint();
 
@@ -43,6 +46,8 @@ public class TWIGeomMgr {
 
         this.mCurLine = new TWILine(line);
         this.mCurLine.setStrokeColor(TWIGeomMgr.COLOR_CURRENT);
+        
+        return true;
     }
 
     public void updateLine(Point pt) {
@@ -56,17 +61,22 @@ public class TWIGeomMgr {
         );
     }
 
-    public void addLine() {
+    public boolean addLine() {
         assert (this.mCurLine != null);
 
         Line2D line = (Line2D) this.mCurLine.getShape();
-
+        
+        
         Point2D startPt = line.getP1();
         Point2D endPt = line.getP2();
 
         TWIDot dotToAdd = new TWIDot(endPt);
         TWITileMgr tileMgr = this.mTwi.getTileMgr();
         dotToAdd = tileMgr.addDot(dotToAdd);
+        
+        if (dotToAdd == null) {
+            return false;
+        }
         endPt = dotToAdd.getPoint();
 
         TWIPattern patternToAdd = new TWIPattern(
@@ -78,5 +88,6 @@ public class TWIGeomMgr {
         );
 
         tileMgr.getTile().addPattern(patternToAdd);
+        return true;
     }
 }

@@ -30,9 +30,7 @@ public class TWICmdToCreateLine extends XLoggableCmd {
 
         TWIGeomMgr geomMgr = twi.getGeomMgr();
 
-        geomMgr.createLine(mPt);
-
-        return true;
+        return geomMgr.createLine(mPt);
     }
 
     @Override

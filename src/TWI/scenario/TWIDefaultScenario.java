@@ -69,14 +69,13 @@ public class TWIDefaultScenario extends XScenario {
         @Override
         public void handleMousePress(MouseEvent e) {
             TWI twi = (TWI) this.getScenario().getApp();
-
-            TWICmdToCreateLine.execute(twi, e.getPoint());
-
-            XCmdToChangeScene.execute(
-                twi,
-                TWIDrawScenario.DrawLineReadyScene.getSingleton(),
-                this
-            );
+                if (TWICmdToCreateLine.execute(twi, e.getPoint())) {
+                    XCmdToChangeScene.execute(
+                    twi,
+                    TWIDrawScenario.DrawLineReadyScene.getSingleton(),
+                    this
+                );
+            }
         }
 
         @Override
