@@ -2,6 +2,7 @@ package TWI;
 
 import javax.swing.JFrame;
 
+import TWI.preview.TWIPreviewMgr;
 import TWI.tile.TWISquareTileMgr;
 import TWI.tile.TWITileMgr;
 import x.XApp;

@@ -17,7 +17,7 @@ public class TWISquareTile extends TWITile {
     private TWIGeom mTileGeom = null;
 
     @Override
-    protected TWIGeom getTileGeom() {
+    public TWIGeom getTileGeom() {
         return this.mTileGeom;
     }
 
