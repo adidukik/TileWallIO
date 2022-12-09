@@ -58,11 +58,6 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
 
     // methods
     public void addPattern(TWIGeom geom) {
-        // // (1) translate geom to its own local coordinate
-        // AffineTransform tx = new AffineTransform();
-        // tx.translate(-this.getOrigin().x, -this.getOrigin().y);
-        // geom.applyTransform(tx);
-
         TWIPattern p = new TWIPattern(geom);
         this.mPatterns.add(p);
     }

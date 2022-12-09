@@ -14,13 +14,6 @@ public class TWISquareTile extends TWITile {
         return this.mTileGeom;
     }
 
-    private Rectangle2D.Double mBoundingBox = null;
-
-    @Override
-    public Rectangle2D.Double getBoundingBox() {
-        return this.mBoundingBox;
-    }
-
     // constructor
     public TWISquareTile(Double w, Double h) {
         super();
@@ -32,9 +25,5 @@ public class TWISquareTile extends TWITile {
         this.mTileGeom = new TWIRectangle(rect);
 
         this.mTileGeom.setStrokeColor(TWITile.COLOR_TILE_DEFAULT);
-
-        this.mBoundingBox = new Rectangle2D.Double(
-            0, 0, w, h
-        );
     }
 }

@@ -2,7 +2,6 @@ package TWI;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.geom.Rectangle2D;
 
 import TWI.geom.TWIGeom;
 
@@ -20,13 +19,6 @@ public class TWIPattern implements TWIRenderable, TWIClickable {
     }
 
     // interface methods
-    @Override
-    public Rectangle2D.Double getBoundingBox() {
-        // TODO: Make clickable, or revise clicking mechanisms
-        // return this.mGeom.getBoundingBox();
-        return null;
-    }
-
     @Override
     public boolean isMousePointInside(Point pt) {
         return false;

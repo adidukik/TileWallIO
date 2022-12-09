@@ -1,18 +1,17 @@
 package TWI.preview;
 
+import java.awt.Graphics2D;
+import java.awt.Point;
+
 import TWI.TWI;
+import TWI.TWIRenderable;
 import TWI.tile.TWITile;
 
-public class TWIPreviewMgr {
+public class TWIPreviewMgr implements TWIRenderable {
     // fields
     private TWI mTWI = null;
 
     private TWITileImage mTileImage = null;
-
-    // TODO: Is here for debugging
-    public TWITileImage getTileImage() {
-        return this.mTileImage;
-    }
 
     public TWIPreviewMgr(TWI twi) {
         this.mTWI = twi;
@@ -23,7 +22,8 @@ public class TWIPreviewMgr {
     }
 
     // methods
-    public void update() {
-        // TODO
+    @Override
+    public void render(Graphics2D g2, Point origin) {
+        // TODO Auto-generated method stub
     }
 }

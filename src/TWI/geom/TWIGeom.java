@@ -14,8 +14,7 @@ import TWI.TWIRenderable;
 public abstract class TWIGeom implements TWIRenderable, TWIClickable {
     // constant
     private static final Color COLOR_DEFAULT = Color.RED;
-    private static final Color COLOR_FILL_DEFUALT =
-        new Color(1.0f, 0.0f, 0.0f, 0.0f);
+    private static final Color COLOR_FILL_DEFUALT = new Color(0, 0, 0, 0);
     private static final Float STROKE_WIDTH_DEFAULT = 3.0f;
     private static final int STROKE_CAP_DEFAULT = BasicStroke.CAP_ROUND;
     private static final int STROKE_JOIN_DEFAULT = BasicStroke.JOIN_ROUND;
@@ -34,6 +33,7 @@ public abstract class TWIGeom implements TWIRenderable, TWIClickable {
     public void setStrokeColor(Color color) {
         this.mStrokeColor = color;
     }
+
 
     public Color mFillColor = null;
 

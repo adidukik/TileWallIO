@@ -21,11 +21,6 @@ public class TWIRectangle extends TWIGeom {
     }
 
     @Override
-    public Shape getBoundingBox() {
-        return this.mRectangle;
-    }
-
-    @Override
     public boolean isMousePointInside(Point pt) {
         return this.mRectangle.contains(pt);
     }

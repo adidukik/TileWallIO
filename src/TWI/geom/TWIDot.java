@@ -4,7 +4,6 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 
 public class TWIDot extends TWIGeom {
     // constants
@@ -20,28 +19,23 @@ public class TWIDot extends TWIGeom {
     public void setPoint(Point2D pt) {
     }
 
-    private Rectangle2D.Double mBoundingBox = null;
-
-    @Override
-    public Rectangle2D.Double getBoundingBox() {
-        return this.mBoundingBox;
-    }
+    private Ellipse2D mShape = null;
 
     // constructor
     public TWIDot(Point2D pt) {
         this.mPoint = pt;
-    }
 
-    @Override
-    public Shape getShape() {
-        Ellipse2D circle = new Ellipse2D.Double(
+        this.mShape = new Ellipse2D.Double(
             this.mPoint.getX() - TWIDot.RENDER_RADIUS,
             this.mPoint.getY() - TWIDot.RENDER_RADIUS,
             TWIDot.RENDER_RADIUS * 2,
             TWIDot.RENDER_RADIUS * 2
         );
+    }
 
-        return circle;
+    @Override
+    public Shape getShape() {
+        return this.mShape;
     }
 
     @Override

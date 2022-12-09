@@ -3,7 +3,6 @@ package TWI.geom;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D.Double;
 
 public class TWILine extends TWIGeom {
     // fields
@@ -18,11 +17,6 @@ public class TWILine extends TWIGeom {
     @Override
     public Shape getShape() {
         return this.mLine;
-    }
-
-    @Override
-    public Double getBoundingBox() {
-        return null;
     }
 
     @Override
