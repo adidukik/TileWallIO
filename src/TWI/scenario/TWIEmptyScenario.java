@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import TWI.TWIScene;
 import x.XApp;
 import x.XScenario;
 

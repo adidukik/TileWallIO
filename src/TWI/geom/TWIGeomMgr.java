@@ -1,12 +1,11 @@
-package TWI;
+package TWI.geom;
 
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
-import TWI.geom.TWIDot;
-import TWI.geom.TWILine;
+import TWI.TWI;
 import TWI.tile.TWITileMgr;
 
 public class TWIGeomMgr {

@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import TWI.TWI;
-import TWI.TWIScene;
 import TWI.cmd.TWICmdToRegisterLine;
 import TWI.cmd.TWICmdToUpdateLine;
 import TWI.geom.TWILine;

@@ -1,4 +1,4 @@
-package TWI;
+package TWI.scenario;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;

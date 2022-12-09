@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import TWI.scenario.TWIScene;
+
 public class TWIEventListener implements
   MouseListener, MouseMotionListener, KeyListener {
     // fields

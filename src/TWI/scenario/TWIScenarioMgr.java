@@ -1,8 +1,6 @@
-package TWI;
+package TWI.scenario;
 
-import TWI.scenario.TWIDefaultScenario;
-import TWI.scenario.TWIDrawScenario;
-import TWI.scenario.TWIPreviewScenario;
+import TWI.TWI;
 import x.XScenarioMgr;
 
 public class TWIScenarioMgr extends XScenarioMgr {

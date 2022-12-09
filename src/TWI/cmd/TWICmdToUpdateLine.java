@@ -4,7 +4,7 @@ package TWI.cmd;
 import java.awt.Point;
 
 import TWI.TWI;
-import TWI.TWIGeomMgr;
+import TWI.geom.TWIGeomMgr;
 import x.XApp;
 import x.XLoggableCmd;
 

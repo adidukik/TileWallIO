@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import TWI.TWI;
-import TWI.TWIScene;
 import TWI.cmd.TWICmdToCreateLine;
 import TWI.cmd.TWICmdToTurnSnapOnOff;
 import x.XApp;

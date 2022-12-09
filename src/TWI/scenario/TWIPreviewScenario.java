@@ -5,7 +5,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import TWI.TWI;
-import TWI.TWIScene;
 import x.XApp;
 import x.XCmdToChangeScene;
 import x.XScenario;

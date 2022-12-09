@@ -8,6 +8,8 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
+import TWI.scenario.TWIScene;
+
 public class TWICanvas2D extends JPanel {
     // constant
     private static final Color COLOR_BG_DEFAULT = new Color(255, 255, 255, 255);
