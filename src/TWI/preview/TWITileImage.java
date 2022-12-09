@@ -43,11 +43,12 @@ public abstract class TWITileImage {
     public void generateImage() {
         this.clearImage();
 
+        Graphics2D g2 = this.mImage.createGraphics();
+
         ArrayList<TWIPattern> patterns = this.mTile.getPatterns();
 
         for (TWIPattern p : patterns) {
-            Graphics2D g2 = (Graphics2D) this.mImage.getGraphics();
-            p.getGeom().render(g2);
+            p.getGeom().render(g2, new Point(0, 0));
         }
     }
 

@@ -1,5 +1,6 @@
 package TWI.tile;
 
+import java.awt.Point;
 import java.awt.geom.Point2D;
 
 import TWI.geom.TWIDot;
@@ -8,9 +9,17 @@ public abstract class TWITileMgr {
     // constant
     protected static final double SNAP_RADIUS = 20.0f;
     protected static final double CALCULATION_TOLERANCE = 5.0f;
+    protected static final double X_DEFAULT = 100.0;
+    protected static final double Y_DEFAULT = 100.0;
 
     // fields
     protected boolean mIsSnapOn = false;
+
+    private Point mTileOrigin = null;
+
+    public Point getTileOrigin() {
+        return this.mTileOrigin;
+    }
 
     public boolean getmIsSnapOn() {
         return this.mIsSnapOn;
@@ -24,6 +33,14 @@ public abstract class TWITileMgr {
 
     public TWITile getTile() {
         return this.mTile;
+    }
+
+    // constructor
+    protected TWITileMgr() {
+        this.mTileOrigin = new Point(
+            (int) TWITileMgr.X_DEFAULT,
+            (int) TWITileMgr.Y_DEFAULT
+        );
     }
 
     // methods

@@ -9,6 +9,7 @@ import TWI.TWIScene;
 import TWI.cmd.TWICmdToCreateLine;
 import TWI.cmd.TWICmdToTurnSnapOnOff;
 import TWI.tile.TWITile;
+import TWI.tile.TWITileMgr;
 import x.XApp;
 import x.XCmdToChangeScene;
 import x.XScenario;
@@ -115,9 +116,10 @@ public class TWIDefaultScenario extends XScenario {
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
 
-            TWITile tile = twi.getTileMgr().getTile();
+            TWITileMgr tileMgr = twi.getTileMgr();
+            TWITile tile = tileMgr.getTile();
 
-            tile.render(g2);
+            tile.render(g2, tileMgr.getTileOrigin());
         }
 
         @Override
@@ -198,9 +200,10 @@ public class TWIDefaultScenario extends XScenario {
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
 
-            TWITile tile = twi.getTileMgr().getTile();
+            TWITileMgr tileMgr = twi.getTileMgr();
+            TWITile tile = tileMgr.getTile();
 
-            tile.render(g2);
+            tile.render(g2, tileMgr.getTileOrigin());
         }
 
         @Override

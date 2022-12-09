@@ -2,6 +2,7 @@ package TWI.geom;
 
 import java.awt.Point;
 import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 public class TWIRectangle extends TWIGeom {
@@ -27,5 +28,10 @@ public class TWIRectangle extends TWIGeom {
     @Override
     public boolean isMousePointInside(Point pt) {
         return this.mRectangle.contains(pt);
+    }
+
+    @Override
+    public void applyTransform(AffineTransform t) {
+        this.mRectangle = (Rectangle2D) t.createTransformedShape(mRectangle);
     }
 }

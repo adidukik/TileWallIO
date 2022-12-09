@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.geom.AffineTransform;
 
 import TWI.TWIClickable;
 import TWI.TWIRenderable;
@@ -21,6 +22,7 @@ public abstract class TWIGeom implements TWIRenderable, TWIClickable {
 
     // abstract methods
     public abstract Shape getShape();
+    public abstract void applyTransform(AffineTransform t);
 
     // fields
     private boolean mIsVisible = false;
@@ -83,11 +85,15 @@ public abstract class TWIGeom implements TWIRenderable, TWIClickable {
 
     // interface methods
     @Override
-    public void render(Graphics2D g2) {
+    public void render(Graphics2D g2, Point origin) {
+        g2.translate(origin.x, origin.y);
+
         g2.setColor(this.mStrokeColor);
         g2.setStroke(this.mStroke);
         g2.draw(this.getShape());
         g2.setColor(this.mFillColor);
         g2.fill(this.getShape());
+
+        g2.translate(-origin.x, -origin.y);
     }
 }

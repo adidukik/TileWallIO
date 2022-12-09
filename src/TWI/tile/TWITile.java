@@ -57,7 +57,13 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
     }
 
     // methods
-    public void addPattern(TWIPattern p) {
+    public void addPattern(TWIGeom geom) {
+        // // (1) translate geom to its own local coordinate
+        // AffineTransform tx = new AffineTransform();
+        // tx.translate(-this.getOrigin().x, -this.getOrigin().y);
+        // geom.applyTransform(tx);
+
+        TWIPattern p = new TWIPattern(geom);
         this.mPatterns.add(p);
     }
 
@@ -71,19 +77,19 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
 
     // interface methods
     @Override
-    public void render(Graphics2D g2) {
+    public void render(Graphics2D g2, Point origin) {
         if (this.mIsEdgeVisible) {
-            this.getTileGeom().render(g2);
+            this.getTileGeom().render(g2, origin);
         }
 
         if (this.mIsDotVisible) {
             for (TWIDot anchorDot : this.mAnchorDots) {
-                anchorDot.render(g2);
+                anchorDot.render(g2, origin);
             }
         }
 
         for (TWIPattern pattern : this.mPatterns) {
-            pattern.render(g2);
+            pattern.render(g2, origin);
         }
     }
 

@@ -33,7 +33,7 @@ public class TWIPattern implements TWIRenderable, TWIClickable {
     }
 
     @Override
-    public void render(Graphics2D g2) {
-        this.mGeom.render(g2);
+    public void render(Graphics2D g2, Point origin) {
+        this.mGeom.render(g2, origin);
     }
 }

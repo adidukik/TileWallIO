@@ -6,9 +6,17 @@ import java.awt.geom.Rectangle2D;
 import TWI.geom.TWIDot;
 
 public class TWISquareTileMgr extends TWITileMgr {
+    // constants
+    private static final double WIDTH_DAFAULT = 400.0;
+    private static final double HEIGHT_DEFAULT = 400.0;
+
     // constructor
     public TWISquareTileMgr() {
-        this.mTile = new TWISquareTile();
+        super();
+        this.mTile = new TWISquareTile(
+            TWISquareTileMgr.WIDTH_DAFAULT,
+            TWISquareTileMgr.HEIGHT_DEFAULT
+        );
     }
 
     // methods

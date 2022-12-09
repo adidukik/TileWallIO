@@ -29,16 +29,30 @@ public class TWIGeomMgr {
 
     // methods
     public boolean createLine(Point pt) {
-        TWIDot dotToAdd = new TWIDot(pt);
-
         TWITileMgr tileMgr = this.mTwi.getTileMgr();
+        int tileX = tileMgr.getTileOrigin().x;
+        int tileY = tileMgr.getTileOrigin().y;
+
+        // (1) Add Dot in respect to the tile's local coordinate.
+        Point ptToAdd = new Point(
+            pt.x - tileX,
+            pt.y - tileY
+        );
+        TWIDot dotToAdd = new TWIDot(ptToAdd);
+
+        // (2) Try to add the new dot to TileMgr.
+        // Use the new dot if tileMgr changed it.
         TWIDot newDot = tileMgr.addDot(dotToAdd);
-        if (newDot == null) {
-             return false;
-        }
 
-        Point2D newPt = newDot.getPoint();
+        if (newDot == null) return false;
 
+        // (3) Create the point in the screen coordinate.
+        Point2D newPt = new Point2D.Double(
+            newDot.getPoint().getX() + tileX,
+            newDot.getPoint().getY() + tileY
+        );
+
+        // (4) Create a line in the screen coordinate.
         Line2D line = new Line2D.Double(
             newPt.getX(), newPt.getY(),
             newPt.getX(), newPt.getY()
@@ -46,7 +60,7 @@ public class TWIGeomMgr {
 
         this.mCurLine = new TWILine(line);
         this.mCurLine.setStrokeColor(TWIGeomMgr.COLOR_CURRENT);
-        
+
         return true;
     }
 
@@ -64,30 +78,42 @@ public class TWIGeomMgr {
     public boolean addLine() {
         assert (this.mCurLine != null);
 
+        TWITileMgr tileMgr = this.mTwi.getTileMgr();
+        int tileX = tileMgr.getTileOrigin().x;
+        int tileY = tileMgr.getTileOrigin().y;
+
+        // (1) Extract (screen) points from the TWILine.
         Line2D line = (Line2D) this.mCurLine.getShape();
-        
-        
+
         Point2D startPt = line.getP1();
         Point2D endPt = line.getP2();
 
-        TWIDot dotToAdd = new TWIDot(endPt);
-        TWITileMgr tileMgr = this.mTwi.getTileMgr();
-        dotToAdd = tileMgr.addDot(dotToAdd);
-        
-        if (dotToAdd == null) {
-            return false;
-        }
-        endPt = dotToAdd.getPoint();
-
-        TWIPattern patternToAdd = new TWIPattern(
-            new TWILine(
-                new Line2D.Double(
-                    startPt, endPt
-                )
-            )
+        // (2) Add Dot in respect to the tile's local coordinate.
+        Point2D startPtToAdd = new Point2D.Double(
+            startPt.getX() - tileX,
+            startPt.getY() - tileY
         );
 
-        tileMgr.getTile().addPattern(patternToAdd);
+        Point2D endPtToAdd = new Point2D.Double(
+            endPt.getX() - tileX,
+            endPt.getY() - tileY
+        );
+        TWIDot endDotToAdd = new TWIDot(endPtToAdd);
+
+        // (3) Try to add the new dot to TileMgr.
+        // Use the new dot if tileMgr changed it.
+        endDotToAdd = tileMgr.addDot(endDotToAdd);
+
+        if (endDotToAdd == null) return false;
+
+        Point2D newEndPtToAdd = endDotToAdd.getPoint();
+
+        // (4) Add TWILine respect to the tile's local coordinate.
+        TWILine geomToAdd = new TWILine(
+            new Line2D.Double(startPtToAdd, newEndPtToAdd)
+        );
+
+        tileMgr.getTile().addPattern(geomToAdd);
         return true;
     }
 }

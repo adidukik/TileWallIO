@@ -1,6 +1,7 @@
 package TWI.geom;
 
 import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -31,6 +32,7 @@ public class TWIDot extends TWIGeom {
         this.mPoint = pt;
     }
 
+    @Override
     public Shape getShape() {
         Ellipse2D circle = new Ellipse2D.Double(
             this.mPoint.getX() - TWIDot.RENDER_RADIUS,
@@ -40,5 +42,17 @@ public class TWIDot extends TWIGeom {
         );
 
         return circle;
+    }
+
+    @Override
+    public void applyTransform(AffineTransform t) {
+        // * only translation can be applied to Point.
+        double tx = t.getTranslateX();
+        double ty = t.getTranslateY();
+
+        this.mPoint = new Point2D.Double(
+            this.mPoint.getX() + tx,
+            this.mPoint.getY() + ty
+        );
     }
 }

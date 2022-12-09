@@ -7,12 +7,6 @@ import TWI.geom.TWIGeom;
 import TWI.geom.TWIRectangle;
 
 public class TWISquareTile extends TWITile {
-    // constants
-    private static final double X_DEFAULT = 100.0;
-    private static final double Y_DEFAULT = 100.0;
-    private static final double WIDTH_DAFAULT = 400.0;
-    private static final double HEIGHT_DEFAULT = 400.0;
-
     // fields
     private TWIGeom mTileGeom = null;
 
@@ -29,14 +23,11 @@ public class TWISquareTile extends TWITile {
     }
 
     // constructor
-    public TWISquareTile() {
+    public TWISquareTile(Double w, Double h) {
         super();
 
         Rectangle2D rect = new Rectangle2D.Double(
-            TWISquareTile.X_DEFAULT,
-            TWISquareTile.Y_DEFAULT,
-            TWISquareTile.HEIGHT_DEFAULT,
-            TWISquareTile.WIDTH_DAFAULT
+            0, 0, w, h
         );
 
         this.mTileGeom = new TWIRectangle(rect);
@@ -44,10 +35,7 @@ public class TWISquareTile extends TWITile {
         this.mTileGeom.setStrokeColor(TWITile.COLOR_TILE_DEFAULT);
 
         this.mBoundingBox = new Rectangle2D.Double(
-            TWISquareTile.X_DEFAULT,
-            TWISquareTile.Y_DEFAULT,
-            TWISquareTile.HEIGHT_DEFAULT,
-            TWISquareTile.WIDTH_DAFAULT
+            0, 0, w, h
         );
     }
 
