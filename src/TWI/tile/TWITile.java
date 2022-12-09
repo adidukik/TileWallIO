@@ -73,7 +73,6 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
 
     // abstract methods
     public abstract TWIGeom getTileGeom();
-    protected abstract Point getTilingPosition(int index);
 
     // interface methods
     @Override

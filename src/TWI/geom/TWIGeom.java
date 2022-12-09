@@ -25,16 +25,6 @@ public abstract class TWIGeom implements TWIRenderable, TWIClickable {
     public abstract void applyTransform(AffineTransform t);
 
     // fields
-    private boolean mIsVisible = false;
-
-    public boolean getIsVisible() {
-        return this.mIsVisible;
-    }
-
-    public void setIsVisible(boolean b) {
-        this.mIsVisible = b;
-    }
-
     private Color mStrokeColor = null;
 
     public Color getStrokeColor() {
@@ -52,7 +42,7 @@ public abstract class TWIGeom implements TWIRenderable, TWIClickable {
     }
 
     public void setFillColor(Color color) {
-        this.mStrokeColor = color;
+        this.mFillColor = color;
     }
 
 

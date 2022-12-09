@@ -1,6 +1,7 @@
 package TWI.scenario;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -8,8 +9,6 @@ import TWI.TWI;
 import TWI.TWIScene;
 import TWI.cmd.TWICmdToCreateLine;
 import TWI.cmd.TWICmdToTurnSnapOnOff;
-import TWI.tile.TWITile;
-import TWI.tile.TWITileMgr;
 import x.XApp;
 import x.XCmdToChangeScene;
 import x.XScenario;
@@ -115,11 +114,7 @@ public class TWIDefaultScenario extends XScenario {
         @Override
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
-
-            TWITileMgr tileMgr = twi.getTileMgr();
-            TWITile tile = tileMgr.getTile();
-
-            tile.render(g2, tileMgr.getTileOrigin());
+            twi.getTileMgr().render(g2, new Point(0, 0));
         }
 
         @Override
@@ -199,11 +194,7 @@ public class TWIDefaultScenario extends XScenario {
         @Override
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
-
-            TWITileMgr tileMgr = twi.getTileMgr();
-            TWITile tile = tileMgr.getTile();
-
-            tile.render(g2, tileMgr.getTileOrigin());
+            twi.getTileMgr().render(g2, new Point(0, 0));
         }
 
         @Override

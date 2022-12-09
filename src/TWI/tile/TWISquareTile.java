@@ -1,6 +1,5 @@
 package TWI.tile;
 
-import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 
 import TWI.geom.TWIGeom;
@@ -37,10 +36,5 @@ public class TWISquareTile extends TWITile {
         this.mBoundingBox = new Rectangle2D.Double(
             0, 0, w, h
         );
-    }
-
-    @Override
-    protected Point getTilingPosition(int index) {
-        throw new UnsupportedOperationException();
     }
 }

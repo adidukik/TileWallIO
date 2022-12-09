@@ -3,6 +3,7 @@ package TWI.tile;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import TWI.TWI;
 import TWI.geom.TWIDot;
 
 public class TWISquareTileMgr extends TWITileMgr {
@@ -11,8 +12,8 @@ public class TWISquareTileMgr extends TWITileMgr {
     private static final double HEIGHT_DEFAULT = 400.0;
 
     // constructor
-    public TWISquareTileMgr() {
-        super();
+    public TWISquareTileMgr(TWI twi) {
+        super(twi);
         this.mTile = new TWISquareTile(
             TWISquareTileMgr.WIDTH_DAFAULT,
             TWISquareTileMgr.HEIGHT_DEFAULT

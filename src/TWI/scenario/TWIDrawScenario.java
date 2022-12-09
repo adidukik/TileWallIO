@@ -10,8 +10,6 @@ import TWI.TWIScene;
 import TWI.cmd.TWICmdToRegisterLine;
 import TWI.cmd.TWICmdToUpdateLine;
 import TWI.geom.TWILine;
-import TWI.tile.TWITile;
-import TWI.tile.TWITileMgr;
 import x.XApp;
 import x.XCmdToChangeScene;
 import x.XScenario;
@@ -108,10 +106,7 @@ public class TWIDrawScenario extends XScenario {
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
 
-            TWITileMgr tileMgr = twi.getTileMgr();
-            TWITile tile = tileMgr.getTile();
-
-            tile.render(g2, tileMgr.getTileOrigin());
+            twi.getTileMgr().render(g2, new Point(0, 0));
 
             TWILine curLine = twi.getGeomMgr().getCurLine();
             curLine.render(g2, new Point(0, 0));
@@ -184,9 +179,7 @@ public class TWIDrawScenario extends XScenario {
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
 
-            TWITileMgr tileMgr = twi.getTileMgr();
-            TWITile tile = tileMgr.getTile();
-            tile.render(g2, tileMgr.getTileOrigin());
+            twi.getTileMgr().render(g2, new Point(0, 0));
 
             TWILine curLine = twi.getGeomMgr().getCurLine();
             curLine.render(g2, new Point(0, 0));
