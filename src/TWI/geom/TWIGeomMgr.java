@@ -29,33 +29,23 @@ public class TWIGeomMgr {
     // methods
     public boolean createLine(Point pt) {
         TWITileMgr tileMgr = this.mTwi.getTileMgr();
-        int tileX = tileMgr.getTileOrigin().x;
-        int tileY = tileMgr.getTileOrigin().y;
 
         // (1) Add Dot in respect to the tile's local coordinate.
-        Point ptToAdd = new Point(
-            pt.x - tileX,
-            pt.y - tileY
-        );
-        TWIDot dotToAdd = new TWIDot(ptToAdd);
+        Point2D tilePt = this.calcScreenPointToTilePoint((Point2D) pt);
+        TWIDot tileDot = new TWIDot(tilePt);
 
         // (2) Try to add the new dot to TileMgr.
         // Use the new dot if tileMgr changed it.
-        TWIDot newDot = tileMgr.addDot(dotToAdd);
+        TWIDot newTileDot = tileMgr.addDot(tileDot);
 
-        if (newDot == null) return false;
+        if (newTileDot == null) return false;
 
         // (3) Create the point in the screen coordinate.
-        Point2D newPt = new Point2D.Double(
-            newDot.getPoint().getX() + tileX,
-            newDot.getPoint().getY() + tileY
-        );
+        Point2D newTilePt = newTileDot.getPoint();
+        Point2D newScreenPt = this.calcTilePointToScreenPoint(newTilePt);
 
         // (4) Create a line in the screen coordinate.
-        Line2D line = new Line2D.Double(
-            newPt.getX(), newPt.getY(),
-            newPt.getX(), newPt.getY()
-        );
+        Line2D line = new Line2D.Double(newScreenPt, newScreenPt);
 
         this.mCurLine = new TWILine(line);
         this.mCurLine.setStrokeColor(TWIGeomMgr.COLOR_CURRENT);
@@ -78,41 +68,59 @@ public class TWIGeomMgr {
         assert (this.mCurLine != null);
 
         TWITileMgr tileMgr = this.mTwi.getTileMgr();
-        int tileX = tileMgr.getTileOrigin().x;
-        int tileY = tileMgr.getTileOrigin().y;
 
         // (1) Extract (screen) points from the TWILine.
         Line2D line = (Line2D) this.mCurLine.getShape();
 
-        Point2D startPt = line.getP1();
-        Point2D endPt = line.getP2();
+        Point2D startScreenPt = line.getP1();
+        Point2D endScreenPt = line.getP2();
 
         // (2) Add Dot in respect to the tile's local coordinate.
-        Point2D startPtToAdd = new Point2D.Double(
-            startPt.getX() - tileX,
-            startPt.getY() - tileY
-        );
+        Point2D startTilePt = this.calcScreenPointToTilePoint(startScreenPt);
 
-        Point2D endPtToAdd = new Point2D.Double(
-            endPt.getX() - tileX,
-            endPt.getY() - tileY
-        );
-        TWIDot endDotToAdd = new TWIDot(endPtToAdd);
+        Point2D endTilePt = this.calcScreenPointToTilePoint(endScreenPt);
+        TWIDot endTileDot = new TWIDot(endTilePt);
 
         // (3) Try to add the new dot to TileMgr.
         // Use the new dot if tileMgr changed it.
-        endDotToAdd = tileMgr.addDot(endDotToAdd);
+        endTileDot = tileMgr.addDot(endTileDot);
 
-        if (endDotToAdd == null) return false;
+        if (endTileDot == null) return false;
 
-        Point2D newEndPtToAdd = endDotToAdd.getPoint();
+        Point2D newEndTilePt = endTileDot.getPoint();
 
         // (4) Add TWILine respect to the tile's local coordinate.
         TWILine geomToAdd = new TWILine(
-            new Line2D.Double(startPtToAdd, newEndPtToAdd)
+            new Line2D.Double(startTilePt, newEndTilePt)
         );
 
         tileMgr.getTile().addPattern(geomToAdd);
+
+        // (5) Set current line to null.
+        this.mCurLine = null;
+
         return true;
+    }
+
+    private Point2D calcScreenPointToTilePoint(Point2D pt) {
+        TWITileMgr tileMgr = this.mTwi.getTileMgr();
+        int tileX = tileMgr.getTileOrigin().x;
+        int tileY = tileMgr.getTileOrigin().y;
+
+        return new Point2D.Double(
+            pt.getX() - tileX,
+            pt.getY() - tileY
+        );
+    }
+
+    private Point2D calcTilePointToScreenPoint(Point2D pt) {
+        TWITileMgr tileMgr = this.mTwi.getTileMgr();
+        int tileX = tileMgr.getTileOrigin().x;
+        int tileY = tileMgr.getTileOrigin().y;
+
+        return new Point2D.Double(
+            pt.getX() + tileX,
+            pt.getY() + tileY
+        );
     }
 }
