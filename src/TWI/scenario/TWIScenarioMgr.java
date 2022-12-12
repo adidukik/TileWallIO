@@ -12,6 +12,7 @@ public class TWIScenarioMgr extends XScenarioMgr {
     // methods
     @Override
     protected void addScenarios() {
+        this.addScenario(TWIStartScenario.createSingleton(this.mApp));
         this.addScenario(TWIDefaultScenario.createSingleton(this.mApp));
         this.addScenario(TWIDrawScenario.createSingleton(this.mApp));
         this.addScenario(TWIPreviewScenario.createSingleton(this.mApp));
@@ -20,6 +21,7 @@ public class TWIScenarioMgr extends XScenarioMgr {
     @Override
     protected void setInitCurScene() {
         this.setCurScene(TWIDefaultScenario.ReadyScene.getSingleton());
+        //later: this.setCurScene(TWIStartScenario.ReadyScene.getSingleton());
     }
 
 }
