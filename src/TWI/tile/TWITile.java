@@ -56,18 +56,13 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
         this.mIsEdgeVisible = true;
     }
 
-    // methods
-    public void addPattern(TWIGeom geom) {
-        TWIPattern p = new TWIPattern(geom);
-        this.mPatterns.add(p);
-    }
-
-    public void addAnchorDot(TWIDot dot) {
-        this.mAnchorDots.add(dot);
-    }
-
     // abstract methods
     public abstract TWIGeom getTileGeom();
+
+    // methods
+    protected void addAnchorDot(TWIDot dot) {
+        this.mAnchorDots.add(dot);
+    }
 
     // interface methods
     @Override

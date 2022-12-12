@@ -94,9 +94,7 @@ public class TWIGeomMgr {
             new Line2D.Double(startTilePt, newEndTilePt)
         );
 
-        tileMgr.getTile().addPattern(geomToAdd);
-        // TODO: Move this to TileMgr
-        this.mTwi.getPreviewMgr().updateTileImage();
+        tileMgr.addPattern(geomToAdd);
 
         // (5) Set current line to null.
         this.mCurLine = null;

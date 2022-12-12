@@ -7,8 +7,10 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 import TWI.TWI;
+import TWI.TWIPattern;
 import TWI.TWIRenderable;
 import TWI.geom.TWIDot;
+import TWI.geom.TWIGeom;
 import TWI.geom.TWIRectangle;
 
 public abstract class TWITileMgr implements TWIRenderable {
@@ -62,6 +64,13 @@ public abstract class TWITileMgr implements TWIRenderable {
     protected boolean isDotInside(TWIDot dot) {
         Point2D pt = dot.getPoint();
         return this.mTile.getTileGeom().getShape().contains(pt);
+    }
+
+    public void addPattern(TWIGeom geom) {
+        TWIPattern p = new TWIPattern(geom);
+        this.mTile.getPatterns().add(p);
+
+        this.mTWI.getPreviewMgr().updateTileImage();
     }
 
     @Override
