@@ -3,7 +3,6 @@ package TWI.preview;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -14,7 +13,7 @@ public abstract class TWITileImage {
     // fields
     private TWITile mTile = null;
 
-    private BufferedImage mImage = null;
+    protected BufferedImage mImage = null;
 
     public BufferedImage getImage() {
         return this.mImage;
@@ -50,10 +49,15 @@ public abstract class TWITileImage {
         for (TWIPattern p : patterns) {
             p.getGeom().render(g2, new Point(0, 0));
         }
+
+        g2.dispose();
     }
 
-    public void renderImageAt(Graphics2D g2, AffineTransform xform) {
-        g2.drawImage(mImage, xform, null);
+    public void renderImageAt(
+        Graphics2D g2,
+        int x, int y, int w, int h
+    ) {
+        g2.drawImage(this.mImage, x, y, w, h, null);
     }
 
     private void clearImage() {

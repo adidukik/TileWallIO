@@ -1,6 +1,7 @@
 package TWI.scenario;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -89,7 +90,10 @@ public class TWIPreviewScenario extends XScenario {
         public void updateSupportObjects(Graphics2D g2) {}
 
         @Override
-        public void renderWorldObjects(Graphics2D g2) {}
+        public void renderWorldObjects(Graphics2D g2) {
+            TWI twi = (TWI) this.mScenario.getApp();
+            twi.getPreviewMgr().render(g2, new Point(0, 0));
+        }
 
         @Override
         public void renderScreenObjects(Graphics2D g2) {}
@@ -157,7 +161,10 @@ public class TWIPreviewScenario extends XScenario {
         public void updateSupportObjects(Graphics2D g2) {}
 
         @Override
-        public void renderWorldObjects(Graphics2D g2) {}
+        public void renderWorldObjects(Graphics2D g2) {
+            TWI twi = (TWI) this.mScenario.getApp();
+            twi.getPreviewMgr().render(g2, new Point(0, 0));
+        }
 
         @Override
         public void renderScreenObjects(Graphics2D g2) {}

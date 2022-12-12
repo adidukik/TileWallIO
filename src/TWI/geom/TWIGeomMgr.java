@@ -95,6 +95,8 @@ public class TWIGeomMgr {
         );
 
         tileMgr.getTile().addPattern(geomToAdd);
+        // TODO: Move this to TileMgr
+        this.mTwi.getPreviewMgr().updateTileImage();
 
         // (5) Set current line to null.
         this.mCurLine = null;

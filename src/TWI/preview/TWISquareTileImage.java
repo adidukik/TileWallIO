@@ -12,7 +12,18 @@ public class TWISquareTileImage extends TWITileImage {
 
     @Override
     public Point getRenderPosition(int i) {
-        // TODO Auto-generated method stub
-        return null;
+        // TODO: replace the naive tiling algorithm with spiral tiling.
+        int maxPerRow = 50;
+        int offset = maxPerRow / 2;
+
+        int imageHeight = this.mImage.getHeight();
+        int imageWidth = this.mImage.getWidth();
+
+        Point pt = new Point(
+            ((i % maxPerRow) - offset) * imageWidth,
+            ((i / maxPerRow) - offset) * imageHeight
+        );
+
+        return pt;
     }
 }

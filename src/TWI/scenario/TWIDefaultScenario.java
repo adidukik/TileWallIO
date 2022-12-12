@@ -108,7 +108,10 @@ public class TWIDefaultScenario extends XScenario {
         public void updateSupportObjects(Graphics2D g2) {}
 
         @Override
-        public void renderWorldObjects(Graphics2D g2) {}
+        public void renderWorldObjects(Graphics2D g2) {
+            TWI twi = (TWI) this.mScenario.getApp();
+            twi.getPreviewMgr().render(g2, new Point(0, 0));
+        }
 
         @Override
         public void renderScreenObjects(Graphics2D g2) {
@@ -188,7 +191,10 @@ public class TWIDefaultScenario extends XScenario {
         public void updateSupportObjects(Graphics2D g2) {}
 
         @Override
-        public void renderWorldObjects(Graphics2D g2) {}
+        public void renderWorldObjects(Graphics2D g2) {
+            TWI twi = (TWI) this.mScenario.getApp();
+            twi.getPreviewMgr().render(g2, new Point(0, 0));
+        }
 
         @Override
         public void renderScreenObjects(Graphics2D g2) {
