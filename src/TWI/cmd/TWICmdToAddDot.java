@@ -32,7 +32,7 @@ public class TWICmdToAddDot extends XLoggableCmd {
         TWITileMgr tileMgr = twi.getTileMgr();
 
         TWIDot dot = new TWIDot(this.mPt.x, this.mPt.y);
-        TWIDot dotAdded = tileMgr.addDot(dot);
+        TWIDot dotAdded = tileMgr.calcValidDot(dot);
 
         this.mIsAdded = (dotAdded != null);
 

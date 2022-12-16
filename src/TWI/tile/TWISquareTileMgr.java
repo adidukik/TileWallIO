@@ -1,6 +1,7 @@
 package TWI.tile;
 
 import TWI.TWI;
+import TWI.TWIAnchorDot;
 import TWI.geom.TWIDot;
 import TWI.geom.TWIRectangle;
 
@@ -22,7 +23,7 @@ public class TWISquareTileMgr extends TWITileMgr {
 
     // methods
     @Override
-    public TWIDot addDot(TWIDot dot) {
+    public TWIDot calcValidDot(TWIDot dot) {
         if (!this.isDotInside(dot)) {
             return null;
         }
@@ -62,13 +63,6 @@ public class TWISquareTileMgr extends TWITileMgr {
             );
         }
 
-        this.mTile.addAnchorDot(dot);
-
-        if (this.isDotOnEdge(dot)) {
-            TWIDot oppositePoint = getOppositeAnchorDot(dot);
-            this.mTile.addAnchorDot(oppositePoint);
-        }
-
         return dot;
     }
 
@@ -85,8 +79,22 @@ public class TWISquareTileMgr extends TWITileMgr {
         );
     }
 
+
     @Override
-    protected TWIDot getOppositeAnchorDot(TWIDot dot) {
+    protected void addAnchorDot(TWIAnchorDot anchorDot) {
+        this.mTile.getAnchorDots().add(anchorDot);
+
+        if (this.isDotOnEdge(anchorDot)) {
+            TWIAnchorDot oppositeAnchorDot = getOppositeAnchorDot(anchorDot);
+            this.mTile.getEdgeAnchorDotTable().put(
+                anchorDot, oppositeAnchorDot
+            );
+            this.mTile.getAnchorDots().add(oppositeAnchorDot);
+        }
+    }
+
+    @Override
+    protected TWIAnchorDot getOppositeAnchorDot(TWIAnchorDot dot) {
         assert (isDotOnEdge(dot));
 
         TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
@@ -94,27 +102,35 @@ public class TWISquareTileMgr extends TWITileMgr {
         Double tileWidth = rect.getWidth();
 
         if (isDotOnTopEdge(dot)) {
-            return new TWIDot(
+            return new TWIAnchorDot(
                 dot.getX(),
-                rect.getY() + tileHeight
+                rect.getY() + tileHeight,
+                TWIAnchorDot.SnappableFlag.SNAPPABLE,
+                TWIAnchorDot.ClickableFlag.NOT_CLICKABLE
             );
 
         } else if (isDotOnBottomEdge(dot)) {
-            return new TWIDot(
+            return new TWIAnchorDot(
                 dot.getX(),
-                rect.getY()
+                rect.getY(),
+                TWIAnchorDot.SnappableFlag.SNAPPABLE,
+                TWIAnchorDot.ClickableFlag.NOT_CLICKABLE
             );
 
         } else if (isDotOnLeftEdge(dot)) {
-            return new TWIDot(
+            return new TWIAnchorDot(
                 rect.getX() + tileWidth,
-                dot.getY()
+                dot.getY(),
+                TWIAnchorDot.SnappableFlag.SNAPPABLE,
+                TWIAnchorDot.ClickableFlag.NOT_CLICKABLE
             );
 
         } else {
-            return new TWIDot(
+            return new TWIAnchorDot(
                 rect.getX(),
-                dot.getY()
+                dot.getY(),
+                TWIAnchorDot.SnappableFlag.SNAPPABLE,
+                TWIAnchorDot.ClickableFlag.NOT_CLICKABLE
             );
         }
     }

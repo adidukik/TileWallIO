@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
+import TWI.TWIAnchorDot;
 import TWI.TWIClickable;
-import TWI.TWIPattern;
 import TWI.TWIRenderable;
 import TWI.geom.TWIDot;
 import TWI.geom.TWIGeom;
+import TWI.pattern.TWIPattern;
 
 public abstract class TWITile implements TWIRenderable, TWIClickable {
     // constants
@@ -24,17 +26,27 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
         return this.mPatterns;
     }
 
+
     private ArrayList<TWIPattern> mSelectedPatterns = null;
 
     public ArrayList<TWIPattern> getSelectedPatterns() {
         return this.mSelectedPatterns;
     }
 
+
     private ArrayList<TWIDot> mAnchorDots = null;
 
     public ArrayList<TWIDot> getAnchorDots() {
         return this.mAnchorDots;
     }
+
+
+    private Hashtable<TWIAnchorDot, TWIAnchorDot> mEdgeAnchorDotTable = null;
+
+    public Hashtable<TWIAnchorDot, TWIAnchorDot> getEdgeAnchorDotTable() {
+        return this.mEdgeAnchorDotTable;
+    }
+
 
     private boolean mIsEdgeVisible = false;
 
@@ -62,16 +74,12 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
         this.mPatterns = new ArrayList<>();
         this.mSelectedPatterns = new ArrayList<>();
         this.mAnchorDots = new ArrayList<>();
+        this.mEdgeAnchorDotTable = new Hashtable<>();
         this.mIsEdgeVisible = true;
     }
 
     // abstract methods
     public abstract TWIGeom getTileGeom();
-
-    // methods
-    protected void addAnchorDot(TWIDot dot) {
-        this.mAnchorDots.add(dot);
-    }
 
     // interface methods
     @Override
@@ -88,13 +96,13 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
 
         for (TWIPattern pattern : this.mPatterns) {
             // TODO: make the selected color revertible.
-            pattern.getGeom().setStrokeColor(Color.RED);
+            pattern.setStrokeColor(Color.RED);
             pattern.render(g2, origin);
         }
 
         for (TWIPattern pattern : this.mSelectedPatterns) {
             // TODO: make the selected color revertible.
-            pattern.getGeom().setStrokeColor(Color.GREEN);
+            pattern.setStrokeColor(Color.GREEN);
             pattern.render(g2, origin);
         }
     }

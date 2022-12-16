@@ -5,11 +5,13 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 import TWI.TWI;
-import TWI.TWIPattern;
+import TWI.TWIAnchorDot;
 import TWI.TWIRenderable;
 import TWI.geom.TWIDot;
 import TWI.geom.TWIGeom;
 import TWI.geom.TWIRectangle;
+import TWI.pattern.TWIPattern;
+import TWI.pattern.TWIPatternFactory;
 
 public abstract class TWITileMgr implements TWIRenderable {
     // constant
@@ -59,15 +61,22 @@ public abstract class TWITileMgr implements TWIRenderable {
     }
 
     // abstract methods
-    public abstract TWIDot addDot(TWIDot dot);
+    public abstract TWIDot calcValidDot(TWIDot dot);
+
     protected abstract boolean isDotInside(TWIDot dot);
     protected abstract boolean isDotOnEdge(TWIDot dot);
-    protected abstract TWIDot getOppositeAnchorDot(TWIDot dot);
+    protected abstract void addAnchorDot(TWIAnchorDot dot);
+    protected abstract TWIAnchorDot getOppositeAnchorDot(TWIAnchorDot dot);
 
     // methods
     public void addPattern(TWIGeom geom) {
-        TWIPattern p = new TWIPattern(geom);
-        this.mTile.getPatterns().add(p);
+        TWIPattern pattern = TWIPatternFactory.getPattern(geom);
+
+        this.mTile.getPatterns().add(pattern);
+
+        for (TWIAnchorDot dot : pattern.getAnchorDots()) {
+            this.addAnchorDot(dot);
+        }
 
         this.mTWI.getPreviewMgr().updateTileImage();
     }
@@ -89,16 +98,41 @@ public abstract class TWITileMgr implements TWIRenderable {
     }
 
     public void removeSelectedPatterns() {
+        for (TWIPattern pattern : this.mTile.getSelectedPatterns()) {
+            this.removeAnchorDots(pattern);
+        }
+
         this.mTile.getSelectedPatterns().clear();
 
         this.mTWI.getPreviewMgr().updateTileImage();
     }
 
     public void removeAllPattern() {
+        for (TWIPattern pattern : this.mTile.getPatterns()) {
+            this.removeAnchorDots(pattern);
+        }
+
+        for (TWIPattern pattern : this.mTile.getSelectedPatterns()) {
+            this.removeAnchorDots(pattern);
+        }
+
         this.mTile.getPatterns().clear();
         this.mTile.getSelectedPatterns().clear();
 
         this.mTWI.getPreviewMgr().updateTileImage();
+    }
+
+    private void removeAnchorDots(TWIPattern pattern) {
+        for (TWIAnchorDot anchorDot : pattern.getAnchorDots()) {
+            if (this.mTile.getEdgeAnchorDotTable().containsKey(anchorDot)) {
+                TWIAnchorDot oppositeAnchorDot =
+                    this.mTile.getEdgeAnchorDotTable().get(anchorDot);
+                this.mTile.getAnchorDots().remove(oppositeAnchorDot);
+                this.mTile.getEdgeAnchorDotTable().remove(anchorDot);
+            }
+
+            this.mTile.getAnchorDots().remove(anchorDot);
+        }
     }
 
     // interface methods

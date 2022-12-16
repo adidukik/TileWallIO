@@ -36,7 +36,7 @@ public class TWIGeomMgr {
 
         // (2) Try to add the new dot to TileMgr.
         // Use the new dot if tileMgr changed it.
-        TWIDot newTileDot = tileMgr.addDot(tileDot);
+        TWIDot newTileDot = tileMgr.calcValidDot(tileDot);
 
         if (newTileDot == null) return false;
 
@@ -76,7 +76,7 @@ public class TWIGeomMgr {
 
         // (3) Try to add the new dot to TileMgr.
         // Use the new dot if tileMgr changed it.
-        TWIDot newEndTileDot = tileMgr.addDot(endTileDot);
+        TWIDot newEndTileDot = tileMgr.calcValidDot(endTileDot);
 
         if (newEndTileDot == null) return false;
 

@@ -6,7 +6,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import TWI.TWIPattern;
+import TWI.pattern.TWIPattern;
 import TWI.tile.TWITile;
 
 public abstract class TWITileImage {
@@ -47,7 +47,7 @@ public abstract class TWITileImage {
         ArrayList<TWIPattern> patterns = this.mTile.getPatterns();
 
         for (TWIPattern p : patterns) {
-            p.getGeom().render(g2, new Point(0, 0));
+            p.render(g2, new Point(0, 0));
         }
 
         g2.dispose();

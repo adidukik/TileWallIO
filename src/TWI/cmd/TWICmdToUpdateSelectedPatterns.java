@@ -3,8 +3,8 @@ package TWI.cmd;
 import java.util.ArrayList;
 
 import TWI.TWI;
-import TWI.TWIPattern;
 import TWI.TWISelectionBox;
+import TWI.pattern.TWIPattern;
 import TWI.scenario.TWISelectScenario;
 import TWI.tile.TWITileMgr;
 import x.XApp;
@@ -50,7 +50,7 @@ public class TWICmdToUpdateSelectedPatterns extends XLoggableCmd {
 
         assert(selectionBox != null);
 
-        return selectionBox.intersects(pattern.getGeom().getBounds());
+        return selectionBox.intersects(pattern.getBounds());
     }
 
     @Override
