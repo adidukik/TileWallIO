@@ -3,6 +3,7 @@ package TWI.tile;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
 
 import TWI.TWI;
 import TWI.TWIAnchorDot;
@@ -87,14 +88,14 @@ public abstract class TWITileMgr implements TWIRenderable {
     }
 
     public void deselectAllPatterns() {
-        for (TWIPattern pattern : this.mTile.getSelectedPatterns()) {
-            this.deselectPattern(pattern);
-        }
-    }
+        ArrayList<TWIPattern> deselectPatterns = new ArrayList<>();
 
-    public void deselectPattern(TWIPattern pattern) {
-        this.mTile.getSelectedPatterns().remove(pattern);
-        this.mTile.getPatterns().add(pattern);
+        for (TWIPattern pattern : this.mTile.getSelectedPatterns()) {
+            deselectPatterns.add(pattern);
+        }
+
+        this.mTile.getSelectedPatterns().removeAll(deselectPatterns);
+        this.mTile.getPatterns().addAll(deselectPatterns);
     }
 
     public void removeSelectedPatterns() {
