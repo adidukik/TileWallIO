@@ -60,6 +60,11 @@ public abstract class TWITileMgr implements TWIRenderable {
         );
     }
 
+    // abstract methods
+    public abstract TWIDot addDot(TWIDot dot);
+    protected abstract boolean isDotOnEdge(TWIDot dot);
+    protected abstract TWIDot getOppositeAnchorDot(TWIDot dot);
+
     // methods
     protected boolean isDotInside(TWIDot dot) {
         Point2D pt = dot.getPoint();
@@ -73,18 +78,36 @@ public abstract class TWITileMgr implements TWIRenderable {
         this.mTWI.getPreviewMgr().updateTileImage();
     }
 
-    public void removePattern(TWIPattern pattern) {
+    public void selectPattern(TWIPattern pattern) {
         this.mTile.getPatterns().remove(pattern);
+        this.mTile.getSelectedPatterns().add(pattern);
+    }
+
+    public void deselectAllPatterns() {
+        for (TWIPattern pattern : this.mTile.getSelectedPatterns()) {
+            this.deselectPattern(pattern);
+        }
+    }
+
+    public void deselectPattern(TWIPattern pattern) {
+        this.mTile.getSelectedPatterns().remove(pattern);
+        this.mTile.getPatterns().add(pattern);
+    }
+
+    public void removeSelectedPatterns() {
+        this.mTile.getSelectedPatterns().clear();
 
         this.mTWI.getPreviewMgr().updateTileImage();
     }
 
     public void removeAllPattern() {
         this.mTile.getPatterns().clear();
+        this.mTile.getSelectedPatterns().clear();
 
         this.mTWI.getPreviewMgr().updateTileImage();
     }
 
+    // interface methods
     @Override
     public void render(Graphics2D g2, Point origin) {
         double bgW = this.mTWI.getCanvas2d().getWidth() / 2;
@@ -108,9 +131,4 @@ public abstract class TWITileMgr implements TWIRenderable {
 
         this.mTile.render(g2, tilePos);
     }
-
-    // abstract methods
-    public abstract TWIDot addDot(TWIDot dot);
-    protected abstract boolean isDotOnEdge(TWIDot dot);
-    protected abstract TWIDot getOppositeAnchorDot(TWIDot dot);
 }

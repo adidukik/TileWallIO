@@ -22,6 +22,12 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
         return this.mPatterns;
     }
 
+    private ArrayList<TWIPattern> mSelectedPatterns = null;
+
+    public ArrayList<TWIPattern> getSelectedPatterns() {
+        return this.mSelectedPatterns;
+    }
+
     private ArrayList<TWIDot> mAnchorDots = null;
 
     public ArrayList<TWIDot> getAnchorDots() {
@@ -52,6 +58,7 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
     // constructor
     public TWITile() {
         this.mPatterns = new ArrayList<>();
+        this.mSelectedPatterns = new ArrayList<>();
         this.mAnchorDots = new ArrayList<>();
         this.mIsEdgeVisible = true;
     }
@@ -78,6 +85,14 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
         }
 
         for (TWIPattern pattern : this.mPatterns) {
+            // TODO: make the selected color revertible.
+            pattern.getGeom().setStrokeColor(Color.RED);
+            pattern.render(g2, origin);
+        }
+
+        for (TWIPattern pattern : this.mSelectedPatterns) {
+            // TODO: make the selected color revertible.
+            pattern.getGeom().setStrokeColor(Color.GREEN);
             pattern.render(g2, origin);
         }
     }

@@ -99,6 +99,13 @@ public class TWIDefaultScenario extends XScenario {
                         TWIDefaultScenario.ReadyScene.getSingleton()
                     );
                 }
+                case KeyEvent.VK_SHIFT -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        TWISelectScenario.SelectReadyScene.getSingleton(),
+                        this
+                    );
+                }
             }
         }
 
@@ -177,7 +184,20 @@ public class TWIDefaultScenario extends XScenario {
         public void handleMouseRelease(MouseEvent e) {}
 
         @Override
-        public void handleKeyDown(KeyEvent e) {}
+        public void handleKeyDown(KeyEvent e) {
+            TWI twi = (TWI) this.getScenario().getApp();
+
+            int code = e.getKeyCode();
+            switch (code) {
+                case KeyEvent.VK_SHIFT -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        TWISelectScenario.SelectReadyScene.getSingleton(),
+                        this
+                    );
+                }
+            }
+        }
 
         @Override
         public void handleKeyUp(KeyEvent e) {
