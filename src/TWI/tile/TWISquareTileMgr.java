@@ -1,10 +1,8 @@
 package TWI.tile;
 
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-
 import TWI.TWI;
 import TWI.geom.TWIDot;
+import TWI.geom.TWIRectangle;
 
 public class TWISquareTileMgr extends TWITileMgr {
     // constants
@@ -15,6 +13,8 @@ public class TWISquareTileMgr extends TWITileMgr {
     public TWISquareTileMgr(TWI twi) {
         super(twi);
         this.mTile = new TWISquareTile(
+            TWITileMgr.X_DEFAULT,
+            TWITileMgr.Y_DEFAULT,
             TWISquareTileMgr.WIDTH_DAFAULT,
             TWISquareTileMgr.HEIGHT_DEFAULT
         );
@@ -27,64 +27,54 @@ public class TWISquareTileMgr extends TWITileMgr {
             return null;
         }
 
-        Point2D pt = dot.getPoint();
-
         for (TWIDot anchorDot : this.mTile.getAnchorDots()) {
-            if (anchorDot.getPoint().distance(pt) < TWITileMgr.SNAP_RADIUS) {
+            if (anchorDot.distance(dot) < TWITileMgr.SNAP_RADIUS) {
                 return anchorDot;
             }
         }
 
-        Rectangle2D rect = (Rectangle2D) this.mTile.getTileGeom().getShape();
+        TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
         Double tileHeight = rect.getHeight();
         Double tileWidth = rect.getWidth();
 
-        Point2D pointToAdd;
-        TWIDot dotToAdd;
         if (isDotOnTopEdge(dot)) {
-            pointToAdd = new Point2D.Double(
-                pt.getX(),
+            dot = new TWIDot(
+                dot.getX(),
                 rect.getY()
             );
 
-            dotToAdd = new TWIDot(pointToAdd);
-
         } else if (isDotOnBottomEdge(dot)) {
-            pointToAdd = new Point2D.Double(
-                pt.getX(),
+            dot = new TWIDot(
+                dot.getX(),
                 rect.getY() + tileHeight
             );
 
-            dotToAdd = new TWIDot(pointToAdd);
-
         } else if (isDotOnLeftEdge(dot)) {
-            pointToAdd = new Point2D.Double(
+            dot = new TWIDot(
                 rect.getX(),
-                pt.getY()
+                dot.getY()
             );
-
-            dotToAdd = new TWIDot(pointToAdd);
 
         } else if (isDotOnRightEdge(dot)) {
-            pointToAdd = new Point2D.Double(
+            dot = new TWIDot(
                 rect.getX() + tileWidth,
-                pt.getY()
+                dot.getY()
             );
-
-            dotToAdd = new TWIDot(pointToAdd);
-
-        } else {
-            dotToAdd = dot;
         }
 
-        this.mTile.addAnchorDot(dotToAdd);
+        this.mTile.addAnchorDot(dot);
 
         if (this.isDotOnEdge(dot)) {
-            TWIDot oppositePoint = getOppositeAnchorDot(dotToAdd);
+            TWIDot oppositePoint = getOppositeAnchorDot(dot);
             this.mTile.addAnchorDot(oppositePoint);
         }
 
-        return dotToAdd;
+        return dot;
+    }
+
+    @Override
+    protected boolean isDotInside(TWIDot dot) {
+        return ((TWIRectangle) this.mTile.getTileGeom()).contains(dot);
     }
 
     @Override
@@ -99,44 +89,38 @@ public class TWISquareTileMgr extends TWITileMgr {
     protected TWIDot getOppositeAnchorDot(TWIDot dot) {
         assert (isDotOnEdge(dot));
 
-        Point2D pt = dot.getPoint();
-
-        Rectangle2D rect = (Rectangle2D) this.mTile.getTileGeom().getShape();
+        TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
         Double tileHeight = rect.getHeight();
         Double tileWidth = rect.getWidth();
 
-        Point2D oppositePoint;
         if (isDotOnTopEdge(dot)) {
-            oppositePoint = new Point2D.Double(
-                pt.getX(),
+            return new TWIDot(
+                dot.getX(),
                 rect.getY() + tileHeight
             );
 
         } else if (isDotOnBottomEdge(dot)) {
-            oppositePoint = new Point2D.Double(
-                pt.getX(),
+            return new TWIDot(
+                dot.getX(),
                 rect.getY()
             );
+
         } else if (isDotOnLeftEdge(dot)) {
-            oppositePoint = new Point2D.Double(
+            return new TWIDot(
                 rect.getX() + tileWidth,
-                pt.getY()
+                dot.getY()
             );
 
         } else {
-            oppositePoint = new Point2D.Double(
+            return new TWIDot(
                 rect.getX(),
-                pt.getY()
+                dot.getY()
             );
         }
-
-        TWIDot oppositeDot = new TWIDot(oppositePoint);
-        return oppositeDot;
     }
 
     private boolean isDotOnTopEdge(TWIDot dot) {
-        Point2D pt = dot.getPoint();
-        Rectangle2D rect = (Rectangle2D) this.mTile.getTileGeom().getShape();
+        TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
         Double y = rect.getY();
 
         Double range;
@@ -147,7 +131,7 @@ public class TWISquareTileMgr extends TWITileMgr {
             range = TWITileMgr.CALCULATION_TOLERANCE;
         }
 
-        if ((y - range) <= pt.getY() && pt.getY() <= (y + range)) {
+        if ((y - range) <= dot.getY() && dot.getY() <= (y + range)) {
             return true;
         } else {
             return false;
@@ -155,8 +139,7 @@ public class TWISquareTileMgr extends TWITileMgr {
     }
 
     private boolean isDotOnBottomEdge(TWIDot dot) {
-        Point2D pt = dot.getPoint();
-        Rectangle2D rect = (Rectangle2D) this.mTile.getTileGeom().getShape();
+        TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
         Double y = rect.getY() + rect.getHeight();
 
         Double range;
@@ -168,7 +151,7 @@ public class TWISquareTileMgr extends TWITileMgr {
         }
 
 
-        if ((y - range) <= pt.getY() && pt.getY() <= (y + range)) {
+        if ((y - range) <= dot.getY() && dot.getY() <= (y + range)) {
             return true;
         } else {
             return false;
@@ -176,8 +159,7 @@ public class TWISquareTileMgr extends TWITileMgr {
     }
 
     private boolean isDotOnLeftEdge(TWIDot dot) {
-        Point2D pt = dot.getPoint();
-        Rectangle2D rect = (Rectangle2D) this.mTile.getTileGeom().getShape();
+        TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
         Double x = rect.getX();
 
         Double range;
@@ -189,7 +171,7 @@ public class TWISquareTileMgr extends TWITileMgr {
         }
 
 
-        if ((x - range) <= pt.getX() && pt.getX() <= (x + range)) {
+        if ((x - range) <= dot.getX() && dot.getX() <= (x + range)) {
             return true;
         } else {
             return false;
@@ -197,8 +179,7 @@ public class TWISquareTileMgr extends TWITileMgr {
     }
 
     private boolean isDotOnRightEdge(TWIDot dot) {
-        Point2D pt = dot.getPoint();
-        Rectangle2D rect = (Rectangle2D) this.mTile.getTileGeom().getShape();
+        TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
         Double x = rect.getX() + rect.getWidth();
 
         Double range;
@@ -210,7 +191,7 @@ public class TWISquareTileMgr extends TWITileMgr {
         }
 
 
-        if ((x - range) <= pt.getX() && pt.getX() <= (x + range)) {
+        if ((x - range) <= dot.getX() && dot.getX() <= (x + range)) {
             return true;
         } else {
             return false;

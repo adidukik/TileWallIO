@@ -1,6 +1,5 @@
 package TWI.cmd;
 
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import TWI.TWI;
@@ -69,9 +68,7 @@ public class TWICmdToUpdateSelectedPatterns extends XLoggableCmd {
 
         assert(selectionBox != null);
 
-        Rectangle2D rect = (Rectangle2D) selectionBox.getRectangle().getShape();
-
-        return rect.intersects(pattern.getGeom().getShape().getBounds2D());
+        return selectionBox.intersects(pattern.getGeom().getBounds());
     }
 
     @Override
