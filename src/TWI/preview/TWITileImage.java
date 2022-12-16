@@ -47,7 +47,8 @@ public abstract class TWITileImage {
         ArrayList<TWIPattern> patterns = this.mTile.getPatterns();
 
         for (TWIPattern p : patterns) {
-            p.render(g2, new Point(0, 0));
+            // TODO: Investigate what cause this origin shift
+            p.render(g2, new Point(-100, -100));
         }
 
         g2.dispose();
