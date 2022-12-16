@@ -14,6 +14,8 @@ import TWI.geom.TWIGeom;
 public abstract class TWITile implements TWIRenderable, TWIClickable {
     // constants
     protected static final Color COLOR_TILE_DEFAULT = Color.BLACK;
+    protected static final Color TILE_FILL_COLOR_DEFAULT =
+        new Color(0, 0, 0, 0);
 
     // fields
     private ArrayList<TWIPattern> mPatterns = null;
@@ -95,10 +97,5 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
             pattern.getGeom().setStrokeColor(Color.GREEN);
             pattern.render(g2, origin);
         }
-    }
-
-    @Override
-    public boolean isMousePointInside(Point pt) {
-        return this.getTileGeom().getShape().contains(pt);
     }
 }

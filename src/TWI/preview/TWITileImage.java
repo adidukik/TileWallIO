@@ -24,10 +24,10 @@ public abstract class TWITileImage {
         this.mTile = tile;
 
         int image_width = (int)
-            tile.getTileGeom().getShape().getBounds().getWidth();
+            tile.getTileGeom().getBounds().getWidth();
 
         int image_height = (int)
-            tile.getTileGeom().getShape().getBounds().getHeight();
+            tile.getTileGeom().getBounds().getHeight();
 
         this.mImage = new BufferedImage(
             image_width,

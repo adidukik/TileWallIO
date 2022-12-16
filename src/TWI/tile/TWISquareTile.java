@@ -1,29 +1,33 @@
 package TWI.tile;
 
-import java.awt.geom.Rectangle2D;
+import java.awt.Point;
 
 import TWI.geom.TWIGeom;
 import TWI.geom.TWIRectangle;
 
 public class TWISquareTile extends TWITile {
     // fields
-    private TWIGeom mTileGeom = null;
+    private TWIRectangle mRect = null;
 
     @Override
     public TWIGeom getTileGeom() {
-        return this.mTileGeom;
+        return this.mRect;
     }
 
     // constructor
-    public TWISquareTile(Double w, Double h) {
+    public TWISquareTile(Double x, Double y, Double w, Double h) {
         super();
 
-        Rectangle2D rect = new Rectangle2D.Double(
-            0, 0, w, h
+        this.mRect = new TWIRectangle(
+            x, y, w, h
         );
 
-        this.mTileGeom = new TWIRectangle(rect);
+        this.mRect.setStrokeColor(TWITile.COLOR_TILE_DEFAULT);
+        this.mRect.setFillColor(TWITile.TILE_FILL_COLOR_DEFAULT);
+    }
 
-        this.mTileGeom.setStrokeColor(TWITile.COLOR_TILE_DEFAULT);
+    @Override
+    public boolean isMousePointInside(Point pt) {
+        return this.mRect.contains(pt);
     }
 }

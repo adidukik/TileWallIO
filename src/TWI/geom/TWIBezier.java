@@ -1,90 +1,82 @@
 package TWI.geom;
 
-import java.awt.Shape;
-import java.awt.geom.AffineTransform;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.geom.CubicCurve2D;
 
-public class TWIBezier extends TWIGeom {
+
+public class TWIBezier extends CubicCurve2D.Double implements TWIGeom {
     // fields
-    private CubicCurve2D mCurve;
+    private Color mStrokeColor = null;
 
     @Override
-    public Shape getShape() {
-        return this.mCurve;
+    public Color getStrokeColor() {
+        return this.mStrokeColor;
+    }
+
+    @Override
+    public void setStrokeColor(Color color) {
+        this.mStrokeColor = color;
     }
 
 
-    private TWIDot mStartDot = null;
+    private Color mFillColor = null;
 
-    public TWIDot getStartDot() {
-        return this.mStartDot;
+    @Override
+    public Color getFillColor() {
+        return this.mFillColor;
     }
 
-    public void setStartDot(TWIDot dot) {
-        this.mStartDot = dot;
-        this.updateCurve();
-    }
-
-
-    private TWIDot mEndDot = null;
-
-    public TWIDot getEndDot() {
-        return this.mEndDot;
-    }
-
-    public void setEndDot(TWIDot dot) {
-        this.mEndDot = dot;
-        this.updateCurve();
+    @Override
+    public void setFillColor(Color color) {
+        this.mFillColor = color;
     }
 
 
-    private TWIDot mStartControlDot = null;
+    private Stroke mStroke = null;
 
-    public TWIDot getStartControlDot() {
-        return this.mStartControlDot;
+    @Override
+    public Stroke getStroke() {
+        return this.mStroke;
     }
 
-    public void setStartControlDot(TWIDot dot) {
-        this.mStartControlDot = dot;
-        this.updateCurve();
+    @Override
+    public void setStroke(Stroke stroke) {
+        this.mStroke = stroke;
     }
-
-
-    private TWIDot mEndControlDot = null;
-
-    public TWIDot getEndControlDot() {
-        return this.mEndControlDot;
-    }
-
-    public void setEndControlDot(TWIDot dot) {
-        this.mEndControlDot = dot;
-        this.updateCurve();
-    }
-
 
     // constructor
-    public TWIBezier(CubicCurve2D curve) {
-        this.mStartDot = new TWIDot(curve.getP1());
-        this.mEndDot = new TWIDot(curve.getP2());
-        this.mStartControlDot = new TWIDot(curve.getCtrlP1());
-        this.mEndControlDot = new TWIDot(curve.getCtrlP2());
-
-        this.mCurve = curve;
-    }
-
-
-    // methods
-    private void updateCurve() {
-        this.mCurve.setCurve(
-            this.mStartDot.getPoint(),
-            this.mEndDot.getPoint(),
-            this.mStartControlDot.getPoint(),
-            this.mEndControlDot.getPoint()
+    public TWIBezier(
+        double x1, double y1,
+        double ctrlx1, double ctrly1,
+        double ctrlx2, double ctrly2,
+        double x2, double y2
+    ) {
+        super(
+            x1, y1,
+            ctrlx1, ctrly1,
+            ctrlx2, ctrly2,
+            x2, y2
         );
+
+        this.mStrokeColor = TWIGeom.COLOR_DEFAULT;
+        this.mFillColor = TWIGeom.COLOR_FILL_DEFAULT;
+        this.mStroke = TWIGeom.STROKE_DEFAULT;
     }
 
+    // interface methods
     @Override
-    public void applyTransform(AffineTransform t) {
-        this.mCurve = (CubicCurve2D) t.createTransformedShape(mCurve);
+    public void render(Graphics2D g2, Point origin) {
+        g2.translate(origin.x, origin.y);
+
+        g2.setColor(this.mStrokeColor);
+        g2.setStroke(this.mStroke);
+        g2.draw(this);
+        g2.setColor(this.mFillColor);
+        g2.fill(this);
+
+        g2.translate(-origin.x, -origin.y);
     }
 }

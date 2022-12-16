@@ -3,8 +3,6 @@ package TWI.tile;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 
 import TWI.TWI;
 import TWI.TWIPattern;
@@ -62,15 +60,11 @@ public abstract class TWITileMgr implements TWIRenderable {
 
     // abstract methods
     public abstract TWIDot addDot(TWIDot dot);
+    protected abstract boolean isDotInside(TWIDot dot);
     protected abstract boolean isDotOnEdge(TWIDot dot);
     protected abstract TWIDot getOppositeAnchorDot(TWIDot dot);
 
     // methods
-    protected boolean isDotInside(TWIDot dot) {
-        Point2D pt = dot.getPoint();
-        return this.mTile.getTileGeom().getShape().contains(pt);
-    }
-
     public void addPattern(TWIGeom geom) {
         TWIPattern p = new TWIPattern(geom);
         this.mTile.getPatterns().add(p);
@@ -113,11 +107,7 @@ public abstract class TWITileMgr implements TWIRenderable {
         double bgW = this.mTWI.getCanvas2d().getWidth() / 2;
         double bgH = this.mTWI.getCanvas2d().getHeight();
 
-        TWIRectangle bg = new TWIRectangle(
-            new Rectangle2D.Double(
-                0, 0, bgW, bgH
-            )
-        );
+        TWIRectangle bg = new TWIRectangle(0, 0, bgW, bgH);
 
         bg.setStrokeColor(TWITileMgr.BG_STROKE_COLOR);
         bg.setFillColor(TWITileMgr.BG_FILL_COLOR);
