@@ -73,6 +73,18 @@ public abstract class TWITileMgr implements TWIRenderable {
         this.mTWI.getPreviewMgr().updateTileImage();
     }
 
+    public void removePattern(TWIPattern pattern) {
+        this.mTile.getPatterns().remove(pattern);
+
+        this.mTWI.getPreviewMgr().updateTileImage();
+    }
+
+    public void removeAllPattern() {
+        this.mTile.getPatterns().clear();
+
+        this.mTWI.getPreviewMgr().updateTileImage();
+    }
+
     @Override
     public void render(Graphics2D g2, Point origin) {
         double bgW = this.mTWI.getCanvas2d().getWidth() / 2;

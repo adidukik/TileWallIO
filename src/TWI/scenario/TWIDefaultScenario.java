@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 import TWI.TWI;
 import TWI.cmd.TWICmdToCreateLine;
+import TWI.cmd.TWICmdToRemoveAllPatterns;
 import TWI.cmd.TWICmdToTurnSnapOnOff;
 import x.XApp;
 import x.XCmdToChangeScene;
@@ -102,7 +103,16 @@ public class TWIDefaultScenario extends XScenario {
         }
 
         @Override
-        public void handleKeyUp(KeyEvent e) {}
+        public void handleKeyUp(KeyEvent e) {
+            TWI twi = (TWI) this.getScenario().getApp();
+
+            int code = e.getKeyCode();
+            switch (code) {
+                case KeyEvent.VK_0 -> {
+                    TWICmdToRemoveAllPatterns.execute(twi);
+                }
+            }
+        }
 
         @Override
         public void updateSupportObjects(Graphics2D g2) {}
@@ -183,6 +193,9 @@ public class TWIDefaultScenario extends XScenario {
                         TWIDefaultScenario.ReadyScene.getSingleton(),
                         null
                     );
+                }
+                case KeyEvent.VK_0 -> {
+                    TWICmdToRemoveAllPatterns.execute(twi);
                 }
             }
         }
