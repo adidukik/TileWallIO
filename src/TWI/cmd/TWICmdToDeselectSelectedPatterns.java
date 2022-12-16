@@ -5,8 +5,6 @@ import x.XApp;
 import x.XLoggableCmd;
 
 public class TWICmdToDeselectSelectedPatterns extends XLoggableCmd {
-    // fields
-
     // private constructor
     private TWICmdToDeselectSelectedPatterns(XApp app) {
         super(app);

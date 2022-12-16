@@ -15,6 +15,7 @@ public class TWIDot extends Point2D.Double implements TWIGeom {
     // fields
     private Ellipse2D mCircle = null;
 
+
     private Color mStrokeColor = null;
 
     @Override

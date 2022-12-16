@@ -5,8 +5,6 @@ import x.XApp;
 import x.XLoggableCmd;
 
 public class TWICmdToDestroySelectionBox extends XLoggableCmd {
-    // fields
-
     // private constructor
     private TWICmdToDestroySelectionBox(XApp app) {
         super(app);
@@ -29,7 +27,6 @@ public class TWICmdToDestroySelectionBox extends XLoggableCmd {
         StringBuffer sb = new StringBuffer();
 
         sb.append(this.getClass().getSimpleName());
-        // sb.append("\t");
 
         return sb.toString();
     }

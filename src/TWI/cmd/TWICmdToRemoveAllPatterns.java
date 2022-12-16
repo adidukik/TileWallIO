@@ -5,8 +5,6 @@ import x.XApp;
 import x.XLoggableCmd;
 
 public class TWICmdToRemoveAllPatterns extends XLoggableCmd {
-    // fields
-
     // private constructor
     private TWICmdToRemoveAllPatterns(XApp app) {
         super(app);

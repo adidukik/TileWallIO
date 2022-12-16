@@ -32,7 +32,6 @@ public class TWICmdToRegisterLine extends XLoggableCmd {
         StringBuffer sb = new StringBuffer();
 
         sb.append(this.getClass().getSimpleName());
-        // sb.append("\t");
 
         return sb.toString();
     }

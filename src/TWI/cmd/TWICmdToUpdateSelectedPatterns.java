@@ -11,8 +11,6 @@ import x.XApp;
 import x.XLoggableCmd;
 
 public class TWICmdToUpdateSelectedPatterns extends XLoggableCmd {
-    // fields
-
     // private constructor
     private TWICmdToUpdateSelectedPatterns(XApp app) {
         super(app);
@@ -25,22 +23,6 @@ public class TWICmdToUpdateSelectedPatterns extends XLoggableCmd {
 
     @Override
     protected boolean defineCmd() {
-        // JSI jsi = (JSI) this.mApp;
-        // JSIPtCurveMgr ptCurveManager = jsi.getPtCurveMgr();
-        // ArrayList<JSIPtCurve> ptCurves = ptCurveManager.getPtCurves();
-        // ArrayList<JSIPtCurve> selectedPtCurves =
-        //     ptCurveManager.getSelectedPtCurves();
-        // ArrayList<JSIPtCurve> newlySelectedPtCurves = new ArrayList<>();
-
-        // for (JSIPtCurve ptCurve : ptCurves) {
-        //     if (isPtCurveInsideSelectionBox(ptCurve)) {
-        //         newlySelectedPtCurves.add(ptCurve);
-        //     }
-        // }
-
-        // ptCurves.removeAll(newlySelectedPtCurves);
-        // selectedPtCurves.addAll(newlySelectedPtCurves);
-
         TWI twi = (TWI) this.mApp;
         TWITileMgr tileMgr = twi.getTileMgr();
         ArrayList<TWIPattern> patterns = tileMgr.getTile().getPatterns();
@@ -76,7 +58,6 @@ public class TWICmdToUpdateSelectedPatterns extends XLoggableCmd {
         StringBuffer sb = new StringBuffer();
 
         sb.append(this.getClass().getSimpleName());
-        // sb.append("\t");
 
         return sb.toString();
     }

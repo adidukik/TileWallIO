@@ -5,8 +5,6 @@ import x.XApp;
 import x.XLoggableCmd;
 
 public class TWICmdToRemoveSelectedPattern extends XLoggableCmd {
-    // fields
-
     // private constructor
     private TWICmdToRemoveSelectedPattern(XApp app) {
         super(app);
@@ -31,7 +29,6 @@ public class TWICmdToRemoveSelectedPattern extends XLoggableCmd {
         StringBuffer sb = new StringBuffer();
 
         sb.append(this.getClass().getSimpleName());
-        // sb.append("\t");
 
         return sb.toString();
     }
