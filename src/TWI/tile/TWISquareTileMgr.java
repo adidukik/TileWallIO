@@ -14,8 +14,6 @@ public class TWISquareTileMgr extends TWITileMgr {
     public TWISquareTileMgr(TWI twi) {
         super(twi);
         this.mTile = new TWISquareTile(
-            TWITileMgr.X_DEFAULT,
-            TWITileMgr.Y_DEFAULT,
             TWISquareTileMgr.WIDTH_DAFAULT,
             TWISquareTileMgr.HEIGHT_DEFAULT
         );

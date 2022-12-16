@@ -15,11 +15,11 @@ public class TWISquareTile extends TWITile {
     }
 
     // constructor
-    public TWISquareTile(Double x, Double y, Double w, Double h) {
+    public TWISquareTile(Double w, Double h) {
         super();
 
         this.mRect = new TWIRectangle(
-            x, y, w, h
+            0, 0, w, h
         );
 
         this.mRect.setStrokeColor(TWITile.COLOR_TILE_DEFAULT);

@@ -1,5 +1,6 @@
 package TWI.cmd;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import TWI.TWI;
@@ -45,12 +46,20 @@ public class TWICmdToUpdateSelectedPatterns extends XLoggableCmd {
     }
 
     private boolean isPatternInsideSelectionBox(TWIPattern pattern) {
+        TWI twi = (TWI) this.mApp;
         TWISelectionBox selectionBox =
             TWISelectScenario.getSingleton().getSelectionBox();
 
         assert(selectionBox != null);
 
-        return selectionBox.intersects(pattern.getBounds());
+        Rectangle2D worldBox = new Rectangle2D.Double(
+            selectionBox.getX() - twi.getTileMgr().getTileOrigin().getX(),
+            selectionBox.getY() - twi.getTileMgr().getTileOrigin().getY(),
+            selectionBox.getWidth(),
+            selectionBox.getHeight()
+        );
+
+        return worldBox.intersects(pattern.getBounds());
     }
 
     @Override
