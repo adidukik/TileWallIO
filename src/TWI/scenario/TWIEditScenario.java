@@ -116,10 +116,16 @@ public class TWIEditScenario extends XScenario {
         }
 
         @Override
-        public void getReady() {}
+        public void getReady() {
+            TWI twi = (TWI) this.mScenario.getApp();
+            twi.getTileMgr().setIsSnapOn(true);
+        }
 
         @Override
-        public void wrapUp() {}
+        public void wrapUp() {
+            TWI twi = (TWI) this.mScenario.getApp();
+            twi.getTileMgr().setIsSnapOn(false);
+        }
     }
 
     public static class AnchorDotDragScene extends TWIScene {
@@ -200,9 +206,15 @@ public class TWIEditScenario extends XScenario {
         }
 
         @Override
-        public void getReady() {}
+        public void getReady() {
+            TWI twi = (TWI) this.mScenario.getApp();
+            twi.getTileMgr().setIsSnapOn(true);
+        }
 
         @Override
-        public void wrapUp() {}
+        public void wrapUp() {
+            TWI twi = (TWI) this.mScenario.getApp();
+            twi.getTileMgr().setIsSnapOn(false);
+        }
     }
 }
