@@ -1,7 +1,5 @@
 package TWI.tile;
 
-import java.awt.Point;
-
 import TWI.geom.TWIGeom;
 import TWI.geom.TWIRectangle;
 
@@ -22,10 +20,5 @@ public class TWISquareTile extends TWITile {
 
         this.mRect.setStrokeColor(TWITile.COLOR_TILE_DEFAULT);
         this.mRect.setFillColor(TWITile.TILE_FILL_COLOR_DEFAULT);
-    }
-
-    @Override
-    public boolean isMousePointInside(Point pt) {
-        return this.mRect.contains(pt);
     }
 }

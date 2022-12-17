@@ -5,12 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import TWI.TWIClickable;
 import TWI.TWIRenderable;
 import TWI.geom.TWIGeom;
 import TWI.pattern.TWIPattern;
 
-public abstract class TWITile implements TWIRenderable, TWIClickable {
+public abstract class TWITile implements TWIRenderable {
     // constants
     protected static final Color COLOR_TILE_DEFAULT = Color.BLACK;
     protected static final Color TILE_FILL_COLOR_DEFAULT = Color.WHITE;
