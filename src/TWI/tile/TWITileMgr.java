@@ -29,11 +29,13 @@ public abstract class TWITileMgr implements TWIRenderable {
     // fields
     private TWI mTWI = null;
 
+
     private Point mTileOrigin = null;
 
     public Point getTileOrigin() {
         return this.mTileOrigin;
     }
+
 
     protected boolean mIsSnapOn = false;
 
@@ -45,11 +47,15 @@ public abstract class TWITileMgr implements TWIRenderable {
         this.mIsSnapOn = b;
     }
 
+
     protected TWITile mTile = null;
 
     public TWITile getTile() {
         return this.mTile;
     }
+
+
+    private TWIAnchorDot mSelectAnchorDot = null;
 
     // constructor
     protected TWITileMgr(TWI twi) {
@@ -134,6 +140,62 @@ public abstract class TWITileMgr implements TWIRenderable {
 
             this.mTile.getAnchorDots().remove(anchorDot);
         }
+    }
+
+    public boolean selectAnchorDot(Point pt) {
+        assert(this.mSelectAnchorDot == null);
+
+        Point tilePt = new Point(
+            pt.x - this.getTileOrigin().x,
+            pt.y - this.getTileOrigin().y
+        );
+
+        for (TWIAnchorDot anchorDot : this.mTile.getAnchorDots()) {
+            if (
+                anchorDot.getIsClickable() &&
+                anchorDot.distance(tilePt) < TWITileMgr.CALCULATION_TOLERANCE
+            ) {
+                this.mSelectAnchorDot = anchorDot;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean moveSelectedAnchorDotTo(Point pt) {
+        assert(this.mSelectAnchorDot != null);
+
+        if (this.mSelectAnchorDot.getIsSnappable()) {
+            TWIAnchorDot newAnchorDot = new TWIAnchorDot(
+                pt.x - this.getTileOrigin().x,
+                pt.y - this.getTileOrigin().y,
+                this.mSelectAnchorDot.getSnappableFlag(),
+                this.mSelectAnchorDot.getClickableFlag()
+            );
+
+            newAnchorDot = this.calcValidDot(newAnchorDot);
+
+            if (newAnchorDot == null) return false;
+
+            this.mSelectAnchorDot.setLocation(
+                newAnchorDot.getX(),
+                newAnchorDot.getY()
+            );
+
+        } else {
+            this.mSelectAnchorDot.setLocation(
+                pt.getX(), pt.getY()
+            );
+        }
+
+        for (TWIPattern pattern : this.mTile.getPatterns()) {
+            pattern.update();
+        }
+
+        this.mTWI.getPreviewMgr().updateTileImage();
+
+        return true;
     }
 
     // interface methods

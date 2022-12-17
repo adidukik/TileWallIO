@@ -107,6 +107,13 @@ public class TWIDefaultScenario extends XScenario {
                         this
                     );
                 }
+                case KeyEvent.VK_E -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        TWIEditScenario.EditReadyScene.getSingleton(),
+                        this
+                    );
+                }
             }
         }
 
@@ -195,6 +202,13 @@ public class TWIDefaultScenario extends XScenario {
                     XCmdToChangeScene.execute(
                         twi,
                         TWISelectScenario.SelectReadyScene.getSingleton(),
+                        this
+                    );
+                }
+                case KeyEvent.VK_E -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        TWIEditScenario.EditReadyScene.getSingleton(),
                         this
                     );
                 }
