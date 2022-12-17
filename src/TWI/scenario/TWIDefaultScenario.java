@@ -114,6 +114,13 @@ public class TWIDefaultScenario extends XScenario {
                         this
                     );
                 }
+                case KeyEvent.VK_P -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        TWIPreviewScenario.PreviewScene.getSingleton(),
+                        this
+                    );
+                }
             }
         }
 

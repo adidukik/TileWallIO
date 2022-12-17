@@ -33,7 +33,10 @@ public class TWIPreviewScenario extends XScenario {
 
     @Override
     protected void addScenes() {
-        this.addScene(TWIPreviewScenario.PreviewCtrlScene.createSingleton(this));
+        this.addScene(TWIPreviewScenario.PreviewScene.createSingleton(this));
+        this.addScene(
+            TWIPreviewScenario.PreviewCtrlScene.createSingleton(this)
+        );
     }
 
     // scenes
@@ -77,6 +80,13 @@ public class TWIPreviewScenario extends XScenario {
                     XCmdToChangeScene.execute(
                         twi,
                         TWIPreviewScenario.PreviewCtrlScene.getSingleton(),
+                        this
+                    );
+                }
+                case KeyEvent.VK_P -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        TWIDefaultScenario.ReadyScene.getSingleton(),
                         this
                     );
                 }
