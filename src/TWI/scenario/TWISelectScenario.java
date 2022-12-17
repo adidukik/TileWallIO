@@ -238,6 +238,7 @@ public class TWISelectScenario extends XScenario {
             TWISelectScenario.getSingleton().drawSelectionBox(
                 g2, new Point(0, 0)
             );
+            twi.getGeomMgr().renderStrokePreview(g2);
         }
 
         @Override
@@ -337,6 +338,7 @@ public class TWISelectScenario extends XScenario {
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
             twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
+            twi.getGeomMgr().renderStrokePreview(g2);
         }
 
         @Override

@@ -113,6 +113,7 @@ public class TWIEditScenario extends XScenario {
             TWI twi = (TWI) this.mScenario.getApp();
             twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
             twi.getTileMgr().renderController(g2, new Point(0, 0));
+            twi.getGeomMgr().renderStrokePreview(g2);
         }
 
         @Override
@@ -203,6 +204,7 @@ public class TWIEditScenario extends XScenario {
             TWI twi = (TWI) this.mScenario.getApp();
             twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
             twi.getTileMgr().renderController(g2, new Point(0, 0));
+            twi.getGeomMgr().renderStrokePreview(g2);
         }
 
         @Override

@@ -72,8 +72,6 @@ public class TWILine extends Line2D.Double implements TWIGeom {
         g2.setColor(this.mStrokeColor);
         g2.setStroke(this.mStroke);
         g2.draw(this);
-        g2.setColor(this.mFillColor);
-        g2.fill(this);
 
         g2.translate(-origin.x, -origin.y);
     }

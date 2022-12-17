@@ -148,7 +148,7 @@ public abstract class TWITileMgr {
 
     private void removeAnchorDots(TWIPattern pattern) {
         for (TWIAnchorDot anchorDot : pattern.getAnchorDots()) {
-            this.removeOppositeAnchorDotIfAny(this.mSelectAnchorDot);
+            this.removeOppositeAnchorDotIfAny(anchorDot);
 
             this.mAnchorDots.remove(anchorDot);
         }

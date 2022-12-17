@@ -29,7 +29,7 @@ public class TWIToolMgr {
     // constructor
     public TWIToolMgr(TWI twi) {
         this.mTwi = twi;
-        this.mCurTool = Tool.LINE;
+        this.mCurTool = Tool.BEZIER;
     }
 
     // methods

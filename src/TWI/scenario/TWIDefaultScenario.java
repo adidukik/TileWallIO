@@ -7,6 +7,8 @@ import java.awt.event.MouseEvent;
 
 import TWI.TWI;
 import TWI.cmd.TWICmdToCreateGeom;
+import TWI.cmd.TWICmdToDecreaseDrawStrokeWidth;
+import TWI.cmd.TWICmdToIncreaseDrawStrokeWidth;
 import TWI.cmd.TWICmdToRemoveAllPatterns;
 import TWI.cmd.TWICmdToSwitchToNextTool;
 import TWI.cmd.TWICmdToSwitchToPrevTool;
@@ -102,12 +104,6 @@ public class TWIDefaultScenario extends XScenario {
                         TWIDefaultScenario.ReadyScene.getSingleton()
                     );
                 }
-                case KeyEvent.VK_LEFT -> {
-                    TWICmdToSwitchToPrevTool.execute(twi);
-                }
-                case KeyEvent.VK_RIGHT -> {
-                    TWICmdToSwitchToNextTool.execute(twi);
-                }
                 case KeyEvent.VK_SHIFT -> {
                     XCmdToChangeScene.execute(
                         twi,
@@ -129,6 +125,13 @@ public class TWIDefaultScenario extends XScenario {
                         this
                     );
                 }
+                case KeyEvent.VK_C -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        TWIColorScenario.ColorScene.getSingleton(),
+                        this
+                    );
+                }
             }
         }
 
@@ -140,6 +143,18 @@ public class TWIDefaultScenario extends XScenario {
             switch (code) {
                 case KeyEvent.VK_0 -> {
                     TWICmdToRemoveAllPatterns.execute(twi);
+                }
+                case KeyEvent.VK_LEFT -> {
+                    TWICmdToSwitchToPrevTool.execute(twi);
+                }
+                case KeyEvent.VK_RIGHT -> {
+                    TWICmdToSwitchToNextTool.execute(twi);
+                }
+                case KeyEvent.VK_UP -> {
+                    TWICmdToIncreaseDrawStrokeWidth.execute(twi);
+                }
+                case KeyEvent.VK_DOWN -> {
+                    TWICmdToDecreaseDrawStrokeWidth.execute(twi);
                 }
             }
         }
@@ -157,6 +172,7 @@ public class TWIDefaultScenario extends XScenario {
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
             twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
+            twi.getGeomMgr().renderStrokePreview(g2);
         }
 
         @Override
@@ -248,6 +264,18 @@ public class TWIDefaultScenario extends XScenario {
                 case KeyEvent.VK_0 -> {
                     TWICmdToRemoveAllPatterns.execute(twi);
                 }
+                case KeyEvent.VK_LEFT -> {
+                    TWICmdToSwitchToPrevTool.execute(twi);
+                }
+                case KeyEvent.VK_RIGHT -> {
+                    TWICmdToSwitchToNextTool.execute(twi);
+                }
+                case KeyEvent.VK_UP -> {
+                    TWICmdToIncreaseDrawStrokeWidth.execute(twi);
+                }
+                case KeyEvent.VK_DOWN -> {
+                    TWICmdToDecreaseDrawStrokeWidth.execute(twi);
+                }
             }
         }
 
@@ -264,6 +292,7 @@ public class TWIDefaultScenario extends XScenario {
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
             twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
+            twi.getGeomMgr().renderStrokePreview(g2);
         }
 
         @Override

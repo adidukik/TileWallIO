@@ -1,5 +1,6 @@
 package TWI.geom;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -13,10 +14,38 @@ import TWI.tile.TWITileMgr;
 
 public class TWIGeomMgr {
     // constant
-    private static final Color COLOR_CURRENT = Color.BLUE;
+    private static final Color COLOR_DEFAULT = Color.BLACK;
+    private static final float STROKE_WIDTH_DEFAULT = 3.0f;
+    private static final float STROKE_WIDTH_INCREMENT = 1.0f;
+
+    private static final int STROKE_PREVIEW_OFFSET_X = 20;
+    private static final int STROKE_PREVIEW_OFFSET_Y = 20;
 
     // fields
-    private TWI mTwi = null;
+    private TWI mTWI = null;
+
+
+    private Color mDrawColor = null;
+
+    public Color getDrawColor() {
+        return this.mDrawColor;
+    }
+
+    public void setDrawColor(Color color) {
+        this.mDrawColor = color;
+
+        this.updateStrokePreview();
+    }
+
+
+    private float mDrawStrokeWidth = Float.NaN;
+
+    public float getDrawStrokeWidth() {
+        return this.mDrawStrokeWidth;
+    }
+
+
+    private TWIEllipse mStrokePreview = null;
 
 
     private TWILine mCurScreenLine = null;
@@ -33,14 +62,31 @@ public class TWIGeomMgr {
 
     // constructor
     public TWIGeomMgr(TWI twi) {
-        this.mTwi = twi;
+        this.mTWI = twi;
+        this.mDrawColor = TWIGeomMgr.COLOR_DEFAULT;
+        this.mDrawStrokeWidth = TWIGeomMgr.STROKE_WIDTH_DEFAULT;
+
+        this.mStrokePreview = new TWIEllipse(
+            -this.mDrawStrokeWidth / 2,
+            -this.mDrawStrokeWidth / 2,
+            this.mDrawStrokeWidth,
+            this.mDrawStrokeWidth
+        );
+        this.mStrokePreview.setStroke(
+            new BasicStroke(
+                0,
+                TWIGeom.STROKE_CAP_DEFAULT,
+                TWIGeom.STROKE_JOIN_DEFAULT
+            )
+        );
+        this.mStrokePreview.setFillColor(this.mDrawColor);
     }
 
     // methods
     public boolean createLine(Point pt) {
         assert(this.mCurScreenLine == null);
 
-        TWITileMgr tileMgr = this.mTwi.getTileMgr();
+        TWITileMgr tileMgr = this.mTWI.getTileMgr();
 
         TWIDot screenDot = new TWIDot(pt.x, pt.y);
 
@@ -62,7 +108,14 @@ public class TWIGeomMgr {
 
         // (4) Create a line in the screen coordinate.
         this.mCurScreenLine = new TWILine(newScreenPt, newScreenPt);
-        this.mCurScreenLine.setStrokeColor(TWIGeomMgr.COLOR_CURRENT);
+        this.mCurScreenLine.setStrokeColor(this.mDrawColor);
+        this.mCurScreenLine.setStroke(
+            new BasicStroke(
+                this.mDrawStrokeWidth,
+                TWIGeom.STROKE_CAP_DEFAULT,
+                TWIGeom.STROKE_JOIN_DEFAULT
+            )
+        );
 
         return true;
     }
@@ -76,7 +129,7 @@ public class TWIGeomMgr {
     public boolean addLine() {
         assert (this.mCurScreenLine != null);
 
-        TWITileMgr tileMgr = this.mTwi.getTileMgr();
+        TWITileMgr tileMgr = this.mTWI.getTileMgr();
 
         // (1) Extract (screen) points from the TWILine.
         TWIDot startScreenDot = new TWIDot(
@@ -110,10 +163,20 @@ public class TWIGeomMgr {
         // (4) Add TWILine respect to the tile's local coordinate.
         TWILine geomToAdd = new TWILine(startTileDot, newEndTileDot);
 
+        geomToAdd.setStrokeColor(this.mDrawColor);
+        geomToAdd.setStroke(
+            new BasicStroke(
+                this.mDrawStrokeWidth,
+                TWIGeom.STROKE_CAP_DEFAULT,
+                TWIGeom.STROKE_JOIN_DEFAULT
+            )
+        );
+
         tileMgr.addPattern(geomToAdd);
 
         // (5) Set current line to null.
         this.mCurScreenLine = null;
+
 
         return true;
     }
@@ -128,7 +191,7 @@ public class TWIGeomMgr {
     public boolean createBezier(Point pt) {
         assert(this.mCurScreenBezier == null);
 
-        TWITileMgr tileMgr = this.mTwi.getTileMgr();
+        TWITileMgr tileMgr = this.mTWI.getTileMgr();
 
         TWIDot screenDot = new TWIDot(pt.x, pt.y);
 
@@ -157,7 +220,14 @@ public class TWIGeomMgr {
             newScreenPt.getX(), newScreenPt.getY() - 50,
             newScreenPt.getX(), newScreenPt.getY()
         );
-        this.mCurScreenBezier.setStrokeColor(TWIGeomMgr.COLOR_CURRENT);
+        this.mCurScreenBezier.setStrokeColor(this.mDrawColor);
+        this.mCurScreenBezier.setStroke(
+            new BasicStroke(
+                this.mDrawStrokeWidth,
+                TWIGeom.STROKE_CAP_DEFAULT,
+                TWIGeom.STROKE_JOIN_DEFAULT
+            )
+        );
 
         return true;
     }
@@ -176,7 +246,7 @@ public class TWIGeomMgr {
     public boolean addBezier() {
         assert (this.mCurScreenBezier != null);
 
-        TWITileMgr tileMgr = this.mTwi.getTileMgr();
+        TWITileMgr tileMgr = this.mTWI.getTileMgr();
 
         // (1) Extract (screen) points from the TWIBezier.
         TWIDot startScreenDot = new TWIDot(
@@ -235,6 +305,15 @@ public class TWIGeomMgr {
             newEndTileDot.getX(), newEndTileDot.getY()
         );
 
+        geomToAdd.setStrokeColor(this.mDrawColor);
+        geomToAdd.setStroke(
+            new BasicStroke(
+                this.mDrawStrokeWidth,
+                TWIGeom.STROKE_CAP_DEFAULT,
+                TWIGeom.STROKE_JOIN_DEFAULT
+            )
+        );
+
         tileMgr.addPattern(geomToAdd);
 
         // (5) Set current line to null.
@@ -255,7 +334,7 @@ public class TWIGeomMgr {
         SnappableFlag snappableFlag,
         ClickableFlag clickableFlag
     ) {
-        TWITileMgr tileMgr = this.mTwi.getTileMgr();
+        TWITileMgr tileMgr = this.mTWI.getTileMgr();
         int tileX = tileMgr.getTileOrigin().x;
         int tileY = tileMgr.getTileOrigin().y;
 
@@ -268,7 +347,7 @@ public class TWIGeomMgr {
     }
 
     private TWIDot calcTileDotToScreenDot(TWIDot  pt) {
-        TWITileMgr tileMgr = this.mTwi.getTileMgr();
+        TWITileMgr tileMgr = this.mTWI.getTileMgr();
         int tileX = tileMgr.getTileOrigin().x;
         int tileY = tileMgr.getTileOrigin().y;
 
@@ -276,5 +355,45 @@ public class TWIGeomMgr {
             pt.getX() + tileX,
             pt.getY() + tileY
         );
+    }
+
+
+    public void increaseDrawStrokeWidth() {
+        this.mDrawStrokeWidth += TWIGeomMgr.STROKE_WIDTH_INCREMENT;
+
+        this.updateStrokePreview();
+    }
+
+
+    public void decreaseDrawStrokeWidth() {
+        if (this.mDrawStrokeWidth > TWIGeomMgr.STROKE_WIDTH_INCREMENT) {
+            this.mDrawStrokeWidth -= TWIGeomMgr.STROKE_WIDTH_INCREMENT;
+            this.updateStrokePreview();
+        }
+    }
+
+
+    public void renderStrokePreview(Graphics2D g2) {
+        int screenH = this.mTWI.getCanvas2d().getHeight();
+
+        this.mStrokePreview.render(
+            g2,
+            new Point(
+                TWIGeomMgr.STROKE_PREVIEW_OFFSET_X,
+                screenH - TWIGeomMgr.STROKE_PREVIEW_OFFSET_Y
+            )
+        );
+    }
+
+
+    private void updateStrokePreview() {
+        this.mStrokePreview.setFrame(
+            -this.mDrawStrokeWidth / 2,
+            -this.mDrawStrokeWidth / 2,
+            this.mDrawStrokeWidth,
+            this.mDrawStrokeWidth
+        );
+
+        this.mStrokePreview.setFillColor(this.mDrawColor);
     }
 }

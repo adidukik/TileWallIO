@@ -4,10 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Stroke;
-import java.awt.geom.CubicCurve2D;
+import java.awt.geom.Ellipse2D;
 
-
-public class TWIBezier extends CubicCurve2D.Double implements TWIGeom {
+public class TWIEllipse extends Ellipse2D.Double implements TWIGeom {
     // fields
     private Color mStrokeColor = null;
 
@@ -48,19 +47,8 @@ public class TWIBezier extends CubicCurve2D.Double implements TWIGeom {
     }
 
     // constructor
-    public TWIBezier(
-        double x1, double y1,
-        double ctrlx1, double ctrly1,
-        double ctrlx2, double ctrly2,
-        double x2, double y2
-    ) {
-        super(
-            x1, y1,
-            ctrlx1, ctrly1,
-            ctrlx2, ctrly2,
-            x2, y2
-        );
-
+    public TWIEllipse(double x, double y, double w, double h) {
+        super(x, y, w, h);
         this.mStrokeColor = TWIGeom.COLOR_DEFAULT;
         this.mFillColor = TWIGeom.COLOR_FILL_DEFAULT;
         this.mStroke = TWIGeom.STROKE_DEFAULT;
@@ -74,6 +62,8 @@ public class TWIBezier extends CubicCurve2D.Double implements TWIGeom {
         g2.setColor(this.mStrokeColor);
         g2.setStroke(this.mStroke);
         g2.draw(this);
+        g2.setColor(this.mFillColor);
+        g2.fill(this);
 
         g2.translate(-origin.x, -origin.y);
     }

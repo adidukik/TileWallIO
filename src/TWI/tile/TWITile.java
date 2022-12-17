@@ -58,14 +58,10 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
         }
 
         for (TWIPattern pattern : this.mPatterns) {
-            // TODO: make the selected color revertible.
-            pattern.setStrokeColor(Color.RED);
             pattern.render(g2, origin);
         }
 
         for (TWIPattern pattern : this.mSelectedPatterns) {
-            // TODO: make the selected color revertible.
-            pattern.setStrokeColor(Color.GREEN);
             pattern.render(g2, origin);
         }
     }

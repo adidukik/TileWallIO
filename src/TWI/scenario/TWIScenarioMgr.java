@@ -17,6 +17,7 @@ public class TWIScenarioMgr extends XScenarioMgr {
         this.addScenario(TWIPreviewScenario.createSingleton(this.mApp));
         this.addScenario(TWISelectScenario.createSingleton(this.mApp));
         this.addScenario(TWIEditScenario.createSingleton(this.mApp));
+        this.addScenario(TWIColorScenario.createSingleton(this.mApp));
     }
 
     @Override
