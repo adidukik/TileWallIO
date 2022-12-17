@@ -1,5 +1,7 @@
 package TWI.pattern;
 
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import TWI.TWIAnchorDot;
@@ -31,5 +33,11 @@ public class TWIPatternDot extends TWIDot implements TWIPattern {
     public void update() {
         this.setLocation(this.mDot);
     }
+
+    @Override
+    public void renderAnchorDots(Graphics2D g2, Point origin) {}
+
+    @Override
+    public void renderController(Graphics2D g2, Point origin) {}
 
 }

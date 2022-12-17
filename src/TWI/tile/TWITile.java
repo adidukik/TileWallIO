@@ -69,4 +69,16 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
             pattern.render(g2, origin);
         }
     }
+
+    public void renderAnchorDots(Graphics2D g2, Point origin) {
+        for (TWIPattern pattern : this.mPatterns) {
+            pattern.renderAnchorDots(g2, origin);
+        }
+    }
+
+    public void renderController(Graphics2D g2, Point origin) {
+        for (TWIPattern pattern : this.mPatterns) {
+            pattern.renderController(g2, origin);
+        }
+    }
 }

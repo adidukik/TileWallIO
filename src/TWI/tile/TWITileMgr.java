@@ -248,24 +248,15 @@ public abstract class TWITileMgr {
         );
 
         this.mTile.render(g2, tilePos);
-
-        for (TWIAnchorDot anchorDot : this.mAnchorDots) {
-            if (anchorDot.getIsSnappable()) {
-                anchorDot.render(g2, tilePos);
-            }
-        }
+        this.mTile.renderAnchorDots(g2, tilePos);
     }
 
-    public void renderAdditionalAnchorDots(Graphics2D g2, Point origin) {
+    public void renderController(Graphics2D g2, Point origin) {
         Point tilePos = new Point(
             origin.x + mTileOrigin.x,
             origin.y + mTileOrigin.y
         );
 
-        for (TWIAnchorDot anchorDot : this.mAnchorDots) {
-            if (!anchorDot.getIsSnappable()) {
-                anchorDot.render(g2, tilePos);
-            }
-        }
+        this.mTile.renderController(g2, tilePos);
     }
 }

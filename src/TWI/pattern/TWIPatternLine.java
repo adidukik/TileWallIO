@@ -1,5 +1,7 @@
 package TWI.pattern;
 
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
@@ -58,4 +60,13 @@ public class TWIPatternLine extends TWILine implements TWIPattern {
     public void update() {
         this.setLine(this.mDot1, this.mDot2);
     }
+
+    @Override
+    public void renderAnchorDots(Graphics2D g2, Point origin) {
+        this.mDot1.render(g2, origin);
+        this.mDot2.render(g2, origin);
+    }
+
+    @Override
+    public void renderController(Graphics2D g2, Point origin) {}
 }

@@ -1,9 +1,12 @@
 package TWI.pattern;
 
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import TWI.TWIAnchorDot;
 import TWI.geom.TWIBezier;
+import TWI.geom.TWILine;
 
 public class TWIPatternBezier extends TWIBezier implements TWIPattern {
     // fields
@@ -14,6 +17,10 @@ public class TWIPatternBezier extends TWIBezier implements TWIPattern {
     private TWIAnchorDot mCtrlDot2 = null;
 
     private TWIAnchorDot mDot2 = null;
+
+    private TWILine mCtrlLine1 = null;
+
+    private TWILine mCtrlLine2 = null;
 
     // constructor
     public TWIPatternBezier(
@@ -44,6 +51,12 @@ public class TWIPatternBezier extends TWIBezier implements TWIPattern {
             TWIAnchorDot.SnappableFlag.SNAPPABLE,
             TWIAnchorDot.ClickableFlag.CLICKABLE
         );
+
+        this.mCtrlLine1 = new TWILine(this.mDot1, this.mCtrlDot1);
+        this.mCtrlLine1.setStrokeColor(TWIPattern.CONTROLLER_COLOR);
+
+        this.mCtrlLine2 = new TWILine(this.mDot2, this.mCtrlDot2);
+        this.mCtrlLine2.setStrokeColor(TWIPattern.CONTROLLER_COLOR);
     }
 
     // interface methods
@@ -62,6 +75,24 @@ public class TWIPatternBezier extends TWIBezier implements TWIPattern {
     @Override
     public void update() {
         this.setCurve(mDot1, mCtrlDot1, mCtrlDot2, mDot2);
+
+        this.mCtrlLine1.setLine(this.mDot1, this.mCtrlDot1);
+        this.mCtrlLine2.setLine(this.mDot2, this.mCtrlDot2);
+    }
+
+    @Override
+    public void renderAnchorDots(Graphics2D g2, Point origin) {
+        this.mDot1.render(g2, origin);
+        this.mDot2.render(g2, origin);
+    }
+
+    @Override
+    public void renderController(Graphics2D g2, Point origin) {
+        this.mCtrlLine1.render(g2, origin);
+        this.mCtrlDot1.render(g2, origin);
+
+        this.mCtrlLine2.render(g2, origin);
+        this.mCtrlDot2.render(g2, origin);
     }
 
 }
