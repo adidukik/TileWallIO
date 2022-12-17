@@ -81,7 +81,10 @@ public class TWIStartScenario extends XScenario {
         @Override
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
-            twi.getButton().render(g2, null);
+            
+            twi.getButtons().render(g2, new Point(400, 400));
+
+
         }
 
         @Override

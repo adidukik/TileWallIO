@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import TWI.geom.TWIGeomMgr;
 import TWI.preview.TWIPreviewMgr;
 import TWI.scenario.TWIScenarioMgr;
-import TWI.start.TWIStartMgr;
 import TWI.tile.TWISquareTileMgr;
 import TWI.tile.TWITileMgr;
 
@@ -59,10 +58,10 @@ public class TWI extends XApp {
     //     return this.mStartMgr;
     // }
 
-    private TWIButton mButton = null;
-
-    public TWIButton getButton() {
-        return this.mButton;
+    private TWIButton mButtons = null;
+    
+    public TWIButton getButtons() {
+        return this.mButtons;
     }
 
     private TWIPreviewMgr mPreviewMgr = null;
@@ -109,7 +108,7 @@ public class TWI extends XApp {
         this.mLogMgr = new XLogMgr();
         this.getLogMgr().setPrintOn(this.mIsDebug);
 
-        this.mButton = new TWIButton();
+        this.mButtons = new TWIButton();
 
         // connect event listeners
         this.mCanvas2D.addMouseListener(this.mEventListener);
