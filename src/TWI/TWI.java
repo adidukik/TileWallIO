@@ -5,8 +5,11 @@ import javax.swing.JFrame;
 import TWI.geom.TWIGeomMgr;
 import TWI.preview.TWIPreviewMgr;
 import TWI.scenario.TWIScenarioMgr;
+import TWI.start.TWIStartMgr;
 import TWI.tile.TWISquareTileMgr;
 import TWI.tile.TWITileMgr;
+
+import TWI.start.TWIButton;
 import x.XApp;
 import x.XLogMgr;
 
@@ -50,6 +53,18 @@ public class TWI extends XApp {
         return this.mTileMgr;
     }
 
+    //private TWIStartMgr mStartMgr = null;
+
+    // public TWIStartMgr getStartMgr() {
+    //     return this.mStartMgr;
+    // }
+
+    private TWIButton mButton = null;
+
+    public TWIButton getButton() {
+        return this.mButton;
+    }
+
     private TWIPreviewMgr mPreviewMgr = null;
 
     public TWIPreviewMgr getPreviewMgr() {
@@ -88,10 +103,13 @@ public class TWI extends XApp {
         this.mGeomMgr = new TWIGeomMgr(this);
         this.mTileMgr = new TWISquareTileMgr(this);
         this.mPreviewMgr = new TWIPreviewMgr(this);
+        //this.mStartMgr = new TWIStartMgr(this);
 
         this.mScenarioMgr = new TWIScenarioMgr(this);
         this.mLogMgr = new XLogMgr();
         this.getLogMgr().setPrintOn(this.mIsDebug);
+
+        this.mButton = new TWIButton();
 
         // connect event listeners
         this.mCanvas2D.addMouseListener(this.mEventListener);

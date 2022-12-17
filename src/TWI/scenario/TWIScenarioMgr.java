@@ -20,8 +20,9 @@ public class TWIScenarioMgr extends XScenarioMgr {
 
     @Override
     protected void setInitCurScene() {
-        this.setCurScene(TWIDefaultScenario.ReadyScene.getSingleton());
-        //later: this.setCurScene(TWIStartScenario.ReadyScene.getSingleton());
+        //this.setCurScene(TWIDefaultScenario.ReadyScene.getSingleton());
+        //later:
+        this.setCurScene(TWIStartScenario.StartScene.getSingleton());
     }
 
 }

@@ -8,14 +8,14 @@ import TWI.geom.TWIDot;
 
 public class TWISquareTileMgr extends TWITileMgr {
     // constants
-    private static final double WIDTH_DAFAULT = 400.0;
+    private static final double WIDTH_DEFAULT = 400.0;
     private static final double HEIGHT_DEFAULT = 400.0;
 
     // constructor
     public TWISquareTileMgr(TWI twi) {
         super(twi);
         this.mTile = new TWISquareTile(
-            TWISquareTileMgr.WIDTH_DAFAULT,
+            TWISquareTileMgr.WIDTH_DEFAULT,
             TWISquareTileMgr.HEIGHT_DEFAULT
         );
     }

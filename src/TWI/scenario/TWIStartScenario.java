@@ -1,9 +1,11 @@
 package TWI.scenario;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+import TWI.TWI;
 import x.XApp;
 import x.XScenario;
 
@@ -77,7 +79,10 @@ public class TWIStartScenario extends XScenario {
         public void renderWorldObjects(Graphics2D g2) {}
 
         @Override
-        public void renderScreenObjects(Graphics2D g2) {}
+        public void renderScreenObjects(Graphics2D g2) {
+            TWI twi = (TWI) this.mScenario.getApp();
+            twi.getButton().render(g2, null);
+        }
 
         @Override
         public void getReady() {}
