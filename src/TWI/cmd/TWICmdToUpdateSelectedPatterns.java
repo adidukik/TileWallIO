@@ -33,6 +33,7 @@ public class TWICmdToUpdateSelectedPatterns extends XLoggableCmd {
 
         for (TWIPattern pattern : patterns) {
             if (this.isPatternInsideSelectionBox(pattern)) {
+                pattern.setHighlightColor();
                 newlySelectedPatterns.add(pattern);
             }
         }
@@ -57,7 +58,7 @@ public class TWICmdToUpdateSelectedPatterns extends XLoggableCmd {
             selectionBox.getHeight()
         );
 
-        return worldBox.intersects(pattern.getBounds());
+        return worldBox.contains(pattern.getBounds());
     }
 
     @Override

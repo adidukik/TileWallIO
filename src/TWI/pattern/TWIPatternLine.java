@@ -1,5 +1,6 @@
 package TWI.pattern;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Point2D;
@@ -13,6 +14,10 @@ public class TWIPatternLine extends TWILine implements TWIPattern {
     private TWIAnchorDot mDot1 = null;
 
     private TWIAnchorDot mDot2 = null;
+
+    private Color mFillColor = null;
+
+    private Color mStrokeColor = null;
 
     // constructor
     public TWIPatternLine(double x1, double y1, double x2, double y2) {
@@ -60,6 +65,22 @@ public class TWIPatternLine extends TWILine implements TWIPattern {
     public void update() {
         this.setLine(this.mDot1, this.mDot2);
     }
+
+    @Override
+    public void setHighlightColor() {
+        this.mFillColor = this.getFillColor();
+        this.mStrokeColor = this.getStrokeColor();
+
+        this.setFillColor(TWIPattern.HIGHLIGHT_COLOR);
+        this.setStrokeColor(TWIPattern.HIGHLIGHT_COLOR);
+    }
+
+    @Override
+    public void unsetHighlightColor() {
+        this.setFillColor(this.mFillColor);
+        this.setStrokeColor(this.mStrokeColor);
+    }
+
 
     @Override
     public void renderAnchorDots(Graphics2D g2, Point origin) {

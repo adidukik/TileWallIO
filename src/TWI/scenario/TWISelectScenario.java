@@ -8,8 +8,10 @@ import java.awt.event.MouseEvent;
 import TWI.TWI;
 import TWI.TWISelectionBox;
 import TWI.cmd.TWICmdToCreateSelectionBox;
+import TWI.cmd.TWICmdToDecreaseSelectedPatternsWidth;
 import TWI.cmd.TWICmdToDeselectSelectedPatterns;
 import TWI.cmd.TWICmdToDestroySelectionBox;
+import TWI.cmd.TWICmdToIncreaseSelectedPatternsWidth;
 import TWI.cmd.TWICmdToRemoveSelectedPattern;
 import TWI.cmd.TWICmdToUpdateSelectedPatterns;
 import TWI.cmd.TWICmdToUpdateSelectionBox;
@@ -98,26 +100,26 @@ public class TWISelectScenario extends XScenario {
 
         @Override
         public void handleKeyUp(KeyEvent e) {
-            TWI TWI = (TWI) this.mScenario.getApp();
+            TWI twi = (TWI) this.mScenario.getApp();
             int code = e.getKeyCode();
 
             switch (code) {
                 case KeyEvent.VK_SHIFT -> {
                     boolean isSelectionBoxEmpty =
-                        TWI.getTileMgr().getTile().getSelectedPatterns()
+                        twi.getTileMgr().getTile().getSelectedPatterns()
                             .isEmpty();
 
                     if (isSelectionBoxEmpty) {
                         XCmdToChangeScene.execute(
-                            TWI,
+                            twi,
                             TWIDefaultScenario.ReadyScene.getSingleton(),
                             null
                         );
                     } else {
                         XCmdToChangeScene.execute(
-                            TWI,
+                            twi,
                             TWISelectScenario.SelectedReadyScene.getSingleton(),
-                            null
+                            this.mReturnScene
                         );
                     }
                 }
@@ -173,19 +175,19 @@ public class TWISelectScenario extends XScenario {
 
         @Override
         public void handleMouseDrag(MouseEvent e) {
-            TWI TWI = (TWI) this.mScenario.getApp();
+            TWI twi = (TWI) this.mScenario.getApp();
 
             Point pt = e.getPoint();
-            TWICmdToUpdateSelectionBox.execute(TWI, pt);
+            TWICmdToUpdateSelectionBox.execute(twi, pt);
 
-            TWICmdToUpdateSelectedPatterns.execute(TWI);
+            TWICmdToUpdateSelectedPatterns.execute(twi);
         }
 
         @Override
         public void handleMouseRelease(MouseEvent e) {
-            TWI TWI = (TWI) this.mScenario.getApp();
+            TWI twi = (TWI) this.mScenario.getApp();
             XCmdToChangeScene.execute(
-                TWI,
+                twi,
                 TWISelectScenario.SelectReadyScene.getSingleton(),
                 this.mReturnScene
             );
@@ -196,25 +198,25 @@ public class TWISelectScenario extends XScenario {
 
         @Override
         public void handleKeyUp(KeyEvent e) {
-            TWI TWI = (TWI) this.mScenario.getApp();
+            TWI twi = (TWI) this.mScenario.getApp();
             int code = e.getKeyCode();
 
             switch (code) {
                 case KeyEvent.VK_SHIFT -> {
                     if (
-                        TWI.getTileMgr().getTile().getSelectedPatterns()
+                        twi.getTileMgr().getTile().getSelectedPatterns()
                             .isEmpty()
                     ) {
                         XCmdToChangeScene.execute(
-                            TWI,
+                            twi,
                             TWIDefaultScenario.ReadyScene.getSingleton(),
-                            null
+                            this.mReturnScene
                         );
                     } else {
                         XCmdToChangeScene.execute(
-                            TWI,
+                            twi,
                             TWISelectScenario.SelectedReadyScene.getSingleton(),
-                            null
+                            this.mReturnScene
                         );
                     }
                 }
@@ -284,15 +286,28 @@ public class TWISelectScenario extends XScenario {
 
         @Override
         public void handleKeyDown(KeyEvent e) {
-            TWI TWI = (TWI) this.mScenario.getApp();
+            TWI twi = (TWI) this.mScenario.getApp();
 
             int code = e.getKeyCode();
             switch (code) {
                 case KeyEvent.VK_SHIFT -> {
                     XCmdToChangeScene.execute(
-                        TWI,
+                        twi,
                         TWISelectScenario.SelectReadyScene.getSingleton(),
-                        this
+                        this.mReturnScene
+                    );
+                }
+                case KeyEvent.VK_UP -> {
+                    TWICmdToIncreaseSelectedPatternsWidth.execute(twi);
+                }
+                case KeyEvent.VK_DOWN -> {
+                    TWICmdToDecreaseSelectedPatternsWidth.execute(twi);
+                }
+                case KeyEvent.VK_C -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        TWIColorScenario.ColorSelectedScene.getSingleton(),
+                        this.mReturnScene
                     );
                 }
             }

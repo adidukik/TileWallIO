@@ -1,5 +1,6 @@
 package TWI.tile;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -25,6 +26,8 @@ public abstract class TWITileMgr {
         new Color(0, 0, 0, 0);
     protected static final Color BG_FILL_COLOR =
         new Color(253, 253, 150);
+
+    private static final float STROKE_WIDTH_INCREMENT = 1.0f;
 
     // fields
     private TWI mTWI = null;
@@ -106,6 +109,7 @@ public abstract class TWITileMgr {
     }
 
     public void selectPattern(TWIPattern pattern) {
+        pattern.setHighlightColor();
         this.mTile.getPatterns().remove(pattern);
         this.mTile.getSelectedPatterns().add(pattern);
     }
@@ -114,6 +118,7 @@ public abstract class TWITileMgr {
         ArrayList<TWIPattern> deselectPatterns = new ArrayList<>();
 
         for (TWIPattern pattern : this.mTile.getSelectedPatterns()) {
+            pattern.unsetHighlightColor();
             deselectPatterns.add(pattern);
         }
 
@@ -145,6 +150,47 @@ public abstract class TWITileMgr {
 
         this.mTWI.getPreviewMgr().updateTileImage();
     }
+
+    public void setSelectedPatternsColor(Color color) {
+        for (TWIPattern pattern : this.mTile.getSelectedPatterns()) {
+            pattern.unsetHighlightColor();
+            pattern.setFillColor(color);
+            pattern.setStrokeColor(color);
+        }
+
+        this.deselectAllPatterns();
+    }
+
+    public void increaseSelectedPatternsStrokeWidth() {
+        for (TWIPattern pattern : this.mTile.getSelectedPatterns()) {
+            BasicStroke stroke = (BasicStroke) pattern.getStroke();
+            pattern.setStroke(
+                new BasicStroke(
+                    stroke.getLineWidth() + TWITileMgr.STROKE_WIDTH_INCREMENT,
+                    stroke.getEndCap(),
+                    stroke.getLineJoin()
+                )
+            );
+        }
+    }
+
+    public void decreaseSelectedPatternsStrokeWidth() {
+        for (TWIPattern pattern : this.mTile.getSelectedPatterns()) {
+            BasicStroke stroke = (BasicStroke) pattern.getStroke();
+
+            if (stroke.getLineWidth() > TWITileMgr.STROKE_WIDTH_INCREMENT) {
+                pattern.setStroke(
+                    new BasicStroke(
+                        stroke.getLineWidth() -
+                             TWITileMgr.STROKE_WIDTH_INCREMENT,
+                        stroke.getEndCap(),
+                        stroke.getLineJoin()
+                    )
+                );
+            }
+        }
+    }
+
 
     private void removeAnchorDots(TWIPattern pattern) {
         for (TWIAnchorDot anchorDot : pattern.getAnchorDots()) {

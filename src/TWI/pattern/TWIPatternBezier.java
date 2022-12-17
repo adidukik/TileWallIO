@@ -1,5 +1,6 @@
 package TWI.pattern;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -21,6 +22,10 @@ public class TWIPatternBezier extends TWIBezier implements TWIPattern {
     private TWILine mCtrlLine1 = null;
 
     private TWILine mCtrlLine2 = null;
+
+    private Color mFillColor = null;
+
+    private Color mStrokeColor = null;
 
     // constructor
     public TWIPatternBezier(
@@ -81,6 +86,28 @@ public class TWIPatternBezier extends TWIBezier implements TWIPattern {
     }
 
     @Override
+    public void setHighlightColor() {
+        if (this.mFillColor == null && this.mStrokeColor == null) {
+            this.mFillColor = this.getFillColor();
+            this.mStrokeColor = this.getStrokeColor();
+
+            this.setFillColor(TWIPattern.HIGHLIGHT_COLOR);
+            this.setStrokeColor(TWIPattern.HIGHLIGHT_COLOR);
+        }
+    }
+
+    @Override
+    public void unsetHighlightColor() {
+        if (this.mFillColor != null && this.mStrokeColor != null) {
+            this.setFillColor(this.mFillColor);
+            this.setStrokeColor(this.mStrokeColor);
+
+            this.mFillColor = null;
+            this.mStrokeColor = null;
+        }
+    }
+
+    @Override
     public void renderAnchorDots(Graphics2D g2, Point origin) {
         this.mDot1.render(g2, origin);
         this.mDot2.render(g2, origin);
@@ -94,5 +121,4 @@ public class TWIPatternBezier extends TWIBezier implements TWIPattern {
         this.mCtrlLine2.render(g2, origin);
         this.mCtrlDot2.render(g2, origin);
     }
-
 }

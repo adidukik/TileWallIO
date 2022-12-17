@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import TWI.TWI;
 import TWI.TWIColorChooser;
 import TWI.cmd.TWICmdToChangeDrawColor;
+import TWI.cmd.TWICmdToChangeSelectedPatternsColor;
 import x.XApp;
 import x.XCmdToChangeScene;
 import x.XScenario;
@@ -147,7 +148,21 @@ public class TWIColorScenario extends XScenario {
         }
 
         @Override
-        public void handleMousePress(MouseEvent e) {}
+        public void handleMousePress(MouseEvent e) {
+            TWI twi = (TWI) this.getScenario().getApp();
+
+
+            Color color = TWIColorScenario.getColorChooser()
+                .calcColor(e.getPoint());
+
+            TWICmdToChangeSelectedPatternsColor.execute(twi, color);
+
+            XCmdToChangeScene.execute(
+                twi,
+                this.mReturnScene,
+                null
+            );
+        }
 
         @Override
         public void handleMouseDrag(MouseEvent e) {}
@@ -167,8 +182,8 @@ public class TWIColorScenario extends XScenario {
                 case KeyEvent.VK_C -> {
                     XCmdToChangeScene.execute(
                         twi,
-                        this.mReturnScene,
-                        null
+                        TWISelectScenario.SelectedReadyScene.getSingleton(),
+                        this.mReturnScene
                     );
                 }
             }
