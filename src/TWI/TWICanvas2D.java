@@ -23,6 +23,7 @@ public class TWICanvas2D extends JPanel {
 
     private static final int INFO_TOP_ALIGNMENT_X = 20;
     private static final int INFO_TOP_ALIGNMENT_Y = 30;
+    private static final int INFO_NEWLINE_SPACE = 20;
 
     // fields
     private TWI mTWI = null;
@@ -69,22 +70,32 @@ public class TWICanvas2D extends JPanel {
         // screen objects
         g2.transform(this.mTWI.getXform().getCurXformFromScreenToWorld());
 
-        // render common screen objects
-        this.drawInfo(g2);
-
         // render the current scene's screen object
         curScene.renderScreenObjects(g2);
+
+        // render common screen objects
+        this.drawInfo(g2);
     }
 
     private void drawInfo(Graphics2D g2) {
         TWIScene curScene = (TWIScene) this.mTWI.getScenarioMgr().getCurScene();
-        String str = curScene.getClass().getSimpleName();
+        String curSceneName = curScene.getClass().getSimpleName();
+
+        String isSnapOn =
+            "SNAP: " +
+            String.valueOf(this.mTWI.getTileMgr().getIsSnapOn());
+
         g2.setColor(TWICanvas2D.COLOR_INFO);
         g2.setFont(TWICanvas2D.FONT_INFO);
         g2.drawString(
-            str,
+            curSceneName,
             TWICanvas2D.INFO_TOP_ALIGNMENT_X,
             TWICanvas2D.INFO_TOP_ALIGNMENT_Y
+        );
+        g2.drawString(
+            isSnapOn,
+            TWICanvas2D.INFO_TOP_ALIGNMENT_X,
+            TWICanvas2D.INFO_TOP_ALIGNMENT_Y + TWICanvas2D.INFO_NEWLINE_SPACE
         );
     }
 }
