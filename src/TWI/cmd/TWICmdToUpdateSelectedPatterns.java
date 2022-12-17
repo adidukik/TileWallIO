@@ -34,8 +34,6 @@ public class TWICmdToUpdateSelectedPatterns extends XLoggableCmd {
         for (TWIPattern pattern : patterns) {
             if (this.isPatternInsideSelectionBox(pattern)) {
                 newlySelectedPatterns.add(pattern);
-            } else {
-                System.out.println("(1): Wrong");
             }
         }
 
