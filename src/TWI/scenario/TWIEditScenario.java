@@ -112,7 +112,7 @@ public class TWIEditScenario extends XScenario {
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
             twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
-            twi.getTileMgr().renderAnchorDots(g2, new Point(0, 0));
+            twi.getTileMgr().renderAdditionalAnchorDots(g2, new Point(0, 0));
         }
 
         @Override
@@ -202,7 +202,7 @@ public class TWIEditScenario extends XScenario {
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
             twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
-            twi.getTileMgr().renderAnchorDots(g2, new Point(0, 0));
+            twi.getTileMgr().renderAdditionalAnchorDots(g2, new Point(0, 0));
         }
 
         @Override

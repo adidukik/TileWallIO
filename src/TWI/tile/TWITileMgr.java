@@ -217,12 +217,12 @@ public abstract class TWITileMgr {
         this.mTile.render(g2, tilePos);
     }
 
-    public void renderAnchorDots(Graphics2D g2, Point origin) {
+    public void renderAdditionalAnchorDots(Graphics2D g2, Point origin) {
         Point tilePos = new Point(
             origin.x + mTileOrigin.x,
             origin.y + mTileOrigin.y
         );
 
-        this.mTile.renderAnchorDots(g2, tilePos);
+        this.mTile.renderAdditionalAnchorDots(g2, tilePos);
     }
 }

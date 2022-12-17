@@ -9,7 +9,6 @@ import java.util.Hashtable;
 import TWI.TWIAnchorDot;
 import TWI.TWIClickable;
 import TWI.TWIRenderable;
-import TWI.geom.TWIDot;
 import TWI.geom.TWIGeom;
 import TWI.pattern.TWIPattern;
 
@@ -88,11 +87,19 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
             pattern.setStrokeColor(Color.GREEN);
             pattern.render(g2, origin);
         }
+
+        for (TWIAnchorDot anchorDot : this.mAnchorDots) {
+            if (anchorDot.getIsSnappable()) {
+                anchorDot.render(g2, origin);
+            }
+        }
     }
 
-    public void renderAnchorDots(Graphics2D g2, Point origin) {
-        for (TWIDot anchorDot : this.mAnchorDots) {
-            anchorDot.render(g2, origin);
+    public void renderAdditionalAnchorDots(Graphics2D g2, Point origin) {
+        for (TWIAnchorDot anchorDot : this.mAnchorDots) {
+            if (!anchorDot.getIsSnappable()) {
+                anchorDot.render(g2, origin);
+            }
         }
     }
 }
