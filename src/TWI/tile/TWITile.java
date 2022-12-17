@@ -13,8 +13,7 @@ import TWI.pattern.TWIPattern;
 public abstract class TWITile implements TWIRenderable, TWIClickable {
     // constants
     protected static final Color COLOR_TILE_DEFAULT = Color.BLACK;
-    protected static final Color TILE_FILL_COLOR_DEFAULT =
-        new Color(0, 0, 0, 0);
+    protected static final Color TILE_FILL_COLOR_DEFAULT = Color.WHITE;
 
     // fields
     private ArrayList<TWIPattern> mPatterns = null;
