@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import TWI.TWI;
-import TWI.cmd.TWICmdToCreateLine;
+import TWI.cmd.TWICmdToCreateBezier;
 import TWI.cmd.TWICmdToRemoveAllPatterns;
 import TWI.cmd.TWICmdToTurnSnapOnOff;
 import x.XApp;
@@ -69,7 +69,8 @@ public class TWIDefaultScenario extends XScenario {
         @Override
         public void handleMousePress(MouseEvent e) {
             TWI twi = (TWI) this.getScenario().getApp();
-                if (TWICmdToCreateLine.execute(twi, e.getPoint())) {
+                // if (TWICmdToCreateLine.execute(twi, e.getPoint())) {
+                if (TWICmdToCreateBezier.execute(twi, e.getPoint())) {
                     XCmdToChangeScene.execute(
                     twi,
                     TWIDrawScenario.DrawLineReadyScene.getSingleton(),
@@ -168,7 +169,8 @@ public class TWIDefaultScenario extends XScenario {
         public void handleMousePress(MouseEvent e) {
             TWI twi = (TWI) this.getScenario().getApp();
 
-            TWICmdToCreateLine.execute(twi, e.getPoint());
+            // TWICmdToCreateLine.execute(twi, e.getPoint());
+            TWICmdToCreateBezier.execute(twi, e.getPoint());
 
             XCmdToChangeScene.execute(
                 twi,

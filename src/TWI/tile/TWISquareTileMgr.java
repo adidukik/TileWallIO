@@ -21,15 +21,29 @@ public class TWISquareTileMgr extends TWITileMgr {
 
     // methods
     @Override
-    public TWIDot calcValidDot(TWIDot dot) {
-        if (!this.isDotInside(dot)) {
-            return null;
-        }
+    public TWIAnchorDot calcValidDot(TWIAnchorDot dot) {
+        if (!dot.getIsSnappable()) return dot;
 
-        for (TWIDot anchorDot : this.mTile.getAnchorDots()) {
-            if (anchorDot.distance(dot) < TWITileMgr.SNAP_RADIUS) {
-                return anchorDot;
+        if (!this.isDotInside(dot)) return null;
+
+        for (TWIAnchorDot anchorDot : this.mTile.getAnchorDots()) {
+            if (this.mIsSnapOn) {
+                if (
+                    anchorDot.getIsSnappable() &&
+                    anchorDot.distance(dot) < TWITileMgr.SNAP_RADIUS +
+                        TWITileMgr.CALCULATION_TOLERANCE
+                ) {
+                    return anchorDot;
+                }
+            } else {
+                if (
+                    anchorDot.getIsSnappable() &&
+                    anchorDot.distance(dot) < TWITileMgr.CALCULATION_TOLERANCE
+                ) {
+                    return anchorDot;
+                }
             }
+
         }
 
         TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
@@ -37,27 +51,35 @@ public class TWISquareTileMgr extends TWITileMgr {
         Double tileWidth = rect.getWidth();
 
         if (isDotOnTopEdge(dot)) {
-            dot = new TWIDot(
+            dot = new TWIAnchorDot(
                 dot.getX(),
-                rect.getY()
+                rect.getY(),
+                TWIAnchorDot.SnappableFlag.SNAPPABLE,
+                TWIAnchorDot.ClickableFlag.CLICKABLE
             );
 
         } else if (isDotOnBottomEdge(dot)) {
-            dot = new TWIDot(
+            dot = new TWIAnchorDot(
                 dot.getX(),
-                rect.getY() + tileHeight
+                rect.getY() + tileHeight,
+                TWIAnchorDot.SnappableFlag.SNAPPABLE,
+                TWIAnchorDot.ClickableFlag.CLICKABLE
             );
 
         } else if (isDotOnLeftEdge(dot)) {
-            dot = new TWIDot(
+            dot = new TWIAnchorDot(
                 rect.getX(),
-                dot.getY()
+                dot.getY(),
+                TWIAnchorDot.SnappableFlag.SNAPPABLE,
+                TWIAnchorDot.ClickableFlag.CLICKABLE
             );
 
         } else if (isDotOnRightEdge(dot)) {
-            dot = new TWIDot(
+            dot = new TWIAnchorDot(
                 rect.getX() + tileWidth,
-                dot.getY()
+                dot.getY(),
+                TWIAnchorDot.SnappableFlag.SNAPPABLE,
+                TWIAnchorDot.ClickableFlag.CLICKABLE
             );
         }
 
@@ -82,7 +104,7 @@ public class TWISquareTileMgr extends TWITileMgr {
     protected void addAnchorDot(TWIAnchorDot anchorDot) {
         this.mTile.getAnchorDots().add(anchorDot);
 
-        if (this.isDotOnEdge(anchorDot)) {
+        if (anchorDot.getIsSnappable() && this.isDotOnEdge(anchorDot)) {
             TWIAnchorDot oppositeAnchorDot = getOppositeAnchorDot(anchorDot);
             this.mTile.getEdgeAnchorDotTable().put(
                 anchorDot, oppositeAnchorDot

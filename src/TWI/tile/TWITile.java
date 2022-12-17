@@ -34,9 +34,9 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
     }
 
 
-    private ArrayList<TWIDot> mAnchorDots = null;
+    private ArrayList<TWIAnchorDot> mAnchorDots = null;
 
-    public ArrayList<TWIDot> getAnchorDots() {
+    public ArrayList<TWIAnchorDot> getAnchorDots() {
         return this.mAnchorDots;
     }
 

@@ -12,7 +12,7 @@ public class TWIPatternFactory {
             }
             case TWIBezier bezier -> {
                 return new TWIPatternBezier(
-                    bezier.getX1(), bezier.getX1(),
+                    bezier.getX1(), bezier.getY1(),
                     bezier.getCtrlX1(), bezier.getCtrlY1(),
                     bezier.getCtrlX2(), bezier.getCtrlY2(),
                     bezier.getX2(), bezier.getY2()

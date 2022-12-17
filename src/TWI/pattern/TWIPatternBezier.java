@@ -56,7 +56,7 @@ public class TWIPatternBezier extends TWIBezier implements TWIPattern {
         anchorDots.add(this.mCtrlDot2);
         anchorDots.add(this.mDot2);
 
-        return null;
+        return anchorDots;
     }
 
     @Override

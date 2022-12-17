@@ -6,9 +6,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import TWI.TWI;
-import TWI.cmd.TWICmdToRegisterLine;
-import TWI.cmd.TWICmdToUpdateLine;
-import TWI.geom.TWILine;
+import TWI.cmd.TWICmdToRegisterBezier;
+import TWI.cmd.TWICmdToUpdateBezier;
+import TWI.geom.TWIBezier;
 import x.XApp;
 import x.XCmdToChangeScene;
 import x.XScenario;
@@ -69,7 +69,8 @@ public class TWIDrawScenario extends XScenario {
         public void handleMouseDrag(MouseEvent e) {
             TWI twi = (TWI) this.getScenario().getApp();
 
-            TWICmdToUpdateLine.execute(twi, e.getPoint());
+            // TWICmdToUpdateLine.execute(twi, e.getPoint());
+            TWICmdToUpdateBezier.execute(twi, e.getPoint());
 
             XCmdToChangeScene.execute(
                 twi,
@@ -110,8 +111,10 @@ public class TWIDrawScenario extends XScenario {
 
             twi.getTileMgr().render(g2, new Point(0, 0));
 
-            TWILine curLine = twi.getGeomMgr().getCurLine();
-            curLine.render(g2, new Point(0, 0));
+            // TWILine curLine = twi.getGeomMgr().getCurLine();
+            // curLine.render(g2, new Point(0, 0));
+            TWIBezier curBezier = twi.getGeomMgr().getCurCurve();
+            curBezier.render(g2, new Point(0, 0));
         }
 
         @Override
@@ -149,14 +152,16 @@ public class TWIDrawScenario extends XScenario {
         public void handleMouseDrag(MouseEvent e) {
             TWI twi = (TWI) this.getScenario().getApp();
 
-            TWICmdToUpdateLine.execute(twi, e.getPoint());
+            // TWICmdToUpdateLine.execute(twi, e.getPoint());
+            TWICmdToUpdateBezier.execute(twi, e.getPoint());
         }
 
         @Override
         public void handleMouseRelease(MouseEvent e) {
             TWI twi = (TWI) this.getScenario().getApp();
 
-            TWICmdToRegisterLine.execute(twi);
+            // TWICmdToRegisterLine.execute(twi);
+            TWICmdToRegisterBezier.execute(twi);
 
             XCmdToChangeScene.execute(
                 twi,
@@ -186,8 +191,10 @@ public class TWIDrawScenario extends XScenario {
 
             twi.getTileMgr().render(g2, new Point(0, 0));
 
-            TWILine curLine = twi.getGeomMgr().getCurLine();
-            curLine.render(g2, new Point(0, 0));
+            // TWILine curLine = twi.getGeomMgr().getCurLine();
+            // curLine.render(g2, new Point(0, 0));
+            TWIBezier curBezier = twi.getGeomMgr().getCurCurve();
+            curBezier.render(g2, new Point(0, 0));
         }
 
         @Override

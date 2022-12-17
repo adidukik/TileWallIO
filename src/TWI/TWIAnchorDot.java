@@ -1,5 +1,6 @@
 package TWI;
 
+import java.awt.Color;
 import java.awt.Point;
 
 import TWI.geom.TWIDot;
@@ -42,7 +43,10 @@ public class TWIAnchorDot extends TWIDot implements TWIClickable {
 
         switch (clickableFlag) {
             case CLICKABLE -> this.mIsClickable = true;
-            case NOT_CLICKABLE -> this.mIsClickable = false;
+            case NOT_CLICKABLE -> {
+                this.mIsClickable = false;
+                this.setStrokeColor(Color.DARK_GRAY);
+            }
         }
     }
 

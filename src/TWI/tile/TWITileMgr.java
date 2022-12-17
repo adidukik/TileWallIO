@@ -62,7 +62,7 @@ public abstract class TWITileMgr implements TWIRenderable {
     }
 
     // abstract methods
-    public abstract TWIDot calcValidDot(TWIDot dot);
+    public abstract TWIAnchorDot calcValidDot(TWIAnchorDot dot);
 
     protected abstract boolean isDotInside(TWIDot dot);
     protected abstract boolean isDotOnEdge(TWIDot dot);
