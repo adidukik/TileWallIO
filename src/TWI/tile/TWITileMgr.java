@@ -7,14 +7,13 @@ import java.util.ArrayList;
 
 import TWI.TWI;
 import TWI.TWIAnchorDot;
-import TWI.TWIRenderable;
 import TWI.geom.TWIDot;
 import TWI.geom.TWIGeom;
 import TWI.geom.TWIRectangle;
 import TWI.pattern.TWIPattern;
 import TWI.pattern.TWIPatternFactory;
 
-public abstract class TWITileMgr implements TWIRenderable {
+public abstract class TWITileMgr {
     // constant
     protected static final double SNAP_RADIUS = 20.0f;
     protected static final double CALCULATION_TOLERANCE = 5.0f;
@@ -199,9 +198,7 @@ public abstract class TWITileMgr implements TWIRenderable {
         return true;
     }
 
-    // interface methods
-    @Override
-    public void render(Graphics2D g2, Point origin) {
+    public void renderTileEditor(Graphics2D g2, Point origin) {
         double bgW = this.mTWI.getCanvas2d().getWidth() / 2;
         double bgH = this.mTWI.getCanvas2d().getHeight();
 
@@ -218,5 +215,14 @@ public abstract class TWITileMgr implements TWIRenderable {
         );
 
         this.mTile.render(g2, tilePos);
+    }
+
+    public void renderAnchorDots(Graphics2D g2, Point origin) {
+        Point tilePos = new Point(
+            origin.x + mTileOrigin.x,
+            origin.y + mTileOrigin.y
+        );
+
+        this.mTile.renderAnchorDots(g2, tilePos);
     }
 }

@@ -136,7 +136,7 @@ public class TWISelectScenario extends XScenario {
         @Override
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
-            twi.getTileMgr().render(g2, new Point(0, 0));
+            twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
         }
 
         @Override
@@ -233,7 +233,7 @@ public class TWISelectScenario extends XScenario {
         @Override
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
-            twi.getTileMgr().render(g2, new Point(0, 0));
+            twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
 
             TWISelectScenario.getSingleton().drawSelectionBox(
                 g2, new Point(0, 0)
@@ -336,7 +336,7 @@ public class TWISelectScenario extends XScenario {
         @Override
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
-            twi.getTileMgr().render(g2, new Point(0, 0));
+            twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
         }
 
         @Override

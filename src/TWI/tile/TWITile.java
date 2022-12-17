@@ -58,17 +58,6 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
         this.mIsEdgeVisible = true;
     }
 
-
-    private boolean mIsDotVisible = true;
-
-    public boolean getIsDotVisible() {
-        return this.mIsDotVisible;
-    }
-
-    public void setIsDotVisible(boolean b) {
-        this.mIsDotVisible = b;
-    }
-
     // constructor
     public TWITile() {
         this.mPatterns = new ArrayList<>();
@@ -81,17 +70,11 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
     // abstract methods
     public abstract TWIGeom getTileGeom();
 
-    // interface methods
+    // render-related methods
     @Override
     public void render(Graphics2D g2, Point origin) {
         if (this.mIsEdgeVisible) {
             this.getTileGeom().render(g2, origin);
-        }
-
-        if (this.mIsDotVisible) {
-            for (TWIDot anchorDot : this.mAnchorDots) {
-                anchorDot.render(g2, origin);
-            }
         }
 
         for (TWIPattern pattern : this.mPatterns) {
@@ -104,6 +87,12 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
             // TODO: make the selected color revertible.
             pattern.setStrokeColor(Color.GREEN);
             pattern.render(g2, origin);
+        }
+    }
+
+    public void renderAnchorDots(Graphics2D g2, Point origin) {
+        for (TWIDot anchorDot : this.mAnchorDots) {
+            anchorDot.render(g2, origin);
         }
     }
 }

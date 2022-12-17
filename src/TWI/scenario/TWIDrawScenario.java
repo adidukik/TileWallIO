@@ -109,7 +109,7 @@ public class TWIDrawScenario extends XScenario {
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
 
-            twi.getTileMgr().render(g2, new Point(0, 0));
+            twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
 
             // TWILine curLine = twi.getGeomMgr().getCurLine();
             // curLine.render(g2, new Point(0, 0));
@@ -189,7 +189,7 @@ public class TWIDrawScenario extends XScenario {
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
 
-            twi.getTileMgr().render(g2, new Point(0, 0));
+            twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
 
             // TWILine curLine = twi.getGeomMgr().getCurLine();
             // curLine.render(g2, new Point(0, 0));
