@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import TWI.TWI;
 import TWI.TWIAnchorDot;
@@ -54,6 +55,20 @@ public abstract class TWITileMgr {
     }
 
 
+    protected ArrayList<TWIAnchorDot> mAnchorDots = null;
+
+    public ArrayList<TWIAnchorDot> getAnchorDots() {
+        return this.mAnchorDots;
+    }
+
+
+    protected Hashtable<TWIAnchorDot, TWIAnchorDot> mEdgeAnchorDotTable = null;
+
+    public Hashtable<TWIAnchorDot, TWIAnchorDot> getEdgeAnchorDotTable() {
+        return this.mEdgeAnchorDotTable;
+    }
+
+
     private TWIAnchorDot mSelectAnchorDot = null;
 
     // constructor
@@ -64,6 +79,9 @@ public abstract class TWITileMgr {
             (int) TWITileMgr.X_DEFAULT,
             (int) TWITileMgr.Y_DEFAULT
         );
+
+        this.mAnchorDots = new ArrayList<>();
+        this.mEdgeAnchorDotTable = new Hashtable<>();
     }
 
     // abstract methods
@@ -132,7 +150,7 @@ public abstract class TWITileMgr {
         for (TWIAnchorDot anchorDot : pattern.getAnchorDots()) {
             this.removeOppositeAnchorDotIfAny(this.mSelectAnchorDot);
 
-            this.mTile.getAnchorDots().remove(anchorDot);
+            this.mAnchorDots.remove(anchorDot);
         }
     }
 
@@ -144,7 +162,7 @@ public abstract class TWITileMgr {
             pt.y - this.getTileOrigin().y
         );
 
-        for (TWIAnchorDot anchorDot : this.mTile.getAnchorDots()) {
+        for (TWIAnchorDot anchorDot : this.mAnchorDots) {
             if (
                 anchorDot.getIsClickable() &&
                 anchorDot.distance(tilePt) < TWITileMgr.CALCULATION_TOLERANCE
@@ -199,11 +217,11 @@ public abstract class TWITileMgr {
 
 
     private boolean removeOppositeAnchorDotIfAny(TWIAnchorDot anchorDot) {
-        if (this.mTile.getEdgeAnchorDotTable().containsKey(anchorDot)) {
+        if (this.mEdgeAnchorDotTable.containsKey(anchorDot)) {
             TWIAnchorDot oppositeAnchorDot =
-                this.mTile.getEdgeAnchorDotTable().get(anchorDot);
-            this.mTile.getAnchorDots().remove(oppositeAnchorDot);
-            this.mTile.getEdgeAnchorDotTable().remove(anchorDot);
+                this.mEdgeAnchorDotTable.get(anchorDot);
+            this.mEdgeAnchorDotTable.remove(oppositeAnchorDot);
+            this.mEdgeAnchorDotTable.remove(anchorDot);
 
             return true;
 
@@ -230,6 +248,12 @@ public abstract class TWITileMgr {
         );
 
         this.mTile.render(g2, tilePos);
+
+        for (TWIAnchorDot anchorDot : this.mAnchorDots) {
+            if (anchorDot.getIsSnappable()) {
+                anchorDot.render(g2, tilePos);
+            }
+        }
     }
 
     public void renderAdditionalAnchorDots(Graphics2D g2, Point origin) {
@@ -238,6 +262,10 @@ public abstract class TWITileMgr {
             origin.y + mTileOrigin.y
         );
 
-        this.mTile.renderAdditionalAnchorDots(g2, tilePos);
+        for (TWIAnchorDot anchorDot : this.mAnchorDots) {
+            if (!anchorDot.getIsSnappable()) {
+                anchorDot.render(g2, tilePos);
+            }
+        }
     }
 }

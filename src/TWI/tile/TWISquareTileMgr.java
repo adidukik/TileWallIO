@@ -26,7 +26,7 @@ public class TWISquareTileMgr extends TWITileMgr {
 
         if (!this.isDotInside(dot)) return null;
 
-        for (TWIAnchorDot anchorDot : this.mTile.getAnchorDots()) {
+        for (TWIAnchorDot anchorDot : this.mAnchorDots) {
             if (this.mIsSnapOn) {
                 if (
                     anchorDot.getIsSnappable() &&
@@ -99,17 +99,16 @@ public class TWISquareTileMgr extends TWITileMgr {
         );
     }
 
-
     @Override
     protected void addAnchorDot(TWIAnchorDot anchorDot) {
-        this.mTile.getAnchorDots().add(anchorDot);
+        this.mAnchorDots.add(anchorDot);
 
         if (anchorDot.getIsSnappable() && this.isDotOnEdge(anchorDot)) {
             TWIAnchorDot oppositeAnchorDot = getOppositeAnchorDot(anchorDot);
-            this.mTile.getEdgeAnchorDotTable().put(
+            this.mEdgeAnchorDotTable.put(
                 anchorDot, oppositeAnchorDot
             );
-            this.mTile.getAnchorDots().add(oppositeAnchorDot);
+            this.mAnchorDots.add(oppositeAnchorDot);
         }
     }
 

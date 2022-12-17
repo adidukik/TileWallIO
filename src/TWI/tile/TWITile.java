@@ -4,9 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Hashtable;
 
-import TWI.TWIAnchorDot;
 import TWI.TWIClickable;
 import TWI.TWIRenderable;
 import TWI.geom.TWIGeom;
@@ -32,21 +30,6 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
         return this.mSelectedPatterns;
     }
 
-
-    private ArrayList<TWIAnchorDot> mAnchorDots = null;
-
-    public ArrayList<TWIAnchorDot> getAnchorDots() {
-        return this.mAnchorDots;
-    }
-
-
-    private Hashtable<TWIAnchorDot, TWIAnchorDot> mEdgeAnchorDotTable = null;
-
-    public Hashtable<TWIAnchorDot, TWIAnchorDot> getEdgeAnchorDotTable() {
-        return this.mEdgeAnchorDotTable;
-    }
-
-
     private boolean mIsEdgeVisible = false;
 
     public boolean getEdgeVisible() {
@@ -61,8 +44,6 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
     public TWITile() {
         this.mPatterns = new ArrayList<>();
         this.mSelectedPatterns = new ArrayList<>();
-        this.mAnchorDots = new ArrayList<>();
-        this.mEdgeAnchorDotTable = new Hashtable<>();
         this.mIsEdgeVisible = true;
     }
 
@@ -86,20 +67,6 @@ public abstract class TWITile implements TWIRenderable, TWIClickable {
             // TODO: make the selected color revertible.
             pattern.setStrokeColor(Color.GREEN);
             pattern.render(g2, origin);
-        }
-
-        for (TWIAnchorDot anchorDot : this.mAnchorDots) {
-            if (anchorDot.getIsSnappable()) {
-                anchorDot.render(g2, origin);
-            }
-        }
-    }
-
-    public void renderAdditionalAnchorDots(Graphics2D g2, Point origin) {
-        for (TWIAnchorDot anchorDot : this.mAnchorDots) {
-            if (!anchorDot.getIsSnappable()) {
-                anchorDot.render(g2, origin);
-            }
         }
     }
 }

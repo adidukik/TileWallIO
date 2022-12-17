@@ -16,8 +16,6 @@ public class TWISquareTile extends TWITile {
 
     // constructor
     public TWISquareTile(Double w, Double h) {
-        super();
-
         this.mRect = new TWIRectangle(
             0, 0, w, h
         );
