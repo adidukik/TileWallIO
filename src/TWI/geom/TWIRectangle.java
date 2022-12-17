@@ -60,11 +60,11 @@ public class TWIRectangle extends Rectangle2D.Double implements TWIGeom {
     public void render(Graphics2D g2, Point origin) {
         g2.translate(origin.x, origin.y);
 
+        g2.setColor(this.mFillColor);
+        g2.fill(this);
         g2.setColor(this.mStrokeColor);
         g2.setStroke(this.mStroke);
         g2.draw(this);
-        g2.setColor(this.mFillColor);
-        g2.fill(this);
 
         g2.translate(-origin.x, -origin.y);
     }

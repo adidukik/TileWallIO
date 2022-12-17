@@ -67,13 +67,13 @@ public class TWIEmptyGeom implements TWIGeom {
     public void render(Graphics2D g2, Point origin) {
         g2.translate(origin.x, origin.y);
 
+        g2.setColor(this.mFillColor);
+        // ! Uncomment this line if the class is extending a Java shape
+        // g2.fill(this);
         g2.setColor(this.mStrokeColor);
         g2.setStroke(this.mStroke);
         // ! Uncomment this line if the class is extending a Java shape
         // g2.draw(this);
-        g2.setColor(this.mFillColor);
-        // ! Uncomment this line if the class is extending a Java shape
-        // g2.fill(this);
 
         g2.translate(-origin.x, -origin.y);
     }
