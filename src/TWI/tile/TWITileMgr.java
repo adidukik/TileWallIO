@@ -185,7 +185,8 @@ public abstract class TWITileMgr implements TWIRenderable {
 
         } else {
             this.mSelectAnchorDot.setLocation(
-                pt.getX(), pt.getY()
+                pt.x - this.getTileOrigin().x,
+                pt.y - this.getTileOrigin().y
             );
         }
 
