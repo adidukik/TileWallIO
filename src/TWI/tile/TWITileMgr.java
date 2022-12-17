@@ -249,6 +249,12 @@ public abstract class TWITileMgr {
 
         this.mTile.render(g2, tilePos);
         this.mTile.renderAnchorDots(g2, tilePos);
+
+        for (
+            TWIAnchorDot oppositeAnchorDot : this.mEdgeAnchorDotTable.values()
+        ) {
+            oppositeAnchorDot.render(g2, tilePos);
+        }
     }
 
     public void renderController(Graphics2D g2, Point origin) {
