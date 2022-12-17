@@ -1,18 +1,18 @@
 package TWI.cmd;
 
 import TWI.TWI;
-import TWI.geom.TWIGeomMgr;
+import TWI.TWIToolMgr;
 import x.XApp;
 import x.XLoggableCmd;
 
-public class TWICmdToRegisterBezier extends XLoggableCmd {
+public class TWICmdToRegisterCurve extends XLoggableCmd {
     // private constructor
-    private TWICmdToRegisterBezier(XApp app) {
+    private TWICmdToRegisterCurve(XApp app) {
         super(app);
     }
 
     public static boolean execute(XApp app) {
-        TWICmdToRegisterBezier cmd = new TWICmdToRegisterBezier(app);
+        TWICmdToRegisterCurve cmd = new TWICmdToRegisterCurve(app);
         return cmd.execute();
     }
 
@@ -20,9 +20,9 @@ public class TWICmdToRegisterBezier extends XLoggableCmd {
     protected boolean defineCmd() {
         TWI twi = (TWI) this.mApp;
 
-        TWIGeomMgr geomMgr = twi.getGeomMgr();
+        TWIToolMgr toolMgr = twi.getToolMgr();
 
-        geomMgr.addBezier();
+        toolMgr.addGeom();
 
         return true;
     }

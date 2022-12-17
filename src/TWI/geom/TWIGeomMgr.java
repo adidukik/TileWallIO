@@ -1,6 +1,7 @@
 package TWI.geom;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
@@ -18,10 +19,10 @@ public class TWIGeomMgr {
     private TWI mTwi = null;
 
 
-    private TWILine mCurLine = null;
+    private TWILine mCurScreenLine = null;
 
     public TWILine getCurLine() {
-        return this.mCurLine;
+        return this.mCurScreenLine;
     }
 
     private TWIBezier mCurScreenBezier = null;
@@ -37,7 +38,7 @@ public class TWIGeomMgr {
 
     // methods
     public boolean createLine(Point pt) {
-        assert(this.mCurLine == null);
+        assert(this.mCurScreenLine == null);
 
         TWITileMgr tileMgr = this.mTwi.getTileMgr();
 
@@ -60,29 +61,29 @@ public class TWIGeomMgr {
         Point2D newScreenPt = this.calcTileDotToScreenDot(newTileDot);
 
         // (4) Create a line in the screen coordinate.
-        this.mCurLine = new TWILine(newScreenPt, newScreenPt);
-        this.mCurLine.setStrokeColor(TWIGeomMgr.COLOR_CURRENT);
+        this.mCurScreenLine = new TWILine(newScreenPt, newScreenPt);
+        this.mCurScreenLine.setStrokeColor(TWIGeomMgr.COLOR_CURRENT);
 
         return true;
     }
 
     public void updateLine(Point pt) {
-        assert (this.mCurLine != null);
+        assert (this.mCurScreenLine != null);
 
-        this.mCurLine.setLine(this.mCurLine.getP1(), pt);
+        this.mCurScreenLine.setLine(this.mCurScreenLine.getP1(), pt);
     }
 
     public boolean addLine() {
-        assert (this.mCurLine != null);
+        assert (this.mCurScreenLine != null);
 
         TWITileMgr tileMgr = this.mTwi.getTileMgr();
 
         // (1) Extract (screen) points from the TWILine.
         TWIDot startScreenDot = new TWIDot(
-            this.mCurLine.getX1(), this.mCurLine.getY1()
+            this.mCurScreenLine.getX1(), this.mCurScreenLine.getY1()
         );
         TWIDot endScreenDot = new TWIDot(
-            this.mCurLine.getX2(), this.mCurLine.getY2()
+            this.mCurScreenLine.getX2(), this.mCurScreenLine.getY2()
         );
 
         // (2) Add Dot in respect to the tile's local coordinate.
@@ -112,9 +113,15 @@ public class TWIGeomMgr {
         tileMgr.addPattern(geomToAdd);
 
         // (5) Set current line to null.
-        this.mCurLine = null;
+        this.mCurScreenLine = null;
 
         return true;
+    }
+
+    public void renderLine(Graphics2D g2, Point origin) {
+        assert(this.mCurScreenLine != null);
+
+        this.mCurScreenLine.render(g2, origin);
     }
 
 
@@ -234,6 +241,12 @@ public class TWIGeomMgr {
         this.mCurScreenBezier = null;
 
         return true;
+    }
+
+    public void renderBezier(Graphics2D g2, Point origin) {
+        assert(this.mCurScreenBezier != null);
+
+        this.mCurScreenBezier.render(g2, origin);
     }
 
 

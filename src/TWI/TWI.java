@@ -38,6 +38,12 @@ public class TWI extends XApp {
         return this.mEventListener;
     }
 
+    private TWIToolMgr mToolMgr = null;
+
+    public TWIToolMgr getToolMgr() {
+        return this.mToolMgr;
+    }
+
     private TWIGeomMgr mGeomMgr = null;
 
     public TWIGeomMgr getGeomMgr() {
@@ -85,6 +91,7 @@ public class TWI extends XApp {
         this.mEventListener = new TWIEventListener(this);
         // 5) managers
         // TODO: Add scene for selecting tile type
+        this.mToolMgr = new TWIToolMgr(this);
         this.mGeomMgr = new TWIGeomMgr(this);
         this.mTileMgr = new TWISquareTileMgr(this);
         this.mPreviewMgr = new TWIPreviewMgr(this);

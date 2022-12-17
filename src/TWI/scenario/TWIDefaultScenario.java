@@ -6,8 +6,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import TWI.TWI;
-import TWI.cmd.TWICmdToCreateBezier;
+import TWI.cmd.TWICmdToCreateGeom;
 import TWI.cmd.TWICmdToRemoveAllPatterns;
+import TWI.cmd.TWICmdToSwitchToNextTool;
+import TWI.cmd.TWICmdToSwitchToPrevTool;
 import TWI.cmd.TWICmdToTurnSnapOnOff;
 import x.XApp;
 import x.XCmdToChangeScene;
@@ -70,7 +72,7 @@ public class TWIDefaultScenario extends XScenario {
         public void handleMousePress(MouseEvent e) {
             TWI twi = (TWI) this.getScenario().getApp();
                 // if (TWICmdToCreateLine.execute(twi, e.getPoint())) {
-                if (TWICmdToCreateBezier.execute(twi, e.getPoint())) {
+                if (TWICmdToCreateGeom.execute(twi, e.getPoint())) {
                     XCmdToChangeScene.execute(
                     twi,
                     TWIDrawScenario.DrawLineReadyScene.getSingleton(),
@@ -99,6 +101,12 @@ public class TWIDefaultScenario extends XScenario {
                         TWIDefaultScenario.ReadySnapScene.getSingleton(),
                         TWIDefaultScenario.ReadyScene.getSingleton()
                     );
+                }
+                case KeyEvent.VK_LEFT -> {
+                    TWICmdToSwitchToPrevTool.execute(twi);
+                }
+                case KeyEvent.VK_RIGHT -> {
+                    TWICmdToSwitchToNextTool.execute(twi);
                 }
                 case KeyEvent.VK_SHIFT -> {
                     XCmdToChangeScene.execute(
@@ -184,7 +192,7 @@ public class TWIDefaultScenario extends XScenario {
             TWI twi = (TWI) this.getScenario().getApp();
 
             // TWICmdToCreateLine.execute(twi, e.getPoint());
-            TWICmdToCreateBezier.execute(twi, e.getPoint());
+            TWICmdToCreateGeom.execute(twi, e.getPoint());
 
             XCmdToChangeScene.execute(
                 twi,

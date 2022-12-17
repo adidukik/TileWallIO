@@ -6,9 +6,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import TWI.TWI;
-import TWI.cmd.TWICmdToRegisterBezier;
-import TWI.cmd.TWICmdToUpdateBezier;
-import TWI.geom.TWIBezier;
+import TWI.cmd.TWICmdToRegisterCurve;
+import TWI.cmd.TWICmdToUpdateGeom;
 import x.XApp;
 import x.XCmdToChangeScene;
 import x.XScenario;
@@ -70,7 +69,7 @@ public class TWIDrawScenario extends XScenario {
             TWI twi = (TWI) this.getScenario().getApp();
 
             // TWICmdToUpdateLine.execute(twi, e.getPoint());
-            TWICmdToUpdateBezier.execute(twi, e.getPoint());
+            TWICmdToUpdateGeom.execute(twi, e.getPoint());
 
             XCmdToChangeScene.execute(
                 twi,
@@ -111,10 +110,7 @@ public class TWIDrawScenario extends XScenario {
 
             twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
 
-            // TWILine curLine = twi.getGeomMgr().getCurLine();
-            // curLine.render(g2, new Point(0, 0));
-            TWIBezier curBezier = twi.getGeomMgr().getCurCurve();
-            curBezier.render(g2, new Point(0, 0));
+            twi.getToolMgr().renderGeom(g2, new Point(0, 0));
         }
 
         @Override
@@ -153,7 +149,7 @@ public class TWIDrawScenario extends XScenario {
             TWI twi = (TWI) this.getScenario().getApp();
 
             // TWICmdToUpdateLine.execute(twi, e.getPoint());
-            TWICmdToUpdateBezier.execute(twi, e.getPoint());
+            TWICmdToUpdateGeom.execute(twi, e.getPoint());
         }
 
         @Override
@@ -161,7 +157,7 @@ public class TWIDrawScenario extends XScenario {
             TWI twi = (TWI) this.getScenario().getApp();
 
             // TWICmdToRegisterLine.execute(twi);
-            TWICmdToRegisterBezier.execute(twi);
+            TWICmdToRegisterCurve.execute(twi);
 
             XCmdToChangeScene.execute(
                 twi,
@@ -191,10 +187,7 @@ public class TWIDrawScenario extends XScenario {
 
             twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
 
-            // TWILine curLine = twi.getGeomMgr().getCurLine();
-            // curLine.render(g2, new Point(0, 0));
-            TWIBezier curBezier = twi.getGeomMgr().getCurCurve();
-            curBezier.render(g2, new Point(0, 0));
+            twi.getToolMgr().renderGeom(g2, new Point(0, 0));
         }
 
         @Override

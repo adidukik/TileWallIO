@@ -4,23 +4,23 @@ package TWI.cmd;
 import java.awt.Point;
 
 import TWI.TWI;
-import TWI.geom.TWIGeomMgr;
+import TWI.TWIToolMgr;
 import x.XApp;
 import x.XLoggableCmd;
 
-public class TWICmdToCreateBezier extends XLoggableCmd {
+public class TWICmdToUpdateGeom extends XLoggableCmd {
     // fields
     private Point mPt = null;
 
     // private constructor
-    private TWICmdToCreateBezier(XApp app, Point pt) {
+    private TWICmdToUpdateGeom(XApp app, Point pt) {
         super(app);
 
         this.mPt = pt;
     }
 
     public static boolean execute(XApp app, Point pt) {
-        TWICmdToCreateBezier cmd = new TWICmdToCreateBezier(app, pt);
+        TWICmdToUpdateGeom cmd = new TWICmdToUpdateGeom(app, pt);
         return cmd.execute();
     }
 
@@ -28,9 +28,11 @@ public class TWICmdToCreateBezier extends XLoggableCmd {
     protected boolean defineCmd() {
         TWI twi = (TWI) this.mApp;
 
-        TWIGeomMgr geomMgr = twi.getGeomMgr();
+        TWIToolMgr toolMgr = twi.getToolMgr();
 
-        return geomMgr.createBezier(mPt);
+        toolMgr.updateGeom(mPt);
+
+        return true;
     }
 
     @Override

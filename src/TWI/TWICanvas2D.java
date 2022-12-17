@@ -85,6 +85,10 @@ public class TWICanvas2D extends JPanel {
             "SNAP: " +
             String.valueOf(this.mTWI.getTileMgr().getIsSnapOn());
 
+        String curTool =
+            "TOOL: " +
+            String.valueOf(this.mTWI.getToolMgr().getCurTool());
+
         g2.setColor(TWICanvas2D.COLOR_INFO);
         g2.setFont(TWICanvas2D.FONT_INFO);
         g2.drawString(
@@ -96,6 +100,12 @@ public class TWICanvas2D extends JPanel {
             isSnapOn,
             TWICanvas2D.INFO_TOP_ALIGNMENT_X,
             TWICanvas2D.INFO_TOP_ALIGNMENT_Y + TWICanvas2D.INFO_NEWLINE_SPACE
+        );
+        g2.drawString(
+            curTool,
+            TWICanvas2D.INFO_TOP_ALIGNMENT_X,
+            TWICanvas2D.INFO_TOP_ALIGNMENT_Y +
+                2 * TWICanvas2D.INFO_NEWLINE_SPACE
         );
     }
 }
