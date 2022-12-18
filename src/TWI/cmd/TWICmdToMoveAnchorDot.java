@@ -3,13 +3,16 @@ package TWI.cmd;
 import java.awt.Point;
 
 import TWI.TWI;
+import TWI.TWIAnchorDot;
+import TWI.pattern.TWIPattern;
+import TWI.tile.TWITile;
+import TWI.tileMgr.TWITileMgr;
 import x.XApp;
 import x.XLoggableCmd;
 
 public class TWICmdToMoveAnchorDot extends XLoggableCmd {
     // fields
     private Point mPt = null;
-    private boolean mWasMoved = false;
 
     // private constructor
     private TWICmdToMoveAnchorDot(XApp app, Point pt) {
@@ -26,8 +29,44 @@ public class TWICmdToMoveAnchorDot extends XLoggableCmd {
     @Override
     protected boolean defineCmd() {
         TWI twi = (TWI) this.mApp;
+        TWITileMgr tileMgr = twi.getTileMgr();
+        TWITile tile = tileMgr.getTile();
 
-        this.mWasMoved = twi.getTileMgr().moveSelectedAnchorDotTo(this.mPt);
+        TWIAnchorDot anchorDot = tileMgr.getSelectedAnchorDot();
+
+        if (anchorDot.getIsSnappable()) {
+            TWIAnchorDot newAnchorDot = new TWIAnchorDot(
+                this.mPt.x - tileMgr.getTileOrigin().x,
+                this.mPt.y - tileMgr.getTileOrigin().y,
+                anchorDot.getSnappableFlag(),
+                anchorDot.getClickableFlag()
+            );
+
+            newAnchorDot = tileMgr.calcValidDot(newAnchorDot);
+
+            if (newAnchorDot == null) return false;
+
+            tileMgr.removeOppositeAnchorDotIfAny(anchorDot);
+
+            anchorDot.setLocation(
+                newAnchorDot.getX(),
+                newAnchorDot.getY()
+            );
+
+        } else {
+            tileMgr.removeOppositeAnchorDotIfAny(anchorDot);
+
+            anchorDot.setLocation(
+                this.mPt.x - tileMgr.getTileOrigin().x,
+                this.mPt.y - tileMgr.getTileOrigin().y
+            );
+        }
+
+        for (TWIPattern pattern : tile.getPatterns()) {
+            pattern.update();
+        }
+
+        twi.getPreviewMgr().updateTileImage();
 
         return true;
     }
@@ -39,8 +78,6 @@ public class TWICmdToMoveAnchorDot extends XLoggableCmd {
         sb.append(this.getClass().getSimpleName());
         sb.append("\t");
         sb.append(this.mPt);
-        sb.append("\t");
-        sb.append(this.mWasMoved);
 
         return sb.toString();
     }

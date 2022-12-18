@@ -1,6 +1,5 @@
 package TWI.tileMgr;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -19,7 +18,7 @@ import TWI.tile.TWITile;
 public abstract class TWITileMgr {
     // constant
     protected static final double SNAP_RADIUS = 20.0f;
-    protected static final double CALCULATION_TOLERANCE = 5.0f;
+    public static final double CALCULATION_TOLERANCE = 5.0f;
     protected static final double X_DEFAULT = 100.0;
     protected static final double Y_DEFAULT = 100.0;
 
@@ -27,8 +26,6 @@ public abstract class TWITileMgr {
         new Color(0, 0, 0, 0);
     protected static final Color BG_FILL_COLOR =
         new Color(253, 253, 150);
-
-    private static final float STROKE_WIDTH_INCREMENT = 1.0f;
 
     // fields
     private TWI mTWI = null;
@@ -73,7 +70,15 @@ public abstract class TWITileMgr {
     }
 
 
-    private TWIAnchorDot mSelectAnchorDot = null;
+    private TWIAnchorDot mSelectedAnchorDot = null;
+
+    public TWIAnchorDot getSelectedAnchorDot() {
+        return this.mSelectedAnchorDot;
+    }
+
+    public void setSelectedAnchorDot(TWIAnchorDot anchorDot) {
+        this.mSelectedAnchorDot = anchorDot;
+    }
 
     // constructor
     protected TWITileMgr(TWI twi) {
@@ -109,12 +114,6 @@ public abstract class TWITileMgr {
         this.mTWI.getPreviewMgr().updateTileImage();
     }
 
-    public void selectPattern(TWIPattern pattern) {
-        pattern.setHighlightColor();
-        this.mTile.getPatterns().remove(pattern);
-        this.mTile.getSelectedPatterns().add(pattern);
-    }
-
     public void deselectAllPatterns() {
         ArrayList<TWIPattern> deselectPatterns = new ArrayList<>();
 
@@ -127,73 +126,7 @@ public abstract class TWITileMgr {
         this.mTile.getPatterns().addAll(deselectPatterns);
     }
 
-    public void removeSelectedPatterns() {
-        for (TWIPattern pattern : this.mTile.getSelectedPatterns()) {
-            this.removeAnchorDots(pattern);
-        }
-
-        this.mTile.getSelectedPatterns().clear();
-
-        this.mTWI.getPreviewMgr().updateTileImage();
-    }
-
-    public void removeAllPattern() {
-        for (TWIPattern pattern : this.mTile.getPatterns()) {
-            this.removeAnchorDots(pattern);
-        }
-
-        for (TWIPattern pattern : this.mTile.getSelectedPatterns()) {
-            this.removeAnchorDots(pattern);
-        }
-
-        this.mTile.getPatterns().clear();
-        this.mTile.getSelectedPatterns().clear();
-
-        this.mTWI.getPreviewMgr().updateTileImage();
-    }
-
-    public void setSelectedPatternsColor(Color color) {
-        for (TWIPattern pattern : this.mTile.getSelectedPatterns()) {
-            pattern.unsetHighlightColor();
-            pattern.setFillColor(color);
-            pattern.setStrokeColor(color);
-        }
-
-        this.deselectAllPatterns();
-    }
-
-    public void increaseSelectedPatternsStrokeWidth() {
-        for (TWIPattern pattern : this.mTile.getSelectedPatterns()) {
-            BasicStroke stroke = (BasicStroke) pattern.getStroke();
-            pattern.setStroke(
-                new BasicStroke(
-                    stroke.getLineWidth() + TWITileMgr.STROKE_WIDTH_INCREMENT,
-                    stroke.getEndCap(),
-                    stroke.getLineJoin()
-                )
-            );
-        }
-    }
-
-    public void decreaseSelectedPatternsStrokeWidth() {
-        for (TWIPattern pattern : this.mTile.getSelectedPatterns()) {
-            BasicStroke stroke = (BasicStroke) pattern.getStroke();
-
-            if (stroke.getLineWidth() > TWITileMgr.STROKE_WIDTH_INCREMENT) {
-                pattern.setStroke(
-                    new BasicStroke(
-                        stroke.getLineWidth() -
-                             TWITileMgr.STROKE_WIDTH_INCREMENT,
-                        stroke.getEndCap(),
-                        stroke.getLineJoin()
-                    )
-                );
-            }
-        }
-    }
-
-
-    private void removeAnchorDots(TWIPattern pattern) {
+    public void removeAnchorDots(TWIPattern pattern) {
         for (TWIAnchorDot anchorDot : pattern.getAnchorDots()) {
             this.removeOppositeAnchorDotIfAny(anchorDot);
 
@@ -201,69 +134,7 @@ public abstract class TWITileMgr {
         }
     }
 
-    public boolean selectAnchorDot(Point pt) {
-        assert(this.mSelectAnchorDot == null);
-
-        Point tilePt = new Point(
-            pt.x - this.getTileOrigin().x,
-            pt.y - this.getTileOrigin().y
-        );
-
-        for (TWIAnchorDot anchorDot : this.mAnchorDots) {
-            if (
-                anchorDot.getIsClickable() &&
-                anchorDot.distance(tilePt) < TWITileMgr.CALCULATION_TOLERANCE
-            ) {
-                this.mSelectAnchorDot = anchorDot;
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean moveSelectedAnchorDotTo(Point pt) {
-        assert(this.mSelectAnchorDot != null);
-
-        if (this.mSelectAnchorDot.getIsSnappable()) {
-            TWIAnchorDot newAnchorDot = new TWIAnchorDot(
-                pt.x - this.getTileOrigin().x,
-                pt.y - this.getTileOrigin().y,
-                this.mSelectAnchorDot.getSnappableFlag(),
-                this.mSelectAnchorDot.getClickableFlag()
-            );
-
-            newAnchorDot = this.calcValidDot(newAnchorDot);
-
-            if (newAnchorDot == null) return false;
-
-            this.removeOppositeAnchorDotIfAny(this.mSelectAnchorDot);
-
-            this.mSelectAnchorDot.setLocation(
-                newAnchorDot.getX(),
-                newAnchorDot.getY()
-            );
-
-        } else {
-            this.removeOppositeAnchorDotIfAny(this.mSelectAnchorDot);
-
-            this.mSelectAnchorDot.setLocation(
-                pt.x - this.getTileOrigin().x,
-                pt.y - this.getTileOrigin().y
-            );
-        }
-
-        for (TWIPattern pattern : this.mTile.getPatterns()) {
-            pattern.update();
-        }
-
-        this.mTWI.getPreviewMgr().updateTileImage();
-
-        return true;
-    }
-
-
-    private boolean removeOppositeAnchorDotIfAny(TWIAnchorDot anchorDot) {
+    public boolean removeOppositeAnchorDotIfAny(TWIAnchorDot anchorDot) {
         if (this.mEdgeAnchorDotTable.containsKey(anchorDot)) {
             TWIAnchorDot oppositeAnchorDot =
                 this.mEdgeAnchorDotTable.get(anchorDot);
@@ -276,7 +147,6 @@ public abstract class TWITileMgr {
             return false;
         }
     }
-
 
     public void renderTileEditor(Graphics2D g2, Point origin) {
         double bgW = this.mTWI.getCanvas2d().getWidth() / 2;

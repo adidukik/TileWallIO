@@ -1,6 +1,12 @@
 package TWI.cmd;
 
+import java.awt.BasicStroke;
+
 import TWI.TWI;
+import TWI.TWIToolMgr;
+import TWI.pattern.TWIPattern;
+import TWI.tile.TWITile;
+import TWI.tileMgr.TWITileMgr;
 import x.XApp;
 import x.XLoggableCmd;
 
@@ -19,8 +25,23 @@ public class TWICmdToDecreaseSelectedPatternsWidth extends XLoggableCmd {
     @Override
     protected boolean defineCmd() {
         TWI twi = (TWI) this.mApp;
+        TWITileMgr tileMgr = twi.getTileMgr();
+        TWITile tile = tileMgr.getTile();
 
-        twi.getTileMgr().decreaseSelectedPatternsStrokeWidth();
+        for (TWIPattern pattern : tile.getSelectedPatterns()) {
+            BasicStroke stroke = (BasicStroke) pattern.getStroke();
+
+            if (stroke.getLineWidth() > TWIToolMgr.STROKE_WIDTH_INCREMENT) {
+                pattern.setStroke(
+                    new BasicStroke(
+                        stroke.getLineWidth() -
+                            TWIToolMgr.STROKE_WIDTH_INCREMENT,
+                        stroke.getEndCap(),
+                        stroke.getLineJoin()
+                    )
+                );
+            }
+        }
 
         return true;
     }

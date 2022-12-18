@@ -3,6 +3,9 @@ package TWI.cmd;
 import java.awt.Color;
 
 import TWI.TWI;
+import TWI.pattern.TWIPattern;
+import TWI.tile.TWITile;
+import TWI.tileMgr.TWITileMgr;
 import x.XApp;
 import x.XLoggableCmd;
 
@@ -26,8 +29,16 @@ public class TWICmdToChangeSelectedPatternsColor extends XLoggableCmd {
     @Override
     protected boolean defineCmd() {
         TWI twi = (TWI) this.mApp;
+        TWITileMgr tileMgr = twi.getTileMgr();
+        TWITile tile = tileMgr.getTile();
 
-        twi.getTileMgr().setSelectedPatternsColor(this.mColor);
+        for (TWIPattern pattern : tile.getSelectedPatterns()) {
+            pattern.unsetHighlightColor();
+            pattern.setFillColor(this.mColor);
+            pattern.setStrokeColor(this.mColor);
+        }
+
+        tileMgr.deselectAllPatterns();
 
         return true;
     }

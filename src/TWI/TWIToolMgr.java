@@ -17,7 +17,7 @@ public class TWIToolMgr {
 
     private static final Color COLOR_DEFAULT = Color.BLACK;
     private static final float STROKE_WIDTH_DEFAULT = 3.0f;
-    private static final float STROKE_WIDTH_INCREMENT = 1.0f;
+    public static final float STROKE_WIDTH_INCREMENT = 1.0f;
 
     private static final int STROKE_PREVIEW_OFFSET_X = 20;
     private static final int STROKE_PREVIEW_OFFSET_Y = 20;

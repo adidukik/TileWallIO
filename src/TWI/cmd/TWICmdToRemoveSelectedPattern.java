@@ -1,6 +1,9 @@
 package TWI.cmd;
 
 import TWI.TWI;
+import TWI.pattern.TWIPattern;
+import TWI.tile.TWITile;
+import TWI.tileMgr.TWITileMgr;
 import x.XApp;
 import x.XLoggableCmd;
 
@@ -18,9 +21,19 @@ public class TWICmdToRemoveSelectedPattern extends XLoggableCmd {
     @Override
     protected boolean defineCmd() {
         TWI twi = (TWI) this.mApp;
+        TWITileMgr tileMgr = twi.getTileMgr();
+        TWITile tile = tileMgr.getTile();
 
-        twi.getTileMgr().removeSelectedPatterns();
+        for (
+            TWIPattern pattern :
+                twi.getTileMgr().getTile().getSelectedPatterns()
+        ) {
+            tileMgr.removeAnchorDots(pattern);
+        }
 
+        tile.getSelectedPatterns().clear();
+
+        twi.getPreviewMgr().updateTileImage();
         return true;
     }
 
