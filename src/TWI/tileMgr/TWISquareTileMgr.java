@@ -97,8 +97,6 @@ public class TWISquareTileMgr extends TWITileMgr {
     protected TWIAnchorDot getOppositeAnchorDot(TWIAnchorDot dot) {
         assert (isDotOnEdge(dot));
 
-        TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
-
         Point2D oppositePt;
         if (isDotOnTopEdge(dot)) {
             oppositePt = calcClosestPointOnLine(
