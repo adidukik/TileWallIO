@@ -21,13 +21,80 @@ public class TWIHexagonTileMgr extends TWITileMgr {
 
     @Override
     public TWIAnchorDot calcValidDot(TWIAnchorDot dot) {
-        // TODO Auto-generated method stub
-        return null;
+        if (!dot.getIsSnappable()) return dot;
+
+        if (!this.isDotInside(dot)) return null;
+
+        for (TWIAnchorDot anchorDot : this.mAnchorDots) {
+            if (this.mIsSnapOn) {
+                if (
+                    anchorDot.getIsSnappable() &&
+                    anchorDot.distance(dot) < TWITileMgr.SNAP_RADIUS +
+                        TWITileMgr.CALCULATION_TOLERANCE
+                ) {
+                    return anchorDot;
+                }
+            } else {
+                if (
+                    anchorDot.getIsSnappable() &&
+                    anchorDot.distance(dot) < TWITileMgr.CALCULATION_TOLERANCE
+                ) {
+                    return anchorDot;
+                }
+            }
+
+        }
+
+        if (isDotOnTopEdge(dot)) {
+            Point2D closestPt = this.calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(0)
+            );
+
+            dot.setLocation(closestPt);
+
+        } else if (isDotOnTopRightEdge(dot)) {
+            Point2D closestPt = this.calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(1)
+            );
+
+            dot.setLocation(closestPt);
+
+        } else if (isDotOnBottomRightEdge(dot)) {
+            Point2D closestPt = this.calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(2)
+            );
+
+            dot.setLocation(closestPt);
+
+        } else if (isDotOnBottomEdge(dot)) {
+            Point2D closestPt = this.calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(3)
+            );
+
+            dot.setLocation(closestPt);
+
+        } else if (isDotOnBottomLeftEdge(dot)) {
+            Point2D closestPt = this.calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(4)
+            );
+
+            dot.setLocation(closestPt);
+
+        } else if (isDotOnTopLeftEdge(dot)) {
+            Point2D closestPt = this.calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(5)
+            );
+
+            dot.setLocation(closestPt);
+        }
+
+        return dot;
     }
 
     @Override
     protected boolean isDotInside(TWIDot dot) {
-        Point pt = (Point) (Point2D) dot;
+        Point pt = new Point((int) dot.getX(), (int) dot.getY());
+
         return (
             this.isPointBelowLine(pt, this.mTile.getEdgeList().get(0)) &&
 
@@ -61,8 +128,46 @@ public class TWIHexagonTileMgr extends TWITileMgr {
 
     @Override
     protected TWIAnchorDot getOppositeAnchorDot(TWIAnchorDot dot) {
-        // TODO Auto-generated method stub
-        return null;
+        assert (isDotOnEdge(dot));
+
+        Point2D oppositePt;
+        if (isDotOnTopEdge(dot)) {
+            oppositePt = calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(3)
+            );
+
+        } else if (isDotOnTopRightEdge(dot)) {
+            oppositePt = calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(4)
+            );
+
+        } else if (isDotOnBottomRightEdge(dot)) {
+            oppositePt = calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(5)
+            );
+
+        } else if (isDotOnBottomEdge(dot)) {
+            oppositePt = calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(0)
+            );
+
+        } else if (isDotOnBottomLeftEdge(dot)) {
+            oppositePt = calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(1)
+            );
+
+        } else {
+            oppositePt = calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(2)
+            );
+        }
+
+        return new TWIAnchorDot(
+            oppositePt.getX(),
+            oppositePt.getY(),
+            TWIAnchorDot.SnappableFlag.SNAPPABLE,
+            TWIAnchorDot.ClickableFlag.NOT_CLICKABLE
+        );
     }
 
     private boolean isDotOnTopEdge(TWIDot dot) {

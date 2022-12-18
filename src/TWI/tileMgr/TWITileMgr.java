@@ -209,7 +209,7 @@ public abstract class TWITileMgr {
     protected boolean isPointAboveLine(Point pt, Line2D line) {
         Point2D closestPt = this.calcClosestPointOnLine(pt, line);
 
-        return pt.getY() > closestPt.getY();
+        return pt.getY() < closestPt.getY();
     }
 
     protected boolean isPointRightOfLine(Point pt, Line2D line) {
