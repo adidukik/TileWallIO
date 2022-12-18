@@ -1,25 +1,26 @@
 package TWI.cmd;
 
+import TWI.TWI;
 import java.awt.Point;
 
-import TWI.TWI;
-import TWI.geom.TWIGeomMgr;
+import TWI.start.TWIButtons;
 import x.XApp;
 import x.XLoggableCmd;
 
-public class TWICmdToCreateLine extends XLoggableCmd {
+public class TWICmdToSelectHexagonTess extends XLoggableCmd {
     // fields
     private Point mPt = null;
 
     // private constructor
-    private TWICmdToCreateLine(XApp app, Point pt) {
+    private TWICmdToSelectHexagonTess(XApp app, Point pt) {
         super(app);
-
+        
         this.mPt = pt;
     }
 
     public static boolean execute(XApp app, Point pt) {
-        TWICmdToCreateLine cmd = new TWICmdToCreateLine(app, pt);
+        
+        TWICmdToSelectHexagonTess cmd = new TWICmdToSelectHexagonTess(app, pt);
         return cmd.execute();
     }
 
@@ -27,9 +28,8 @@ public class TWICmdToCreateLine extends XLoggableCmd {
     protected boolean defineCmd() {
         TWI twi = (TWI) this.mApp;
 
-        TWIGeomMgr geomMgr = twi.getGeomMgr();
-
-        return geomMgr.createLine(mPt);
+        TWIButtons mButtons = twi.getButtons();
+        return true;
     }
 
     @Override

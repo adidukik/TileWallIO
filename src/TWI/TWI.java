@@ -8,7 +8,7 @@ import TWI.scenario.TWIScenarioMgr;
 import TWI.tile.TWISquareTileMgr;
 import TWI.tile.TWITileMgr;
 
-import TWI.start.TWIButton;
+import TWI.start.TWIButtons;
 import x.XApp;
 import x.XLogMgr;
 
@@ -58,9 +58,9 @@ public class TWI extends XApp {
     //     return this.mStartMgr;
     // }
 
-    private TWIButton mButtons = null;
+    private TWIButtons mButtons = null;
     
-    public TWIButton getButtons() {
+    public TWIButtons getButtons() {
         return this.mButtons;
     }
 
@@ -108,7 +108,7 @@ public class TWI extends XApp {
         this.mLogMgr = new XLogMgr();
         this.getLogMgr().setPrintOn(this.mIsDebug);
 
-        this.mButtons = new TWIButton();
+        this.mButtons = new TWIButtons();
 
         // connect event listeners
         this.mCanvas2D.addMouseListener(this.mEventListener);

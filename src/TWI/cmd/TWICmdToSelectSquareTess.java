@@ -1,35 +1,36 @@
 package TWI.cmd;
 
+import TWI.TWI;
 import java.awt.Point;
 
-import TWI.TWI;
-import TWI.geom.TWIGeomMgr;
+import TWI.start.TWIButtons;
+import java.awt.Rectangle;
 import x.XApp;
 import x.XLoggableCmd;
 
-public class TWICmdToCreateLine extends XLoggableCmd {
+public class TWICmdToSelectSquareTess extends XLoggableCmd {
     // fields
     private Point mPt = null;
 
     // private constructor
-    private TWICmdToCreateLine(XApp app, Point pt) {
+    private TWICmdToSelectSquareTess(XApp app, Point pt) {
         super(app);
-
+        
         this.mPt = pt;
     }
 
     public static boolean execute(XApp app, Point pt) {
-        TWICmdToCreateLine cmd = new TWICmdToCreateLine(app, pt);
+        
+        TWICmdToSelectSquareTess cmd = new TWICmdToSelectSquareTess(app, pt);
         return cmd.execute();
     }
 
     @Override
     protected boolean defineCmd() {
         TWI twi = (TWI) this.mApp;
-
-        TWIGeomMgr geomMgr = twi.getGeomMgr();
-
-        return geomMgr.createLine(mPt);
+        Rectangle squareImageBoundaries = twi.getButtons().getSquareImageBoundaries();
+        
+        return true;
     }
 
     @Override

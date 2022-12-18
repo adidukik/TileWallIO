@@ -2,11 +2,15 @@ package TWI.scenario;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+
 import TWI.TWI;
+import TWI.start.TWIButtons;
 import x.XApp;
+import x.XCmdToChangeScene;
 import x.XScenario;
 
 public class TWIStartScenario extends XScenario {
@@ -58,13 +62,64 @@ public class TWIStartScenario extends XScenario {
         }
 
         @Override
-        public void handleMousePress(MouseEvent e) {}
+        public void handleMousePress(MouseEvent e) {
+            // TWI twi = (TWI) this.getScenario().getApp();
+            // TWIButtons mButtons = twi.getButtons();
+            // Rectangle squareImageBoundaries = 
+            //     mButtons.getSquareImageBoundaries();
+            // Rectangle hexagonImageBoundaries = 
+            //     mButtons.getSquareImageBoundaries();
+            // Rectangle triangleImageBoundaries = 
+            //     mButtons.getSquareImageBoundaries();
+
+            // if (squareImageBoundaries.contains(e.getPoint())) {
+            //     System.out.println("w");
+            //     XCmdToChangeScene.execute(
+            //         twi,
+            //         TWIDrawScenario.DrawLineReadyScene.getSingleton(),
+            //         null    
+            //     );
+            // }
+            // else if (hexagonImageBoundaries.contains(e.getPoint())) {
+                
+            // }
+            // else if (triangleImageBoundaries.contains(e.getPoint())) {
+                
+            // }
+
+
+        }
 
         @Override
         public void handleMouseDrag(MouseEvent e) {}
 
         @Override
-        public void handleMouseRelease(MouseEvent e) {}
+        public void handleMouseRelease(MouseEvent e) {
+            TWI twi = (TWI) this.getScenario().getApp();
+            TWIButtons mButtons = twi.getButtons();
+            Rectangle squareImageBoundaries = 
+                mButtons.getSquareImageBoundaries();
+            Rectangle hexagonImageBoundaries = 
+                mButtons.getSquareImageBoundaries();
+            Rectangle triangleImageBoundaries = 
+                mButtons.getSquareImageBoundaries();
+
+            if (squareImageBoundaries.contains(e.getPoint())) {
+                System.out.println("w");
+                // TODO: factory
+                XCmdToChangeScene.execute(
+                    twi,
+                    TWIDefaultScenario.ReadyScene.getSingleton(),
+                    null    
+                );
+            }
+            else if (hexagonImageBoundaries.contains(e.getPoint())) {
+                
+            }
+            else if (triangleImageBoundaries.contains(e.getPoint())) {
+                
+            }
+        }
 
         @Override
         public void handleKeyDown(KeyEvent e) {}
