@@ -5,8 +5,14 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import TWI.scenario.TWIScene;
 
@@ -14,8 +20,6 @@ public class TWICanvas2D extends JPanel {
     // constant
     private static final Color COLOR_BG_DEFAULT = new Color(255, 255, 255, 255);
 
-
-    // constant
     private static final Color COLOR_INFO = new Color(255, 0, 0, 128);
 
     private static final Font FONT_INFO =
@@ -37,6 +41,8 @@ public class TWICanvas2D extends JPanel {
     public void setBgColor(Color color) {
         this.mBgColor = color;
     }
+
+    private boolean mIsDebugOn = true;
 
     // constructor
     public TWICanvas2D(TWI twi) {
@@ -74,16 +80,12 @@ public class TWICanvas2D extends JPanel {
         curScene.renderScreenObjects(g2);
 
         // render common screen objects
-        this.drawInfo(g2);
+        if (this.mIsDebugOn) this.drawInfo(g2);
     }
 
     private void drawInfo(Graphics2D g2) {
         TWIScene curScene = (TWIScene) this.mTWI.getScenarioMgr().getCurScene();
         String curSceneName = curScene.getClass().getSimpleName();
-
-        // String curTool =
-        //     "TOOL: " +
-        //     String.valueOf(this.mTWI.getToolMgr().getCurTool());
 
         g2.setColor(TWICanvas2D.COLOR_INFO);
         g2.setFont(TWICanvas2D.FONT_INFO);
@@ -92,11 +94,48 @@ public class TWICanvas2D extends JPanel {
             TWICanvas2D.INFO_TOP_ALIGNMENT_X,
             TWICanvas2D.INFO_TOP_ALIGNMENT_Y
         );
-        // g2.drawString(
-        //     curTool,
-        //     TWICanvas2D.INFO_TOP_ALIGNMENT_X,
-        //     TWICanvas2D.INFO_TOP_ALIGNMENT_Y +
-        //         2 * TWICanvas2D.INFO_NEWLINE_SPACE
-        // );
+
+
+        if (this.mTWI.getToolMgr() != null) {
+            String curTool =
+                "TOOL: " +
+                String.valueOf(this.mTWI.getToolMgr().getCurTool());
+
+            g2.drawString(
+                curTool,
+                TWICanvas2D.INFO_TOP_ALIGNMENT_X,
+                TWICanvas2D.INFO_TOP_ALIGNMENT_Y +
+                    2 * TWICanvas2D.INFO_NEWLINE_SPACE
+            );
+        }
+    }
+
+    public void exportImage() {
+        this.mIsDebugOn = false;
+        this.repaint();
+
+        BufferedImage exportImage = new BufferedImage(
+            getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR
+        );
+
+        Graphics2D g2 = exportImage.createGraphics();
+        paint(g2);
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("*.png", ".png"));
+        if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            try {
+                ImageIO.write((BufferedImage) exportImage, "png",
+                new File(file.getAbsolutePath() + ".png"));
+            } catch (IOException e) {
+                System.out.println("Failed to save image!");
+            }
+        } else {
+            System.out.println("No file choosen!");
+        }
+
+        this.mIsDebugOn = true;
+        this.repaint();
     }
 }

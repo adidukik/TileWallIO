@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 
 import TWI.TWI;
 import TWI.TWIColorChooser;
+import TWI.cmd.TWICmdToChangeBackgroundColor;
 import TWI.cmd.TWICmdToChangeDrawColor;
 import TWI.cmd.TWICmdToChangeSelectedPatternsColor;
 import x.XApp;
@@ -41,6 +42,9 @@ public class TWIColorScenario extends XScenario {
         this.addScene(TWIColorScenario.ColorScene.createSingleton(this));
         this.addScene(
             TWIColorScenario.ColorSelectedScene.createSingleton(this)
+        );
+        this.addScene(
+            TWIColorScenario.ColorPreviewScene.createSingleton(this)
         );
     }
 
@@ -203,6 +207,90 @@ public class TWIColorScenario extends XScenario {
             TWI twi = (TWI) this.mScenario.getApp();
             twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
             twi.getToolMgr().renderStrokePreview(g2);
+            TWIColorScenario.drawColorChooser(g2);
+        }
+
+        @Override
+        public void getReady() {}
+
+        @Override
+        public void wrapUp() {}
+    }
+
+    public static class ColorPreviewScene extends TWIScene {
+        // singleton pattern
+        private static ColorPreviewScene mSingleton = null;
+
+        public static ColorPreviewScene createSingleton(XScenario scenario) {
+            assert(ColorPreviewScene.mSingleton == null);
+
+            ColorPreviewScene.mSingleton = new ColorPreviewScene(scenario);
+            return ColorPreviewScene.mSingleton;
+        }
+
+        public static ColorPreviewScene getSingleton() {
+            assert(ColorPreviewScene.mSingleton != null);
+
+            return ColorPreviewScene.mSingleton;
+        }
+
+        private ColorPreviewScene(XScenario scenario) {
+            super(scenario);
+        }
+
+        @Override
+        public void handleMousePress(MouseEvent e) {
+            TWI twi = (TWI) this.getScenario().getApp();
+
+
+            Color color = TWIColorScenario.getColorChooser()
+                .calcColor(e.getPoint());
+
+            TWICmdToChangeBackgroundColor.execute(twi, color);
+
+            XCmdToChangeScene.execute(
+                twi,
+                this.mReturnScene,
+                null
+            );
+        }
+
+        @Override
+        public void handleMouseDrag(MouseEvent e) {}
+
+        @Override
+        public void handleMouseRelease(MouseEvent e) {}
+
+        @Override
+        public void handleKeyDown(KeyEvent e) {}
+
+        @Override
+        public void handleKeyUp(KeyEvent e) {
+            TWI twi = (TWI) this.getScenario().getApp();
+
+            int code = e.getKeyCode();
+            switch (code) {
+                case KeyEvent.VK_C -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        this.mReturnScene,
+                        null
+                    );
+                }
+            }
+        }
+
+        @Override
+        public void updateSupportObjects(Graphics2D g2) {}
+
+        @Override
+        public void renderWorldObjects(Graphics2D g2) {
+            TWI twi = (TWI) this.mScenario.getApp();
+            twi.getPreviewMgr().render(g2, new Point(0, 0));
+        }
+
+        @Override
+        public void renderScreenObjects(Graphics2D g2) {
             TWIColorScenario.drawColorChooser(g2);
         }
 

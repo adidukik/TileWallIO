@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import TWI.TWI;
+import TWI.cmd.TWICmdToExportImage;
 import TWI.cmd.TWICmdToSetStartingScreenPt;
 import TWI.cmd.TWICmdToTranslateTo;
 import TWI.cmd.TWICmdToZoomNRotateTo;
@@ -101,11 +102,26 @@ public class TWIPreviewScenario extends XScenario {
                         this
                     );
                 }
+                case KeyEvent.VK_C -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        TWIColorScenario.ColorPreviewScene.getSingleton(),
+                        this
+                    );
+                }
             }
         }
 
         @Override
-        public void handleKeyUp(KeyEvent e) {}
+        public void handleKeyUp(KeyEvent e) {
+            TWI twi = (TWI) this.mScenario.getApp();
+            int code = e.getKeyCode();
+            switch(code) {
+                case KeyEvent.VK_S -> {
+                    TWICmdToExportImage.execute(twi);
+                }
+            }
+        }
 
         @Override
         public void updateSupportObjects(Graphics2D g2) {}

@@ -13,7 +13,6 @@ import TWI.TWIAnchorDot;
 import TWI.TWIPatternFactory;
 import TWI.geom.TWIDot;
 import TWI.geom.TWIGeom;
-import TWI.geom.TWIRectangle;
 import TWI.pattern.TWIPattern;
 import TWI.tile.TWITile;
 
@@ -240,16 +239,6 @@ public abstract class TWITileMgr {
     }
 
     public void renderTileEditor(Graphics2D g2, Point origin) {
-        double bgW = this.mTWI.getCanvas2d().getWidth() / 2;
-        double bgH = this.mTWI.getCanvas2d().getHeight();
-
-        TWIRectangle bg = new TWIRectangle(0, 0, bgW, bgH);
-
-        bg.setStrokeColor(TWITileMgr.BG_STROKE_COLOR);
-        bg.setFillColor(TWITileMgr.BG_FILL_COLOR);
-
-        bg.render(g2, origin);
-
         Point tilePos = new Point(
             origin.x + mTileOrigin.x,
             origin.y + mTileOrigin.y
