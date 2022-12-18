@@ -40,8 +40,10 @@ public class TWIPreviewMgr implements TWIRenderable {
                 g2,
                 renderPt.x / TWIPreviewMgr.REDUCE_SCALE,
                 renderPt.y / TWIPreviewMgr.REDUCE_SCALE,
-                this.mTileImage.getImage().getWidth() / TWIPreviewMgr.REDUCE_SCALE,
-                this.mTileImage.getImage().getHeight() / TWIPreviewMgr.REDUCE_SCALE
+                this.mTileImage.getImage().getWidth()
+                    / TWIPreviewMgr.REDUCE_SCALE,
+                this.mTileImage.getImage().getHeight()
+                    / TWIPreviewMgr.REDUCE_SCALE
             );
         }
     }

@@ -1,13 +1,11 @@
 package TWI;
 
 import java.awt.Color;
-import java.awt.Point;
 
 import TWI.geom.TWIDot;
 
-public class TWIAnchorDot extends TWIDot implements TWIClickable {
+public class TWIAnchorDot extends TWIDot {
     // constants
-
     public enum SnappableFlag { SNAPPABLE, NOT_SNAPPABLE };
     public enum ClickableFlag { CLICKABLE, NOT_CLICKABLE}
 
@@ -15,8 +13,6 @@ public class TWIAnchorDot extends TWIDot implements TWIClickable {
     public static final Color DOT_NOT_SNAPPABLE_COLOR = Color.BLUE;
     public static final Color DOT_NOT_CLICKABLE_COLOR = Color.DARK_GRAY;
     public static final Color DOT_UNINTERACTABLE_COLOR = Color.BLACK;
-
-    private static final int CLICK_RADIUS = 5;
 
     // fields
     private boolean mIsSnappable = false;
@@ -82,11 +78,5 @@ public class TWIAnchorDot extends TWIDot implements TWIClickable {
             this.setStrokeColor(TWIAnchorDot.DOT_UNINTERACTABLE_COLOR);
             this.setFillColor(TWIAnchorDot.DOT_UNINTERACTABLE_COLOR);
         }
-    }
-
-    // interface methods
-    @Override
-    public boolean isMousePointInside(Point pt) {
-        return this.distance(pt) <= CLICK_RADIUS;
     }
 }
