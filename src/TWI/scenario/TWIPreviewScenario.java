@@ -39,173 +39,11 @@ public class TWIPreviewScenario extends XScenario {
         this.addScene(
             TWIPreviewScenario.PreviewCtrlScene.createSingleton(this)
         );
+        this.addScene(TWIPreviewScenario.ZoomNRotateReadyScene.createSingleton(this));
+        this.addScene(TWIPreviewScenario.ZoomNRotateScene.createSingleton(this));
     }
 
     // scenes
-
-    public static class ZoomNRotateReadyScene extends TWIScene {
-        // singleton pattern
-        private static ZoomNRotateReadyScene mSingleton = null;
-
-        public static ZoomNRotateReadyScene createSingleton(XScenario scenario) {
-            assert(ZoomNRotateReadyScene.mSingleton == null);
-
-            ZoomNRotateReadyScene.mSingleton = new ZoomNRotateReadyScene(scenario);
-            return ZoomNRotateReadyScene.mSingleton;
-        }
-
-        public static ZoomNRotateReadyScene getSingleton() {
-            assert(ZoomNRotateReadyScene.mSingleton != null);
-
-            return ZoomNRotateReadyScene.mSingleton;
-        }
-
-        private ZoomNRotateReadyScene(XScenario scenario) {
-            super(scenario);
-        }
-
-        @Override
-        public void handleMousePress(MouseEvent e) {
-            TWI twi = (TWI) this.mScenario.getApp();
-
-            Point pt = e.getPoint();
-            TWICmdToSetStartingScreenPt.execute(twi, pt);
-
-            XCmdToChangeScene.execute(
-                twi,
-                TWIPreviewScenario.ZoomNRotateScene.getSingleton(),
-                this.mReturnScene
-            );
-        }
-
-        @Override
-        public void handleMouseDrag(MouseEvent e) {}
-
-        @Override
-        public void handleMouseRelease(MouseEvent e) {}
-
-        @Override
-        public void handleKeyDown(KeyEvent e) {}
-
-        @Override
-        public void handleKeyUp(KeyEvent e) {
-            TWI twi = (TWI) this.mScenario.getApp();
-
-            int code = e.getKeyCode();
-
-            switch (code) {
-                case KeyEvent.VK_ALT -> {
-                    XCmdToChangeScene.execute(
-                        twi,
-                        this.mReturnScene,
-                        null
-                    );
-                }
-            }
-        }
-
-        @Override
-        public void updateSupportObjects(Graphics2D g2) {}
-
-        @Override
-        public void renderWorldObjects(Graphics2D g2) {}
-
-        @Override
-        public void renderScreenObjects(Graphics2D g2) {}
-
-        @Override
-        public void getReady() {}
-
-        @Override
-        public void wrapUp() {}
-    }
-
-
-
-    public static class ZoomNRotateScene extends TWIScene {
-        // singleton pattern
-        private static ZoomNRotateScene mSingleton = null;
-
-        public static ZoomNRotateScene createSingleton(XScenario scenario) {
-            assert(ZoomNRotateScene.mSingleton == null);
-
-            ZoomNRotateScene.mSingleton = new ZoomNRotateScene(scenario);
-            return ZoomNRotateScene.mSingleton;
-        }
-
-        public static ZoomNRotateScene getSingleton() {
-            assert(ZoomNRotateScene.mSingleton != null);
-
-            return ZoomNRotateScene.mSingleton;
-        }
-
-        private ZoomNRotateScene(XScenario scenario) {
-            super(scenario);
-        }
-
-        @Override
-        public void handleMousePress(MouseEvent e) {}
-
-        @Override
-        public void handleMouseDrag(MouseEvent e) {
-            TWI twi = (TWI) this.mScenario.getApp();
-
-            Point pt = e.getPoint();
-            TWICmdToZoomNRotateTo.execute(twi, pt);
-        }
-
-        @Override
-        public void handleMouseRelease(MouseEvent e) {
-            TWI twi = (TWI) this.mScenario.getApp();
-
-            TWICmdToSetStartingScreenPt.execute(twi, null);
-
-            XCmdToChangeScene.execute(
-                twi,
-                TWIPreviewScenario.ZoomNRotateReadyScene.getSingleton(),
-                this.mReturnScene
-            );
-
-        }
-
-        @Override
-        public void handleKeyDown(KeyEvent e) {}
-
-        @Override
-        public void handleKeyUp(KeyEvent e) {
-            TWI twi = (TWI) this.mScenario.getApp();
-
-            int code = e.getKeyCode();
-            TWICmdToSetStartingScreenPt.execute(twi, null);
-
-            switch (code) {
-                case KeyEvent.VK_ALT -> {
-                    XCmdToChangeScene.execute(
-                        twi,
-                        this.mReturnScene,
-                        null
-                    );
-                }
-            }
-        }
-
-        @Override
-        public void updateSupportObjects(Graphics2D g2) {}
-
-        @Override
-        public void renderWorldObjects(Graphics2D g2) {}
-
-        @Override
-        public void renderScreenObjects(Graphics2D g2) {}
-
-        @Override
-        public void getReady() {}
-
-        @Override
-        public void wrapUp() {}
-    }
-
-
     public static class PreviewScene extends TWIScene {
         // singleton pattern
         private static PreviewScene mSingleton = null;
@@ -253,6 +91,13 @@ public class TWIPreviewScenario extends XScenario {
                     XCmdToChangeScene.execute(
                         twi,
                         TWIDefaultScenario.ReadyScene.getSingleton(),
+                        null
+                    );
+                }
+                case KeyEvent.VK_ALT -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        TWIPreviewScenario.ZoomNRotateReadyScene.getSingleton(),
                         this
                     );
                 }
@@ -354,7 +199,175 @@ public class TWIPreviewScenario extends XScenario {
         public void wrapUp() {}
     }
 
-    
 
-    
+    public static class ZoomNRotateReadyScene extends TWIScene {
+        // singleton pattern
+        private static ZoomNRotateReadyScene mSingleton = null;
+
+        public static ZoomNRotateReadyScene createSingleton(XScenario scenario) {
+            assert(ZoomNRotateReadyScene.mSingleton == null);
+
+            ZoomNRotateReadyScene.mSingleton = new ZoomNRotateReadyScene(scenario);
+            return ZoomNRotateReadyScene.mSingleton;
+        }
+
+        public static ZoomNRotateReadyScene getSingleton() {
+            assert(ZoomNRotateReadyScene.mSingleton != null);
+
+            return ZoomNRotateReadyScene.mSingleton;
+        }
+
+        private ZoomNRotateReadyScene(XScenario scenario) {
+            super(scenario);
+        }
+
+        @Override
+        public void handleMousePress(MouseEvent e) {
+            TWI twi = (TWI) this.mScenario.getApp();
+
+            Point pt = e.getPoint();
+            TWICmdToSetStartingScreenPt.execute(twi, pt);
+
+            XCmdToChangeScene.execute(
+                twi,
+                TWIPreviewScenario.ZoomNRotateScene.getSingleton(),
+                this.mReturnScene
+            );
+        }
+
+        @Override
+        public void handleMouseDrag(MouseEvent e) {}
+
+        @Override
+        public void handleMouseRelease(MouseEvent e) {}
+
+        @Override
+        public void handleKeyDown(KeyEvent e) {}
+
+        @Override
+        public void handleKeyUp(KeyEvent e) {
+            TWI twi = (TWI) this.mScenario.getApp();
+
+            int code = e.getKeyCode();
+
+            switch (code) {
+                case KeyEvent.VK_ALT -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        this.mReturnScene,
+                        null
+                    );
+                }
+            }
+        }
+
+        @Override
+        public void updateSupportObjects(Graphics2D g2) {}
+
+        @Override
+        public void renderWorldObjects(Graphics2D g2) {
+            TWI twi = (TWI) this.mScenario.getApp();
+            twi.getPreviewMgr().render(g2, new Point(0, 0));
+        }
+
+        @Override
+        public void renderScreenObjects(Graphics2D g2) {}
+
+        @Override
+        public void getReady() {}
+
+        @Override
+        public void wrapUp() {}
+    }
+
+
+
+    public static class ZoomNRotateScene extends TWIScene {
+        // singleton pattern
+        private static ZoomNRotateScene mSingleton = null;
+
+        public static ZoomNRotateScene createSingleton(XScenario scenario) {
+            assert(ZoomNRotateScene.mSingleton == null);
+
+            ZoomNRotateScene.mSingleton = new ZoomNRotateScene(scenario);
+            return ZoomNRotateScene.mSingleton;
+        }
+
+        public static ZoomNRotateScene getSingleton() {
+            assert(ZoomNRotateScene.mSingleton != null);
+
+            return ZoomNRotateScene.mSingleton;
+        }
+
+        private ZoomNRotateScene(XScenario scenario) {
+            super(scenario);
+        }
+
+        @Override
+        public void handleMousePress(MouseEvent e) {}
+
+        @Override
+        public void handleMouseDrag(MouseEvent e) {
+            TWI twi = (TWI) this.mScenario.getApp();
+
+            Point pt = e.getPoint();
+            TWICmdToZoomNRotateTo.execute(twi, pt);
+        }
+
+        @Override
+        public void handleMouseRelease(MouseEvent e) {
+            TWI twi = (TWI) this.mScenario.getApp();
+
+            TWICmdToSetStartingScreenPt.execute(twi, null);
+
+            XCmdToChangeScene.execute(
+                twi,
+                TWIPreviewScenario.ZoomNRotateReadyScene.getSingleton(),
+                this.mReturnScene
+            );
+
+        }
+
+        @Override
+        public void handleKeyDown(KeyEvent e) {}
+
+        @Override
+        public void handleKeyUp(KeyEvent e) {
+            TWI twi = (TWI) this.mScenario.getApp();
+
+            int code = e.getKeyCode();
+            TWICmdToSetStartingScreenPt.execute(twi, null);
+
+            switch (code) {
+                case KeyEvent.VK_ALT -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        this.mReturnScene,
+                        null
+                    );
+                }
+            }
+        }
+
+        @Override
+        public void updateSupportObjects(Graphics2D g2) {}
+
+        @Override
+        public void renderWorldObjects(Graphics2D g2) {
+            TWI twi = (TWI) this.mScenario.getApp();
+            twi.getPreviewMgr().render(g2, new Point(0, 0));
+        }
+
+        @Override
+        public void renderScreenObjects(Graphics2D g2) {}
+
+        @Override
+        public void getReady() {}
+
+        @Override
+        public void wrapUp() {}
+    }
+
+
+
 }
