@@ -3,6 +3,8 @@ package TWI.tileMgr;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -146,6 +148,34 @@ public abstract class TWITileMgr {
         } else {
             return false;
         }
+    }
+
+    protected double calcDistanceFromPointToLine(Point2D pt, Line2D line) {
+        // Calculate the distance from point to line using area method.
+        double paralellogramArea = Math.abs(
+            (line.getX2() - line.getX1()) * (line.getY1() - pt.getY()) -
+            (line.getX1() - pt.getX()) * (line.getY2() - line.getY1())
+        );
+
+        double lineLength = calcLineLength(line);
+
+        return paralellogramArea / lineLength;
+    }
+
+    // protected Point2D calcClosestPointOnLine(Point2D pt, Line2D line) {
+    //     double lineLength = calcLineLength(line);
+
+    // }
+
+    // protected boolean isPointAboveLine(Point pt, Line2D line) {
+
+    // }
+
+    private double calcLineLength(Line2D line) {
+        return Math.hypot(
+            line.getX2() - line.getX1(),
+            line.getY2() - line.getY1()
+        );
     }
 
     public void renderTileEditor(Graphics2D g2, Point origin) {
