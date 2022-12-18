@@ -4,7 +4,6 @@ import java.awt.Point;
 
 import TWI.TWI;
 import TWI.TWIAnchorDot;
-import TWI.tile.TWITile;
 import TWI.tileMgr.TWITileMgr;
 import x.XApp;
 import x.XLoggableCmd;
@@ -29,7 +28,6 @@ public class TWICmdToSelectAnchorDot extends XLoggableCmd {
     protected boolean defineCmd() {
         TWI twi = (TWI) this.mApp;
         TWITileMgr tileMgr = twi.getTileMgr();
-        TWITile tile = tileMgr.getTile();
 
         assert(tileMgr.getSelectedAnchorDot() == null);
 
