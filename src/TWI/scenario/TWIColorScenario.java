@@ -155,17 +155,24 @@ public class TWIColorScenario extends XScenario {
         public void handleMousePress(MouseEvent e) {
             TWI twi = (TWI) this.getScenario().getApp();
 
-
             Color color = TWIColorScenario.getColorChooser()
                 .calcColor(e.getPoint());
 
-            TWICmdToChangeSelectedPatternsColor.execute(twi, color);
+            if (color != null) {
+                TWICmdToChangeSelectedPatternsColor.execute(twi, color);
 
-            XCmdToChangeScene.execute(
-                twi,
-                this.mReturnScene,
-                null
-            );
+                XCmdToChangeScene.execute(
+                    twi,
+                    TWIDefaultScenario.ReadyScene.getSingleton(),
+                    null
+                );
+            } else {
+                XCmdToChangeScene.execute(
+                    twi,
+                    TWISelectScenario.SelectedReadyScene.getSingleton(),
+                    null
+                );
+            }
         }
 
         @Override
@@ -241,7 +248,6 @@ public class TWIColorScenario extends XScenario {
         @Override
         public void handleMousePress(MouseEvent e) {
             TWI twi = (TWI) this.getScenario().getApp();
-
 
             Color color = TWIColorScenario.getColorChooser()
                 .calcColor(e.getPoint());

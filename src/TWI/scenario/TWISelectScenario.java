@@ -210,13 +210,13 @@ public class TWISelectScenario extends XScenario {
                         XCmdToChangeScene.execute(
                             twi,
                             TWIDefaultScenario.ReadyScene.getSingleton(),
-                            this.mReturnScene
+                            null
                         );
                     } else {
                         XCmdToChangeScene.execute(
                             twi,
                             TWISelectScenario.SelectedReadyScene.getSingleton(),
-                            this.mReturnScene
+                            null
                         );
                     }
                 }
