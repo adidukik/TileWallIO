@@ -1,5 +1,8 @@
 package TWI.tileMgr;
 
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+
 import TWI.TWI;
 import TWI.TWIAnchorDot;
 import TWI.geom.TWIDot;
@@ -9,14 +12,12 @@ import TWI.tile.TWISquareTile;
 public class TWISquareTileMgr extends TWITileMgr {
     // constants
     private static final double WIDTH_DAFAULT = 400.0;
-    private static final double HEIGHT_DEFAULT = 400.0;
 
     // constructor
     public TWISquareTileMgr(TWI twi) {
         super(twi);
         this.mTile = new TWISquareTile(
-            TWISquareTileMgr.WIDTH_DAFAULT,
-            TWISquareTileMgr.HEIGHT_DEFAULT
+            TWISquareTileMgr.WIDTH_DAFAULT
         );
     }
 
@@ -47,41 +48,33 @@ public class TWISquareTileMgr extends TWITileMgr {
 
         }
 
-        TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
-        Double tileHeight = rect.getHeight();
-        Double tileWidth = rect.getWidth();
-
         if (isDotOnTopEdge(dot)) {
-            dot = new TWIAnchorDot(
-                dot.getX(),
-                rect.getY(),
-                TWIAnchorDot.SnappableFlag.SNAPPABLE,
-                TWIAnchorDot.ClickableFlag.CLICKABLE
+            Point2D closestPt = this.calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(0)
             );
 
-        } else if (isDotOnBottomEdge(dot)) {
-            dot = new TWIAnchorDot(
-                dot.getX(),
-                rect.getY() + tileHeight,
-                TWIAnchorDot.SnappableFlag.SNAPPABLE,
-                TWIAnchorDot.ClickableFlag.CLICKABLE
-            );
-
-        } else if (isDotOnLeftEdge(dot)) {
-            dot = new TWIAnchorDot(
-                rect.getX(),
-                dot.getY(),
-                TWIAnchorDot.SnappableFlag.SNAPPABLE,
-                TWIAnchorDot.ClickableFlag.CLICKABLE
-            );
+            dot.setLocation(closestPt);
 
         } else if (isDotOnRightEdge(dot)) {
-            dot = new TWIAnchorDot(
-                rect.getX() + tileWidth,
-                dot.getY(),
-                TWIAnchorDot.SnappableFlag.SNAPPABLE,
-                TWIAnchorDot.ClickableFlag.CLICKABLE
+            Point2D closestPt = this.calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(1)
             );
+
+            dot.setLocation(closestPt);
+
+        } else if (isDotOnBottomEdge(dot)) {
+            Point2D closestPt = this.calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(2)
+            );
+
+            dot.setLocation(closestPt);
+
+        } else if (isDotOnLeftEdge(dot)) {
+            Point2D closestPt = this.calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(3)
+            );
+
+            dot.setLocation(closestPt);
         }
 
         return dot;
@@ -101,136 +94,66 @@ public class TWISquareTileMgr extends TWITileMgr {
     }
 
     @Override
-    protected void addAnchorDot(TWIAnchorDot anchorDot) {
-        this.mAnchorDots.add(anchorDot);
-
-        if (anchorDot.getIsSnappable() && this.isDotOnEdge(anchorDot)) {
-            TWIAnchorDot oppositeAnchorDot = getOppositeAnchorDot(anchorDot);
-            this.mEdgeAnchorDotTable.put(
-                anchorDot, oppositeAnchorDot
-            );
-            this.mAnchorDots.add(oppositeAnchorDot);
-        }
-    }
-
-    @Override
     protected TWIAnchorDot getOppositeAnchorDot(TWIAnchorDot dot) {
         assert (isDotOnEdge(dot));
 
         TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
-        Double tileHeight = rect.getHeight();
-        Double tileWidth = rect.getWidth();
 
+        Point2D oppositePt;
         if (isDotOnTopEdge(dot)) {
-            return new TWIAnchorDot(
-                dot.getX(),
-                rect.getY() + tileHeight,
-                TWIAnchorDot.SnappableFlag.SNAPPABLE,
-                TWIAnchorDot.ClickableFlag.NOT_CLICKABLE
+            oppositePt = calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(2)
+            );
+
+        } else if (isDotOnRightEdge(dot)) {
+            oppositePt = calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(3)
             );
 
         } else if (isDotOnBottomEdge(dot)) {
-            return new TWIAnchorDot(
-                dot.getX(),
-                rect.getY(),
-                TWIAnchorDot.SnappableFlag.SNAPPABLE,
-                TWIAnchorDot.ClickableFlag.NOT_CLICKABLE
-            );
-
-        } else if (isDotOnLeftEdge(dot)) {
-            return new TWIAnchorDot(
-                rect.getX() + tileWidth,
-                dot.getY(),
-                TWIAnchorDot.SnappableFlag.SNAPPABLE,
-                TWIAnchorDot.ClickableFlag.NOT_CLICKABLE
+            oppositePt = calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(0)
             );
 
         } else {
-            return new TWIAnchorDot(
-                rect.getX(),
-                dot.getY(),
-                TWIAnchorDot.SnappableFlag.SNAPPABLE,
-                TWIAnchorDot.ClickableFlag.NOT_CLICKABLE
+            oppositePt = calcClosestPointOnLine(
+                dot, this.mTile.getEdgeList().get(1)
             );
         }
+
+        return new TWIAnchorDot(
+            oppositePt.getX(),
+            oppositePt.getY(),
+            TWIAnchorDot.SnappableFlag.SNAPPABLE,
+            TWIAnchorDot.ClickableFlag.NOT_CLICKABLE
+        );
     }
 
     private boolean isDotOnTopEdge(TWIDot dot) {
-        TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
-        Double y = rect.getY();
+        Line2D topEdge = this.mTile.getEdgeList().get(0);
 
-        Double range;
-        if (this.mIsSnapOn) {
-            range = TWITileMgr.CALCULATION_TOLERANCE +
-                TWITileMgr.SNAP_RADIUS;
-        } else {
-            range = TWITileMgr.CALCULATION_TOLERANCE;
-        }
-
-        if ((y - range) <= dot.getY() && dot.getY() <= (y + range)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean isDotOnBottomEdge(TWIDot dot) {
-        TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
-        Double y = rect.getY() + rect.getHeight();
-
-        Double range;
-        if (this.mIsSnapOn) {
-            range = TWITileMgr.CALCULATION_TOLERANCE +
-                TWITileMgr.SNAP_RADIUS;
-        } else {
-            range = TWITileMgr.CALCULATION_TOLERANCE;
-        }
-
-
-        if ((y - range) <= dot.getY() && dot.getY() <= (y + range)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean isDotOnLeftEdge(TWIDot dot) {
-        TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
-        Double x = rect.getX();
-
-        Double range;
-        if (this.mIsSnapOn) {
-            range = TWITileMgr.CALCULATION_TOLERANCE +
-                TWITileMgr.SNAP_RADIUS;
-        } else {
-            range = TWITileMgr.CALCULATION_TOLERANCE;
-        }
-
-
-        if ((x - range) <= dot.getX() && dot.getX() <= (x + range)) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.calcDistanceFromPointToLine(dot, topEdge) <=
+            this.getSnapRange();
     }
 
     private boolean isDotOnRightEdge(TWIDot dot) {
-        TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
-        Double x = rect.getX() + rect.getWidth();
+        Line2D rightEdge = this.mTile.getEdgeList().get(1);
 
-        Double range;
-        if (this.mIsSnapOn) {
-            range = TWITileMgr.CALCULATION_TOLERANCE +
-                TWITileMgr.SNAP_RADIUS;
-        } else {
-            range = TWITileMgr.CALCULATION_TOLERANCE;
-        }
+        return this.calcDistanceFromPointToLine(dot, rightEdge) <=
+            this.getSnapRange();
+    }
 
+    private boolean isDotOnBottomEdge(TWIDot dot) {
+        Line2D bottomEdge = this.mTile.getEdgeList().get(2);
 
-        if ((x - range) <= dot.getX() && dot.getX() <= (x + range)) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.calcDistanceFromPointToLine(dot, bottomEdge) <=
+            this.getSnapRange();
+    }
+
+    private boolean isDotOnLeftEdge(TWIDot dot) {
+        Line2D leftEdge = this.mTile.getEdgeList().get(3);
+
+        return this.calcDistanceFromPointToLine(dot, leftEdge) <=
+            this.getSnapRange();
     }
 }
