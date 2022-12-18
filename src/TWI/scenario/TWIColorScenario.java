@@ -115,7 +115,7 @@ public class TWIColorScenario extends XScenario {
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
             twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
-            twi.getGeomMgr().renderStrokePreview(g2);
+            twi.getToolMgr().renderStrokePreview(g2);
             TWIColorScenario.drawColorChooser(g2);
         }
 
@@ -202,7 +202,7 @@ public class TWIColorScenario extends XScenario {
         public void renderScreenObjects(Graphics2D g2) {
             TWI twi = (TWI) this.mScenario.getApp();
             twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
-            twi.getGeomMgr().renderStrokePreview(g2);
+            twi.getToolMgr().renderStrokePreview(g2);
             TWIColorScenario.drawColorChooser(g2);
         }
 

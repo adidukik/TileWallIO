@@ -111,7 +111,7 @@ public class TWIDrawScenario extends XScenario {
             twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
 
             twi.getToolMgr().renderGeom(g2, new Point(0, 0));
-            twi.getGeomMgr().renderStrokePreview(g2);
+            twi.getToolMgr().renderStrokePreview(g2);
         }
 
         @Override
@@ -189,7 +189,7 @@ public class TWIDrawScenario extends XScenario {
             twi.getTileMgr().renderTileEditor(g2, new Point(0, 0));
 
             twi.getToolMgr().renderGeom(g2, new Point(0, 0));
-            twi.getGeomMgr().renderStrokePreview(g2);
+            twi.getToolMgr().renderStrokePreview(g2);
         }
 
         @Override

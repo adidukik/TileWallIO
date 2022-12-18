@@ -26,7 +26,7 @@ public class TWICmdToChangeDrawColor extends XLoggableCmd {
     protected boolean defineCmd() {
         TWI twi = (TWI) this.mApp;
 
-        twi.getGeomMgr().setDrawColor(this.mColor);
+        twi.getToolMgr().setDrawColor(this.mColor);
 
         return true;
     }

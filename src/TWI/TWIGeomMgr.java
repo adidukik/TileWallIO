@@ -10,46 +10,13 @@ import TWI.TWIAnchorDot.ClickableFlag;
 import TWI.TWIAnchorDot.SnappableFlag;
 import TWI.geom.TWIBezier;
 import TWI.geom.TWIDot;
-import TWI.geom.TWIEllipse;
 import TWI.geom.TWIGeom;
 import TWI.geom.TWILine;
 import TWI.tileMgr.TWITileMgr;
 
 public class TWIGeomMgr {
-    // constant
-    private static final Color COLOR_DEFAULT = Color.BLACK;
-    private static final float STROKE_WIDTH_DEFAULT = 3.0f;
-    private static final float STROKE_WIDTH_INCREMENT = 1.0f;
-
-    private static final int STROKE_PREVIEW_OFFSET_X = 20;
-    private static final int STROKE_PREVIEW_OFFSET_Y = 20;
-
     // fields
     private TWI mTWI = null;
-
-
-    private Color mDrawColor = null;
-
-    public Color getDrawColor() {
-        return this.mDrawColor;
-    }
-
-    public void setDrawColor(Color color) {
-        this.mDrawColor = color;
-
-        this.updateStrokePreview();
-    }
-
-
-    private float mDrawStrokeWidth = Float.NaN;
-
-    public float getDrawStrokeWidth() {
-        return this.mDrawStrokeWidth;
-    }
-
-
-    private TWIEllipse mStrokePreview = null;
-
 
     private TWILine mCurScreenLine = null;
 
@@ -66,23 +33,6 @@ public class TWIGeomMgr {
     // constructor
     public TWIGeomMgr(TWI twi) {
         this.mTWI = twi;
-        this.mDrawColor = TWIGeomMgr.COLOR_DEFAULT;
-        this.mDrawStrokeWidth = TWIGeomMgr.STROKE_WIDTH_DEFAULT;
-
-        this.mStrokePreview = new TWIEllipse(
-            -this.mDrawStrokeWidth / 2,
-            -this.mDrawStrokeWidth / 2,
-            this.mDrawStrokeWidth,
-            this.mDrawStrokeWidth
-        );
-        this.mStrokePreview.setStroke(
-            new BasicStroke(
-                0,
-                TWIGeom.STROKE_CAP_DEFAULT,
-                TWIGeom.STROKE_JOIN_DEFAULT
-            )
-        );
-        this.mStrokePreview.setFillColor(this.mDrawColor);
     }
 
     // methods
@@ -110,11 +60,14 @@ public class TWIGeomMgr {
         Point2D newScreenPt = this.calcTileDotToScreenDot(newTileDot);
 
         // (4) Create a line in the screen coordinate.
+        Color drawColor = this.mTWI.getToolMgr().getDrawColor();
+        float drawStrokeWidth = this.mTWI.getToolMgr().getDrawStrokeWidth();
+
         this.mCurScreenLine = new TWILine(newScreenPt, newScreenPt);
-        this.mCurScreenLine.setStrokeColor(this.mDrawColor);
+        this.mCurScreenLine.setStrokeColor(drawColor);
         this.mCurScreenLine.setStroke(
             new BasicStroke(
-                this.mDrawStrokeWidth,
+                drawStrokeWidth,
                 TWIGeom.STROKE_CAP_DEFAULT,
                 TWIGeom.STROKE_JOIN_DEFAULT
             )
@@ -166,10 +119,13 @@ public class TWIGeomMgr {
         // (4) Add TWILine respect to the tile's local coordinate.
         TWILine geomToAdd = new TWILine(startTileDot, newEndTileDot);
 
-        geomToAdd.setStrokeColor(this.mDrawColor);
+        Color drawColor = this.mTWI.getToolMgr().getDrawColor();
+        float drawStrokeWidth = this.mTWI.getToolMgr().getDrawStrokeWidth();
+
+        geomToAdd.setStrokeColor(drawColor);
         geomToAdd.setStroke(
             new BasicStroke(
-                this.mDrawStrokeWidth,
+                drawStrokeWidth,
                 TWIGeom.STROKE_CAP_DEFAULT,
                 TWIGeom.STROKE_JOIN_DEFAULT
             )
@@ -217,16 +173,19 @@ public class TWIGeomMgr {
 
         // (4) Create a bezier in the screen coordinate.
         // use some dummy points for control points
+        Color drawColor = this.mTWI.getToolMgr().getDrawColor();
+        float drawStrokeWidth = this.mTWI.getToolMgr().getDrawStrokeWidth();
+
         this.mCurScreenBezier = new TWIBezier(
             newScreenPt.getX(), newScreenPt.getY(),
             newScreenPt.getX(), newScreenPt.getY() + 50,
             newScreenPt.getX(), newScreenPt.getY() - 50,
             newScreenPt.getX(), newScreenPt.getY()
         );
-        this.mCurScreenBezier.setStrokeColor(this.mDrawColor);
+        this.mCurScreenBezier.setStrokeColor(drawColor);
         this.mCurScreenBezier.setStroke(
             new BasicStroke(
-                this.mDrawStrokeWidth,
+                drawStrokeWidth,
                 TWIGeom.STROKE_CAP_DEFAULT,
                 TWIGeom.STROKE_JOIN_DEFAULT
             )
@@ -301,6 +260,9 @@ public class TWIGeomMgr {
         if (newEndTileDot == null) return false;
 
         // (4) Add TWIBezier respect to the tile's local coordinate.
+        Color drawColor = this.mTWI.getToolMgr().getDrawColor();
+        float drawStrokeWidth = this.mTWI.getToolMgr().getDrawStrokeWidth();
+
         TWIBezier geomToAdd = new TWIBezier(
             startTileDot.getX(), startTileDot.getY(),
             startCtrlTileDot.getX(), startCtrlTileDot.getY(),
@@ -308,10 +270,10 @@ public class TWIGeomMgr {
             newEndTileDot.getX(), newEndTileDot.getY()
         );
 
-        geomToAdd.setStrokeColor(this.mDrawColor);
+        geomToAdd.setStrokeColor(drawColor);
         geomToAdd.setStroke(
             new BasicStroke(
-                this.mDrawStrokeWidth,
+                drawStrokeWidth,
                 TWIGeom.STROKE_CAP_DEFAULT,
                 TWIGeom.STROKE_JOIN_DEFAULT
             )
@@ -358,45 +320,5 @@ public class TWIGeomMgr {
             pt.getX() + tileX,
             pt.getY() + tileY
         );
-    }
-
-
-    public void increaseDrawStrokeWidth() {
-        this.mDrawStrokeWidth += TWIGeomMgr.STROKE_WIDTH_INCREMENT;
-
-        this.updateStrokePreview();
-    }
-
-
-    public void decreaseDrawStrokeWidth() {
-        if (this.mDrawStrokeWidth > TWIGeomMgr.STROKE_WIDTH_INCREMENT) {
-            this.mDrawStrokeWidth -= TWIGeomMgr.STROKE_WIDTH_INCREMENT;
-            this.updateStrokePreview();
-        }
-    }
-
-
-    public void renderStrokePreview(Graphics2D g2) {
-        int screenH = this.mTWI.getCanvas2d().getHeight();
-
-        this.mStrokePreview.render(
-            g2,
-            new Point(
-                TWIGeomMgr.STROKE_PREVIEW_OFFSET_X,
-                screenH - TWIGeomMgr.STROKE_PREVIEW_OFFSET_Y
-            )
-        );
-    }
-
-
-    private void updateStrokePreview() {
-        this.mStrokePreview.setFrame(
-            -this.mDrawStrokeWidth / 2,
-            -this.mDrawStrokeWidth / 2,
-            this.mDrawStrokeWidth,
-            this.mDrawStrokeWidth
-        );
-
-        this.mStrokePreview.setFillColor(this.mDrawColor);
     }
 }

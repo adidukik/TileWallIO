@@ -22,7 +22,7 @@ public class TWICmdToDecreaseDrawStrokeWidth extends XLoggableCmd {
     protected boolean defineCmd() {
         TWI twi = (TWI) this.mApp;
 
-        twi.getGeomMgr().decreaseDrawStrokeWidth();
+        twi.getToolMgr().decreaseDrawStrokeWidth();
 
         return true;
     }
