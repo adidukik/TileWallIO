@@ -38,9 +38,6 @@ public class TWIPreviewScenario extends XScenario {
     @Override
     protected void addScenes() {
         this.addScene(TWIPreviewScenario.PreviewScene.createSingleton(this));
-        this.addScene(
-            TWIPreviewScenario.PreviewCtrlScene.createSingleton(this)
-        );
         this.addScene(TWIPreviewScenario.ZoomNRotateReadyScene.createSingleton(this));
         this.addScene(TWIPreviewScenario.ZoomNRotateScene.createSingleton(this));
         this.addScene(TWIPreviewScenario.PanReadyScene.createSingleton(this));
@@ -87,7 +84,7 @@ public class TWIPreviewScenario extends XScenario {
                 case KeyEvent.VK_CONTROL -> {
                     XCmdToChangeScene.execute(
                         twi,
-                        TWIPreviewScenario.PreviewCtrlScene.getSingleton(),
+                        TWIPreviewScenario.PanReadyScene.getSingleton(),
                         this
                     );
                 }
@@ -122,79 +119,6 @@ public class TWIPreviewScenario extends XScenario {
             switch(code) {
                 case KeyEvent.VK_S -> {
                     TWICmdToExportImage.execute(twi);
-                }
-            }
-        }
-
-        @Override
-        public void updateSupportObjects(Graphics2D g2) {}
-
-        @Override
-        public void renderWorldObjects(Graphics2D g2) {
-            TWI twi = (TWI) this.mScenario.getApp();
-            twi.getPreviewMgr().render(g2, new Point(0, 0));
-        }
-
-        @Override
-        public void renderScreenObjects(Graphics2D g2) {}
-
-        @Override
-        public void getReady() {}
-
-        @Override
-        public void wrapUp() {}
-    }
-
-
-
-    public static class PreviewCtrlScene extends TWIScene {
-        // singleton pattern
-        private static PreviewCtrlScene mSingleton = null;
-
-        public static PreviewCtrlScene createSingleton(XScenario scenario) {
-            assert(PreviewCtrlScene.mSingleton == null);
-
-            PreviewCtrlScene.mSingleton = new PreviewCtrlScene(scenario);
-            return PreviewCtrlScene.mSingleton;
-        }
-
-        public static PreviewCtrlScene getSingleton() {
-            assert(PreviewCtrlScene.mSingleton != null);
-
-            return PreviewCtrlScene.mSingleton;
-        }
-
-        private PreviewCtrlScene(XScenario scenario) {
-            super(scenario);
-        }
-
-        @Override
-        public void handleMousePress(MouseEvent e) {}
-
-        @Override
-        public void handleMouseDrag(MouseEvent e) {}
-
-        @Override
-        public void handleMouseRelease(MouseEvent e) {}
-
-        @Override
-        public void handleKeyDown(KeyEvent e) {}
-
-        @Override
-        public void handleKeyUp(KeyEvent e) {
-            TWI twi = (TWI) this.mScenario.getApp();
-
-            int code = e.getKeyCode();
-            switch(code) {
-                case KeyEvent.VK_S -> {
-                    // TODO: Implement TWICmdToSavePreview
-                }
-                case KeyEvent.VK_CONTROL -> {
-                    XCmdToChangeScene.execute(
-                        twi,
-                        this.mReturnScene,
-                        null
-                    );
                 }
             }
         }
