@@ -10,7 +10,9 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import TWI.scenario.TWIScene;
 
@@ -108,7 +110,7 @@ public class TWICanvas2D extends JPanel {
         }
     }
 
-    public void exportImage(String name) {
+    public void exportImage() {
         this.mIsDebugOn = false;
         this.repaint();
 
@@ -118,12 +120,19 @@ public class TWICanvas2D extends JPanel {
 
         Graphics2D g2 = exportImage.createGraphics();
         paint(g2);
-        try {
-            ImageIO.write(exportImage, "png", new File("Paint" + "." + "png"));
-            System.out.println("exported");
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("*.png", ".png"));
+        if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            try {
+                ImageIO.write((BufferedImage) exportImage, "png",
+                new File(file.getAbsolutePath() + ".png"));
+            } catch (IOException e) {
+                System.out.println("Failed to save image!");
+            }
+        } else {
+            System.out.println("No file choosen!");
         }
 
         this.mIsDebugOn = true;

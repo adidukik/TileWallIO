@@ -20,7 +20,7 @@ public class TWICmdToExportImage extends XLoggableCmd {
     @Override
     protected boolean defineCmd() {
         TWI twi = (TWI) this.mApp;
-        twi.getCanvas2d().exportImage("Paint");
+        twi.getCanvas2d().exportImage();
         return true;
     }
 
