@@ -5,7 +5,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import TWI.scenario.TWIScene;
@@ -98,5 +102,21 @@ public class TWICanvas2D extends JPanel {
         //     TWICanvas2D.INFO_TOP_ALIGNMENT_Y +
         //         2 * TWICanvas2D.INFO_NEWLINE_SPACE
         // );
+    }
+
+    public void exportImage(String name) {
+        BufferedImage exportImage = new BufferedImage(
+            getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR
+        );
+        Graphics2D g2 = exportImage.createGraphics();
+        paint(g2);
+        try {
+            ImageIO.write(exportImage, "png", new File("Paint" + "." + "png"));
+            System.out.println("exported");
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
 }
