@@ -1,7 +1,10 @@
 package TWI;
 
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
+import TWI.start.TWIStartMenu;
 import TWI.tileMgr.TWITileMgr;
 import x.XApp;
 import x.XLogMgr;
@@ -32,6 +35,12 @@ public class TWI extends XApp {
 
     public TWIEventListener getEventListener() {
         return this.mEventListener;
+    }
+
+    private TWIStartMenu mStartMenu = null;
+
+    public TWIStartMenu getStartMenu() {
+        return this.mStartMenu;
     }
 
     private TWIToolMgr mToolMgr = null;
@@ -79,7 +88,7 @@ public class TWI extends XApp {
     }
 
     // constructor
-    public TWI(boolean isDebug) {
+    public TWI(boolean isDebug) throws IOException {
         this.mIsDebug = isDebug;
 
         // create components
@@ -93,6 +102,7 @@ public class TWI extends XApp {
         this.mEventListener = new TWIEventListener(this);
         // 5) managers
         // TODO: Add scene for selecting tile type
+        this.mStartMenu = new TWIStartMenu();
         this.mToolMgr = new TWIToolMgr(this);
         this.mGeomMgr = new TWIGeomMgr(this);
         this.mPreviewMgr = new TWIPreviewMgr(this);
@@ -116,6 +126,10 @@ public class TWI extends XApp {
 
     // methods
     public static void main(String[] args) {
-        new TWI(true);
+        try {
+            new TWI(true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

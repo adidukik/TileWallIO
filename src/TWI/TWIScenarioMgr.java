@@ -6,6 +6,7 @@ import TWI.scenario.TWIDrawScenario;
 import TWI.scenario.TWIEditScenario;
 import TWI.scenario.TWIPreviewScenario;
 import TWI.scenario.TWISelectScenario;
+import TWI.scenario.TWIStartScenario;
 import x.XScenarioMgr;
 
 public class TWIScenarioMgr extends XScenarioMgr {
@@ -17,6 +18,7 @@ public class TWIScenarioMgr extends XScenarioMgr {
     // methods
     @Override
     protected void addScenarios() {
+        this.addScenario(TWIStartScenario.createSingleton(this.mApp));
         this.addScenario(TWIDefaultScenario.createSingleton(this.mApp));
         this.addScenario(TWIDrawScenario.createSingleton(this.mApp));
         this.addScenario(TWIPreviewScenario.createSingleton(this.mApp));
@@ -27,7 +29,7 @@ public class TWIScenarioMgr extends XScenarioMgr {
 
     @Override
     protected void setInitCurScene() {
-        this.setCurScene(TWIDefaultScenario.ReadyScene.getSingleton());
+        this.setCurScene(TWIStartScenario.StartScene.getSingleton());
     }
 
 }
