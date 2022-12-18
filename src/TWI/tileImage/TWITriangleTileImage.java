@@ -4,9 +4,9 @@ import java.awt.Point;
 
 import TWI.tile.TWITile;
 
-public class TWIHexagonTileImage extends TWITileImage {
+public class TWITriangleTileImage extends TWITileImage {
     // constructor
-    public TWIHexagonTileImage(TWITile tile) {
+    public TWITriangleTileImage(TWITile tile) {
         super(tile);
     }
 
@@ -19,16 +19,18 @@ public class TWIHexagonTileImage extends TWITileImage {
         int imageHeight = this.mImage.getHeight();
         int imageWidth = this.mImage.getWidth();
 
+        int row = i / maxPerRow;
+
         Point pt;
-        if (i % 2 == 1) {
+        if (row % 2 == 1) {
             pt = new Point(
-                ((i % maxPerRow) - offset) * imageWidth * 3 / 4,
+                ((i % maxPerRow) - offset) * imageWidth / 2,
                 ((i / maxPerRow) - offset) * imageHeight
             );
         } else {
             pt = new Point(
-                ((i % maxPerRow) - offset) * imageWidth * 3 / 4,
-                ((i / maxPerRow) - offset) * imageHeight + imageHeight / 2
+                ((i % maxPerRow) - offset + 1) * imageWidth / 2,
+                ((i / maxPerRow) - offset) * imageHeight
             );
         }
 
@@ -37,6 +39,7 @@ public class TWIHexagonTileImage extends TWITileImage {
 
     @Override
     public boolean getRenderFlipAt(int i) {
-        return false;
+        if (i % 2 == 1) return false;
+        else return true;
     }
 }

@@ -3,6 +3,7 @@ package TWI.tileMgr;
 import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 import TWI.TWI;
 import TWI.TWIAnchorDot;
@@ -11,7 +12,7 @@ import TWI.tile.TWIHexagonTile;
 
 public class TWIHexagonTileMgr extends TWITileMgr {
     // constants
-    private static final double WIDTH_DAFAULT = 350.0d;
+    private static final double WIDTH_DAFAULT = 200;
 
     // constructor
     public TWIHexagonTileMgr(TWI twi) {
@@ -127,7 +128,7 @@ public class TWIHexagonTileMgr extends TWITileMgr {
     }
 
     @Override
-    protected TWIAnchorDot getOppositeAnchorDot(TWIAnchorDot dot) {
+    protected ArrayList<TWIAnchorDot> getOppositeAnchorDots(TWIAnchorDot dot) {
         assert (isDotOnEdge(dot));
 
         Point2D oppositePt;
@@ -162,12 +163,15 @@ public class TWIHexagonTileMgr extends TWITileMgr {
             );
         }
 
-        return new TWIAnchorDot(
+        ArrayList<TWIAnchorDot> anchorDots = new ArrayList<>();
+        anchorDots.add(new TWIAnchorDot(
             oppositePt.getX(),
             oppositePt.getY(),
             TWIAnchorDot.SnappableFlag.SNAPPABLE,
             TWIAnchorDot.ClickableFlag.NOT_CLICKABLE
-        );
+        ));
+
+        return anchorDots;
     }
 
     private boolean isDotOnTopEdge(TWIDot dot) {

@@ -26,4 +26,9 @@ public class TWISquareTileImage extends TWITileImage {
 
         return pt;
     }
+
+    @Override
+    public boolean getRenderFlipAt(int i) {
+        return false;
+    }
 }

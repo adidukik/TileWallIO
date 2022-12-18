@@ -3,6 +3,7 @@ package TWI.tileImage;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -55,13 +56,22 @@ public abstract class TWITileImage {
 
     public void renderImageAt(
         Graphics2D g2,
-        int x, int y, int w, int h
+        int x, int y, int w, int h,
+        boolean isFlip
     ) {
-        g2.drawImage(this.mImage, x, y, w, h, null);
+        if (!isFlip) {
+            g2.drawImage(this.mImage, x, y, w, h, null);
+        } else {
+            g2.drawImage(this.mImage, x, y - h, w, -h, null);
+        }
     }
 
     private void clearImage() {
         Graphics2D g = this.mImage.createGraphics();
+        g.setRenderingHint(
+            RenderingHints.KEY_ANTIALIASING,
+            RenderingHints.VALUE_ANTIALIAS_ON
+        );
         g.setBackground(new Color(0, 0, 0, 0));
         g.clearRect(
             0, 0,
@@ -72,4 +82,5 @@ public abstract class TWITileImage {
 
     // abstract methods
     public abstract Point getRenderPosition(int i);
+    public abstract boolean getRenderFlipAt(int i);
 }

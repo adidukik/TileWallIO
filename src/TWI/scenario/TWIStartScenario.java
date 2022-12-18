@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import TWI.TWI;
 import TWI.cmd.TWICmdToInitHexagonTile;
 import TWI.cmd.TWICmdToInitSquareTile;
+import TWI.cmd.TWICmdToInitTriangleTile;
 import TWI.start.TWIStartMenu;
 import x.XApp;
 import x.XCmdToChangeScene;
@@ -122,7 +123,12 @@ public class TWIStartScenario extends XScenario {
                 );
             }
             else if (triangleImageBoundaries.contains(e.getPoint())) {
-
+                TWICmdToInitTriangleTile.execute(twi);
+                XCmdToChangeScene.execute(
+                    twi,
+                    TWIDefaultScenario.ReadyScene.getSingleton(),
+                    null
+                );
             }
         }
 

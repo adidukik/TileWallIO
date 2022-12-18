@@ -35,7 +35,8 @@ public class TWIPreviewMgr implements TWIRenderable {
                 this.mTileImage.getImage().getWidth()
                     / TWIPreviewMgr.REDUCE_SCALE,
                 this.mTileImage.getImage().getHeight()
-                    / TWIPreviewMgr.REDUCE_SCALE
+                    / TWIPreviewMgr.REDUCE_SCALE,
+                this.mTileImage.getRenderFlipAt(i)
             );
         }
     }

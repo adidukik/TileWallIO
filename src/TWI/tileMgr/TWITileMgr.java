@@ -64,9 +64,11 @@ public abstract class TWITileMgr {
     }
 
 
-    protected Hashtable<TWIAnchorDot, TWIAnchorDot> mEdgeAnchorDotTable = null;
+    protected Hashtable<TWIAnchorDot, ArrayList<TWIAnchorDot>>
+        mEdgeAnchorDotTable = null;
 
-    public Hashtable<TWIAnchorDot, TWIAnchorDot> getEdgeAnchorDotTable() {
+    public Hashtable<TWIAnchorDot, ArrayList<TWIAnchorDot>>
+        getEdgeAnchorDotTable() {
         return this.mEdgeAnchorDotTable;
     }
 
@@ -99,7 +101,9 @@ public abstract class TWITileMgr {
 
     protected abstract boolean isDotInside(TWIDot dot);
     protected abstract boolean isDotOnEdge(TWIDot dot);
-    protected abstract TWIAnchorDot getOppositeAnchorDot(TWIAnchorDot dot);
+    protected abstract ArrayList<TWIAnchorDot> getOppositeAnchorDots(
+        TWIAnchorDot dot
+    );
 
     // methods
     public void addPattern(TWIGeom geom) {
@@ -130,11 +134,12 @@ public abstract class TWITileMgr {
         this.mAnchorDots.add(anchorDot);
 
         if (anchorDot.getIsSnappable() && this.isDotOnEdge(anchorDot)) {
-            TWIAnchorDot oppositeAnchorDot = getOppositeAnchorDot(anchorDot);
+            ArrayList<TWIAnchorDot>  oppositeAnchorDots =
+                getOppositeAnchorDots(anchorDot);
             this.mEdgeAnchorDotTable.put(
-                anchorDot, oppositeAnchorDot
+                anchorDot, oppositeAnchorDots
             );
-            this.mAnchorDots.add(oppositeAnchorDot);
+            this.mAnchorDots.addAll(oppositeAnchorDots);
         }
     }
 
@@ -148,9 +153,9 @@ public abstract class TWITileMgr {
 
     public boolean removeOppositeAnchorDotIfAny(TWIAnchorDot anchorDot) {
         if (this.mEdgeAnchorDotTable.containsKey(anchorDot)) {
-            TWIAnchorDot oppositeAnchorDot =
+            ArrayList<TWIAnchorDot>  oppositeAnchorDots =
                 this.mEdgeAnchorDotTable.get(anchorDot);
-            this.mEdgeAnchorDotTable.remove(oppositeAnchorDot);
+            this.mAnchorDots.removeAll(oppositeAnchorDots);
             this.mEdgeAnchorDotTable.remove(anchorDot);
 
             return true;
@@ -248,9 +253,15 @@ public abstract class TWITileMgr {
         this.mTile.renderAnchorDots(g2, tilePos);
 
         for (
-            TWIAnchorDot oppositeAnchorDot : this.mEdgeAnchorDotTable.values()
+            ArrayList<TWIAnchorDot> oppositeAnchorDots :
+                this.mEdgeAnchorDotTable.values()
         ) {
-            oppositeAnchorDot.render(g2, tilePos);
+            for (
+                TWIAnchorDot oppositeAnchorDot :
+                    oppositeAnchorDots
+            ) {
+                oppositeAnchorDot.render(g2, tilePos);
+            }
         }
     }
 
