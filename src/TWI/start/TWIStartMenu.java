@@ -1,7 +1,7 @@
 package TWI.start;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -78,11 +78,26 @@ public class TWIStartMenu implements TWIRenderable {
 
             //boundaries
             this.squareImageBoundaries =
-                new Rectangle(TWIStartMenu.X, TWIStartMenu.Y, mSquareButton.getWidth(), mSquareButton.getHeight());
+                new Rectangle(
+                    TWIStartMenu.X,
+                    TWIStartMenu.Y,
+                    mSquareButton.getWidth(),
+                    mSquareButton.getHeight()
+                );
             this.hexagonImageBoundaries =
-                new Rectangle(TWIStartMenu.X + 300, TWIStartMenu.Y, mHexagonButton.getWidth(), mHexagonButton.getHeight());
+                new Rectangle(
+                    TWIStartMenu.X + 300,
+                    TWIStartMenu.Y,
+                    mHexagonButton.getWidth(),
+                    mHexagonButton.getHeight()
+                );
             this.triangleImageBoundaries =
-                new Rectangle(TWIStartMenu.X + 500, TWIStartMenu.Y, mTriangleButton.getWidth(), mTriangleButton.getHeight());
+                new Rectangle(
+                    TWIStartMenu.X + 500,
+                    TWIStartMenu.Y,
+                    mTriangleButton.getWidth(),
+                    mTriangleButton.getHeight()
+                );
     }
 
     //methods

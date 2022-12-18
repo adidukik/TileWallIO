@@ -101,11 +101,7 @@ public class TWI extends XApp {
         // 4) event listenters
         this.mEventListener = new TWIEventListener(this);
         // 5) managers
-        // TODO: Add scene for selecting tile type
         this.mStartMenu = new TWIStartMenu();
-        this.mToolMgr = new TWIToolMgr(this);
-        this.mGeomMgr = new TWIGeomMgr(this);
-        this.mPreviewMgr = new TWIPreviewMgr(this);
 
         this.mScenarioMgr = new TWIScenarioMgr(this);
         this.mLogMgr = new XLogMgr();
@@ -122,6 +118,12 @@ public class TWI extends XApp {
         this.mFrame.setSize(800, 600);
         this.mFrame.setVisible(true);
         this.mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void initComponents() {
+        this.mToolMgr = new TWIToolMgr(this);
+        this.mGeomMgr = new TWIGeomMgr(this);
+        this.mPreviewMgr = new TWIPreviewMgr(this);
     }
 
     // methods

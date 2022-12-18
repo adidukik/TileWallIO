@@ -62,6 +62,9 @@ public class TWIHexagon implements TWIGeom {
         this.mPath.moveTo(x1, y1);
         this.mPath.lineTo(x2, y2);
         this.mPath.lineTo(x3, y3);
+        this.mPath.lineTo(x4, y4);
+        this.mPath.lineTo(x5, y5);
+        this.mPath.lineTo(x6, y6);
         this.mPath.lineTo(x1, y1);
 
         this.mStrokeColor = TWIGeom.COLOR_DEFAULT;

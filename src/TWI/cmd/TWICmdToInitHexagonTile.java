@@ -23,6 +23,7 @@ public class TWICmdToInitHexagonTile extends XLoggableCmd {
         TWIHexagonTileMgr tileMgr = new TWIHexagonTileMgr(twi);
 
         twi.setTileMgr(tileMgr);
+        twi.initComponents();
 
         return true;
     }
@@ -32,7 +33,6 @@ public class TWICmdToInitHexagonTile extends XLoggableCmd {
         StringBuffer sb = new StringBuffer();
 
         sb.append(this.getClass().getSimpleName());
-        // sb.append("\t");
 
         return sb.toString();
     }
