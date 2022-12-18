@@ -12,21 +12,19 @@ public class TWIPatternFactory {
 
         TWIPattern pattern;
 
-        switch (geom) {
-            case TWILine line -> {
-                pattern = new TWIPatternLine(line.getP1(), line.getP2());
-            }
-            case TWIBezier bezier -> {
-                pattern = new TWIPatternBezier(
-                    bezier.getX1(), bezier.getY1(),
-                    bezier.getCtrlX1(), bezier.getCtrlY1(),
-                    bezier.getCtrlX2(), bezier.getCtrlY2(),
-                    bezier.getX2(), bezier.getY2()
-                );
-            }
-            default -> {
-                throw new UnsupportedOperationException();
-            }
+        if (geom instanceof TWILine) {
+            TWILine line = (TWILine) geom;
+            pattern = new TWIPatternLine(line.getP1(), line.getP2());
+        } else if (geom instanceof TWIBezier) {
+            TWIBezier bezier = (TWIBezier) geom;
+            pattern = new TWIPatternBezier(
+                bezier.getX1(), bezier.getY1(),
+                bezier.getCtrlX1(), bezier.getCtrlY1(),
+                bezier.getCtrlX2(), bezier.getCtrlY2(),
+                bezier.getX2(), bezier.getY2()
+            );
+        } else {
+            throw new UnsupportedOperationException();
         }
 
         pattern.setStroke(geom.getStroke());

@@ -210,13 +210,13 @@ public class TWIEditScenario extends XScenario {
         @Override
         public void getReady() {
             TWI twi = (TWI) this.mScenario.getApp();
-            twi.getTileMgr().setIsSnapOn(true);
+            twi.getTileMgr().setIsSnapOn(false);
         }
 
         @Override
         public void wrapUp() {
             TWI twi = (TWI) this.mScenario.getApp();
-            twi.getTileMgr().setIsSnapOn(false);
+            twi.getTileMgr().setIsSnapOn(true);
         }
     }
 }

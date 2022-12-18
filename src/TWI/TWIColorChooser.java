@@ -9,7 +9,7 @@ public class TWIColorChooser implements TWIRenderable {
     // constants
     private static final int CELL_NUM_H = 40;
     private static final int CELL_NUM_B = 10;
-    private static final float SATURATION_DEFAULT = 1f;
+    private static final float SATURATION_DEFAULT = 0.5f;
     private static final float OPAQUENESS_DEFAULT = 1f;
 
     // fields
