@@ -3,11 +3,13 @@ package TWI.tile;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 import TWI.TWIRenderable;
 import TWI.geom.TWIGeom;
 import TWI.pattern.TWIPattern;
+import TWI.tileImage.TWITileImage;
 
 public abstract class TWITile implements TWIRenderable {
     // constants
@@ -28,6 +30,7 @@ public abstract class TWITile implements TWIRenderable {
         return this.mSelectedPatterns;
     }
 
+
     private boolean mIsEdgeVisible = false;
 
     public boolean getEdgeVisible() {
@@ -47,6 +50,8 @@ public abstract class TWITile implements TWIRenderable {
 
     // abstract methods
     public abstract TWIGeom getTileGeom();
+    public abstract TWITileImage getTileImage();
+    public abstract ArrayList<Line2D> getEdgeList();
 
     // render-related methods
     @Override

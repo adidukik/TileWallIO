@@ -2,7 +2,6 @@ package TWI;
 
 import javax.swing.JFrame;
 
-import TWI.tileMgr.TWISquareTileMgr;
 import TWI.tileMgr.TWITileMgr;
 import x.XApp;
 import x.XLogMgr;
@@ -53,6 +52,12 @@ public class TWI extends XApp {
         return this.mTileMgr;
     }
 
+    public void setTileMgr(TWITileMgr tileMgr) {
+        assert(this.mTileMgr == null);
+
+        this.mTileMgr = tileMgr;
+    }
+
     private TWIPreviewMgr mPreviewMgr = null;
 
     public TWIPreviewMgr getPreviewMgr() {
@@ -90,7 +95,6 @@ public class TWI extends XApp {
         // TODO: Add scene for selecting tile type
         this.mToolMgr = new TWIToolMgr(this);
         this.mGeomMgr = new TWIGeomMgr(this);
-        this.mTileMgr = new TWISquareTileMgr(this);
         this.mPreviewMgr = new TWIPreviewMgr(this);
 
         this.mScenarioMgr = new TWIScenarioMgr(this);
