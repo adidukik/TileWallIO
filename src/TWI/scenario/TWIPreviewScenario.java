@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 import TWI.TWI;
 import TWI.cmd.TWICmdToSetStartingScreenPt;
+import TWI.cmd.TWICmdToTranslateTo;
 import TWI.cmd.TWICmdToZoomNRotateTo;
 import x.XApp;
 import x.XCmdToChangeScene;
@@ -41,6 +42,8 @@ public class TWIPreviewScenario extends XScenario {
         );
         this.addScene(TWIPreviewScenario.ZoomNRotateReadyScene.createSingleton(this));
         this.addScene(TWIPreviewScenario.ZoomNRotateScene.createSingleton(this));
+        this.addScene(TWIPreviewScenario.PanReadyScene.createSingleton(this));
+        this.addScene(TWIPreviewScenario.PanScene.createSingleton(this));
     }
 
     // scenes
@@ -340,6 +343,172 @@ public class TWIPreviewScenario extends XScenario {
 
             switch (code) {
                 case KeyEvent.VK_ALT -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        this.mReturnScene,
+                        null
+                    );
+                }
+            }
+        }
+
+        @Override
+        public void updateSupportObjects(Graphics2D g2) {}
+
+        @Override
+        public void renderWorldObjects(Graphics2D g2) {
+            TWI twi = (TWI) this.mScenario.getApp();
+            twi.getPreviewMgr().render(g2, new Point(0, 0));
+        }
+
+        @Override
+        public void renderScreenObjects(Graphics2D g2) {}
+
+        @Override
+        public void getReady() {}
+
+        @Override
+        public void wrapUp() {}
+    }
+
+    public static class PanReadyScene extends TWIScene {
+        // singleton pattern
+        private static PanReadyScene mSingleton = null;
+
+        public static PanReadyScene createSingleton(XScenario scenario) {
+            assert(PanReadyScene.mSingleton == null);
+
+            PanReadyScene.mSingleton = new PanReadyScene(scenario);
+            return PanReadyScene.mSingleton;
+        }
+
+        public static PanReadyScene getSingleton() {
+            assert(PanReadyScene.mSingleton != null);
+
+            return PanReadyScene.mSingleton;
+        }
+
+        private PanReadyScene(XScenario scenario) {
+            super(scenario);
+        }
+
+        @Override
+        public void handleMousePress(MouseEvent e) {
+            TWI twi = (TWI) this.mScenario.getApp();
+
+            Point pt = e.getPoint();
+            TWICmdToSetStartingScreenPt.execute(twi, pt);
+
+            XCmdToChangeScene.execute(
+                twi,
+                TWIPreviewScenario.PanScene.getSingleton(),
+                this.mReturnScene
+            );
+        }
+
+        @Override
+        public void handleMouseDrag(MouseEvent e) {}
+
+        @Override
+        public void handleMouseRelease(MouseEvent e) {}
+
+        @Override
+        public void handleKeyDown(KeyEvent e) {}
+
+        @Override
+        public void handleKeyUp(KeyEvent e) {
+            TWI twi = (TWI) this.mScenario.getApp();
+
+            int code = e.getKeyCode();
+
+            switch (code) {
+                case KeyEvent.VK_CONTROL -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        this.mReturnScene,
+                        null
+                    );
+                }
+            }
+        }
+
+        @Override
+        public void updateSupportObjects(Graphics2D g2) {}
+
+        @Override
+        public void renderWorldObjects(Graphics2D g2) {
+            TWI twi = (TWI) this.mScenario.getApp();
+            twi.getPreviewMgr().render(g2, new Point(0, 0));
+        }
+
+        @Override
+        public void renderScreenObjects(Graphics2D g2) {}
+
+        @Override
+        public void getReady() {}
+
+        @Override
+        public void wrapUp() {}
+    }
+
+
+    public static class PanScene extends TWIScene {
+        // singleton pattern
+        private static PanScene mSingleton = null;
+
+        public static PanScene createSingleton(XScenario scenario) {
+            assert(PanScene.mSingleton == null);
+
+            PanScene.mSingleton = new PanScene(scenario);
+            return PanScene.mSingleton;
+        }
+
+        public static PanScene getSingleton() {
+            assert(PanScene.mSingleton != null);
+
+            return PanScene.mSingleton;
+        }
+
+        private PanScene(XScenario scenario) {
+            super(scenario);
+        }
+
+        @Override
+        public void handleMousePress(MouseEvent e) {}
+
+        @Override
+        public void handleMouseDrag(MouseEvent e) {
+            TWI twi = (TWI) this.mScenario.getApp();
+
+            Point pt = e.getPoint();
+            TWICmdToTranslateTo.execute(twi, pt);
+        }
+
+        @Override
+        public void handleMouseRelease(MouseEvent e) {
+            TWI twi = (TWI) this.mScenario.getApp();
+
+            TWICmdToSetStartingScreenPt.execute(twi, null);
+
+            XCmdToChangeScene.execute(
+                twi,
+                TWIPreviewScenario.PanReadyScene.getSingleton(),
+                this.mReturnScene
+            );
+        }
+
+        @Override
+        public void handleKeyDown(KeyEvent e) {}
+
+        @Override
+        public void handleKeyUp(KeyEvent e) {
+            TWI twi = (TWI) this.mScenario.getApp();
+
+            int code = e.getKeyCode();
+            TWICmdToSetStartingScreenPt.execute(twi, null);
+
+            switch (code) {
+                case KeyEvent.VK_CONTROL -> {
                     XCmdToChangeScene.execute(
                         twi,
                         this.mReturnScene,
