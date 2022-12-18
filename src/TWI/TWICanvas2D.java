@@ -108,7 +108,6 @@ public class TWICanvas2D extends JPanel {
     }
 
     public void exportImage(String paint) {
-        int counter = 0;
         BufferedImage exportImage = new BufferedImage(
             getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR
         );
