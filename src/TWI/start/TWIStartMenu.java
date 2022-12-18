@@ -1,6 +1,7 @@
 package TWI.start;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,6 +19,12 @@ public class TWIStartMenu implements TWIRenderable {
         "src/TWI/start/hexagons.png";
     private static final String TRIANGLE_BUTTON_PATH =
         "src/TWI/start/triangles.png";
+    private static final Font FONT_LABEL =
+        new Font("Monospaced", Font.BOLD, 24);
+
+    private static final int X = 200;
+    private static final int Y = 300;
+
 
     // fields
     private BufferedImage mSquareButton = null;
@@ -71,23 +78,24 @@ public class TWIStartMenu implements TWIRenderable {
 
             //boundaries
             this.squareImageBoundaries =
-                new Rectangle(200, 300, mSquareButton.getWidth(), mSquareButton.getHeight());
+                new Rectangle(TWIStartMenu.X, TWIStartMenu.Y, mSquareButton.getWidth(), mSquareButton.getHeight());
             this.hexagonImageBoundaries =
-                new Rectangle(500, 300, mHexagonButton.getWidth(), mHexagonButton.getHeight());
+                new Rectangle(TWIStartMenu.X + 300, TWIStartMenu.Y, mHexagonButton.getWidth(), mHexagonButton.getHeight());
             this.triangleImageBoundaries =
-                new Rectangle(800, 300, mTriangleButton.getWidth(), mTriangleButton.getHeight());
+                new Rectangle(TWIStartMenu.X + 500, TWIStartMenu.Y, mTriangleButton.getWidth(), mTriangleButton.getHeight());
     }
 
     //methods
     public void render(Graphics2D g2, Point origin) {
 
         //rendering buttons
-        g2.drawImage(mSquareButton, 200, 300, null, null);
-        g2.drawImage(mHexagonButton, 500, 300, null, null);
-        g2.drawImage(mTriangleButton, 800, 300, null, null);
+        g2.drawImage(mSquareButton, TWIStartMenu.X, TWIStartMenu.Y, null, null);
+        g2.drawImage(mHexagonButton, TWIStartMenu.X + 300, TWIStartMenu.Y, null, null);
+        g2.drawImage(mTriangleButton, TWIStartMenu.X + 500, TWIStartMenu.Y, null, null);
 
         //rendering label
-        g2.drawString("Please select the tesselation type", 300, 100);
+        g2.setFont(FONT_LABEL);
+        g2.drawString("Please select the tesselation type", TWIStartMenu.X, TWIStartMenu.Y - 100);
     }
 
     private BufferedImage readButtonImageFileName(String path)
