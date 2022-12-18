@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import Scalr.Scalr;
 import TWI.TWIRenderable;
 
 public class TWIStartMenu implements TWIRenderable {
