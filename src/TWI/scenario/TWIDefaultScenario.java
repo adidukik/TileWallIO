@@ -44,7 +44,7 @@ public class TWIDefaultScenario extends XScenario {
             TWIDefaultScenario.ReadyScene.createSingleton(this)
         );
         this.addScene(
-            TWIDefaultScenario.ReadySnapScene.createSingleton(this)
+            TWIDefaultScenario.ReadyNoSnapScene.createSingleton(this)
         );
     }
 
@@ -95,11 +95,11 @@ public class TWIDefaultScenario extends XScenario {
             int code = e.getKeyCode();
             switch (code) {
                 case KeyEvent.VK_S -> {
-                    TWICmdToTurnSnapOnOff.execute(twi, true);
+                    TWICmdToTurnSnapOnOff.execute(twi, false);
 
                     XCmdToChangeScene.execute(
                         this.mScenario.getApp(),
-                        TWIDefaultScenario.ReadySnapScene.getSingleton(),
+                        TWIDefaultScenario.ReadyNoSnapScene.getSingleton(),
                         TWIDefaultScenario.ReadyScene.getSingleton()
                     );
                 }
@@ -181,24 +181,24 @@ public class TWIDefaultScenario extends XScenario {
         public void wrapUp() {}
     }
 
-    public static class ReadySnapScene extends TWIScene {
+    public static class ReadyNoSnapScene extends TWIScene {
         // singleton pattern
-        private static ReadySnapScene mSingleton = null;
+        private static ReadyNoSnapScene mSingleton = null;
 
-        public static ReadySnapScene createSingleton(XScenario scenario) {
-            assert(ReadySnapScene.mSingleton == null);
+        public static ReadyNoSnapScene createSingleton(XScenario scenario) {
+            assert(ReadyNoSnapScene.mSingleton == null);
 
-            ReadySnapScene.mSingleton = new ReadySnapScene(scenario);
-            return ReadySnapScene.mSingleton;
+            ReadyNoSnapScene.mSingleton = new ReadyNoSnapScene(scenario);
+            return ReadyNoSnapScene.mSingleton;
         }
 
-        public static ReadySnapScene getSingleton() {
-            assert(ReadySnapScene.mSingleton != null);
+        public static ReadyNoSnapScene getSingleton() {
+            assert(ReadyNoSnapScene.mSingleton != null);
 
-            return ReadySnapScene.mSingleton;
+            return ReadyNoSnapScene.mSingleton;
         }
 
-        private ReadySnapScene(XScenario scenario) {
+        private ReadyNoSnapScene(XScenario scenario) {
             super(scenario);
         }
 
@@ -252,7 +252,7 @@ public class TWIDefaultScenario extends XScenario {
             int code = e.getKeyCode();
             switch (code) {
                 case KeyEvent.VK_S -> {
-                    TWICmdToTurnSnapOnOff.execute(twi, false);
+                    TWICmdToTurnSnapOnOff.execute(twi, true);
 
                     XCmdToChangeScene.execute(
                         this.mScenario.getApp(),

@@ -39,7 +39,7 @@ public abstract class TWITileMgr {
     }
 
 
-    protected boolean mIsSnapOn = false;
+    protected boolean mIsSnapOn = true;
 
     public boolean getIsSnapOn() {
         return this.mIsSnapOn;
