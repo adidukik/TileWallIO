@@ -3,6 +3,8 @@ package TWI.tileMgr;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -98,7 +100,6 @@ public abstract class TWITileMgr {
 
     protected abstract boolean isDotInside(TWIDot dot);
     protected abstract boolean isDotOnEdge(TWIDot dot);
-    protected abstract void addAnchorDot(TWIAnchorDot dot);
     protected abstract TWIAnchorDot getOppositeAnchorDot(TWIAnchorDot dot);
 
     // methods
@@ -126,6 +127,18 @@ public abstract class TWITileMgr {
         this.mTile.getPatterns().addAll(deselectPatterns);
     }
 
+    private void addAnchorDot(TWIAnchorDot anchorDot) {
+        this.mAnchorDots.add(anchorDot);
+
+        if (anchorDot.getIsSnappable() && this.isDotOnEdge(anchorDot)) {
+            TWIAnchorDot oppositeAnchorDot = getOppositeAnchorDot(anchorDot);
+            this.mEdgeAnchorDotTable.put(
+                anchorDot, oppositeAnchorDot
+            );
+            this.mAnchorDots.add(oppositeAnchorDot);
+        }
+    }
+
     public void removeAnchorDots(TWIPattern pattern) {
         for (TWIAnchorDot anchorDot : pattern.getAnchorDots()) {
             this.removeOppositeAnchorDotIfAny(anchorDot);
@@ -146,6 +159,84 @@ public abstract class TWITileMgr {
         } else {
             return false;
         }
+    }
+
+    protected double calcDistanceFromPointToLine(Point2D pt, Line2D line) {
+        // Calculate the distance from point to line using area method.
+        double lineLength = calcLineLength(line);
+
+        // if the line is 0-long, then return the distance to an end point.
+        if (lineLength == 0) {
+            return pt.distance(line.getP1());
+        }
+
+        double paralellogramArea = Math.abs(
+            (line.getX2() - line.getX1()) * (line.getY1() - pt.getY()) -
+            (line.getX1() - pt.getX()) * (line.getY2() - line.getY1())
+        );
+
+        return paralellogramArea / lineLength;
+    }
+
+    protected Point2D calcClosestPointOnLine(Point2D pt, Line2D line) {
+        double lineLength = calcLineLength(line);
+
+        // If the line is 0-long, then return an end point.
+        if (lineLength == 0) return line.getP1();
+
+        double dx = line.getX2() - line.getX1();
+        double dy = line.getY2() - line.getY1();
+
+        // Parameterize pt.
+        double u = (
+            ((pt.getX() - line.getX1()) * dx) +
+            ((pt.getY() - line.getY1()) * dy)
+        ) / Math.pow(lineLength, 2);
+
+        // Check if the closest point is outside the line's end points.
+        // If so, return the end point.
+        if (u < 0) return line.getP1();
+        else if (u > 1) return line.getP2();
+
+        // Deparameterize u.
+        return new Point2D.Double(
+            line.getX1() + u * dx,
+            line.getY1() + u * dy
+        );
+    }
+
+
+    protected boolean isPointAboveLine(Point pt, Line2D line) {
+        Point2D closestPt = this.calcClosestPointOnLine(pt, line);
+
+        return pt.getY() > closestPt.getY();
+    }
+
+    protected boolean isPointRightOfLine(Point pt, Line2D line) {
+        Point2D closestPt = this.calcClosestPointOnLine(pt, line);
+
+        return pt.getX() > closestPt.getX();
+    }
+
+    protected boolean isPointBelowLine(Point pt, Line2D line) {
+        return !this.isPointAboveLine(pt, line);
+    }
+
+    protected boolean isPointLeftOfLine(Point pt, Line2D line) {
+        return !this.isPointRightOfLine(pt, line);
+    }
+
+
+    private double calcLineLength(Line2D line) {
+        return Math.hypot(
+            line.getX2() - line.getX1(),
+            line.getY2() - line.getY1()
+        );
+    }
+
+    protected double getSnapRange() {
+        if (this.mIsSnapOn) return TWITileMgr.SNAP_RADIUS;
+        else return TWITileMgr.CALCULATION_TOLERANCE;
     }
 
     public void renderTileEditor(Graphics2D g2, Point origin) {

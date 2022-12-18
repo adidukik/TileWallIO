@@ -3,8 +3,6 @@ package TWI;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import TWI.tile.TWITile;
-import TWI.tileImage.TWISquareTileImage;
 import TWI.tileImage.TWITileImage;
 
 public class TWIPreviewMgr implements TWIRenderable {
@@ -12,17 +10,11 @@ public class TWIPreviewMgr implements TWIRenderable {
     private static final int REDUCE_SCALE = 3;
 
     // fields
-    private TWI mTWI = null;
-
     private TWITileImage mTileImage = null;
 
+    // Constructor
     public TWIPreviewMgr(TWI twi) {
-        this.mTWI = twi;
-
-        TWITile tile = this.mTWI.getTileMgr().getTile();
-
-        // TODO: Replace this with mapping from Tile -> TileImage
-        this.mTileImage = new TWISquareTileImage(tile);
+        this.mTileImage = twi.getTileMgr().getTile().getTileImage();
     }
 
     // methods

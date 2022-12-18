@@ -81,13 +81,9 @@ public class TWICanvas2D extends JPanel {
         TWIScene curScene = (TWIScene) this.mTWI.getScenarioMgr().getCurScene();
         String curSceneName = curScene.getClass().getSimpleName();
 
-        String isSnapOn =
-            "SNAP: " +
-            String.valueOf(this.mTWI.getTileMgr().getIsSnapOn());
-
-        String curTool =
-            "TOOL: " +
-            String.valueOf(this.mTWI.getToolMgr().getCurTool());
+        // String curTool =
+        //     "TOOL: " +
+        //     String.valueOf(this.mTWI.getToolMgr().getCurTool());
 
         g2.setColor(TWICanvas2D.COLOR_INFO);
         g2.setFont(TWICanvas2D.FONT_INFO);
@@ -96,16 +92,11 @@ public class TWICanvas2D extends JPanel {
             TWICanvas2D.INFO_TOP_ALIGNMENT_X,
             TWICanvas2D.INFO_TOP_ALIGNMENT_Y
         );
-        g2.drawString(
-            isSnapOn,
-            TWICanvas2D.INFO_TOP_ALIGNMENT_X,
-            TWICanvas2D.INFO_TOP_ALIGNMENT_Y + TWICanvas2D.INFO_NEWLINE_SPACE
-        );
-        g2.drawString(
-            curTool,
-            TWICanvas2D.INFO_TOP_ALIGNMENT_X,
-            TWICanvas2D.INFO_TOP_ALIGNMENT_Y +
-                2 * TWICanvas2D.INFO_NEWLINE_SPACE
-        );
+        // g2.drawString(
+        //     curTool,
+        //     TWICanvas2D.INFO_TOP_ALIGNMENT_X,
+        //     TWICanvas2D.INFO_TOP_ALIGNMENT_Y +
+        //         2 * TWICanvas2D.INFO_NEWLINE_SPACE
+        // );
     }
 }

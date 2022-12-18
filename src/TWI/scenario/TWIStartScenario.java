@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import TWI.TWI;
+import TWI.cmd.TWICmdToInitHexagonTile;
+import TWI.cmd.TWICmdToInitSquareTile;
 import TWI.start.TWIStartMenu;
 import x.XApp;
 import x.XCmdToChangeScene;
@@ -99,13 +101,12 @@ public class TWIStartScenario extends XScenario {
             Rectangle squareImageBoundaries =
                 mButtons.getSquareImageBoundaries();
             Rectangle hexagonImageBoundaries =
-                mButtons.getSquareImageBoundaries();
+                mButtons.getHexagonImageBoundaries();
             Rectangle triangleImageBoundaries =
-                mButtons.getSquareImageBoundaries();
+                mButtons.getTriangleImageBoundaries();
 
             if (squareImageBoundaries.contains(e.getPoint())) {
-                System.out.println("w");
-                // TODO: factory
+                TWICmdToInitSquareTile.execute(twi);
                 XCmdToChangeScene.execute(
                     twi,
                     TWIDefaultScenario.ReadyScene.getSingleton(),
@@ -113,7 +114,12 @@ public class TWIStartScenario extends XScenario {
                 );
             }
             else if (hexagonImageBoundaries.contains(e.getPoint())) {
-
+                TWICmdToInitHexagonTile.execute(twi);
+                XCmdToChangeScene.execute(
+                    twi,
+                    TWIDefaultScenario.ReadyScene.getSingleton(),
+                    null
+                );
             }
             else if (triangleImageBoundaries.contains(e.getPoint())) {
 
