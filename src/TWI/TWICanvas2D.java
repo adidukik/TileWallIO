@@ -18,8 +18,6 @@ public class TWICanvas2D extends JPanel {
     // constant
     private static final Color COLOR_BG_DEFAULT = new Color(255, 255, 255, 255);
 
-
-    // constant
     private static final Color COLOR_INFO = new Color(255, 0, 0, 128);
 
     private static final Font FONT_INFO =
@@ -41,6 +39,8 @@ public class TWICanvas2D extends JPanel {
     public void setBgColor(Color color) {
         this.mBgColor = color;
     }
+
+    private boolean mIsDebugOn = true;
 
     // constructor
     public TWICanvas2D(TWI twi) {
@@ -78,7 +78,7 @@ public class TWICanvas2D extends JPanel {
         curScene.renderScreenObjects(g2);
 
         // render common screen objects
-        this.drawInfo(g2);
+        if (this.mIsDebugOn) this.drawInfo(g2);
     }
 
     private void drawInfo(Graphics2D g2) {
@@ -105,18 +105,24 @@ public class TWICanvas2D extends JPanel {
     }
 
     public void exportImage(String name) {
+        this.mIsDebugOn = false;
+        this.repaint();
+
         BufferedImage exportImage = new BufferedImage(
             getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR
         );
+
         Graphics2D g2 = exportImage.createGraphics();
         paint(g2);
         try {
             ImageIO.write(exportImage, "png", new File("Paint" + "." + "png"));
             System.out.println("exported");
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
+        this.mIsDebugOn = true;
+        this.repaint();
     }
 }
