@@ -1,6 +1,11 @@
-package TWI.scenario;
+package TWI;
 
-import TWI.TWI;
+import TWI.scenario.TWIColorScenario;
+import TWI.scenario.TWIDefaultScenario;
+import TWI.scenario.TWIDrawScenario;
+import TWI.scenario.TWIEditScenario;
+import TWI.scenario.TWIPreviewScenario;
+import TWI.scenario.TWISelectScenario;
 import x.XScenarioMgr;
 
 public class TWIScenarioMgr extends XScenarioMgr {

@@ -1,9 +1,10 @@
-package TWI.tile;
+package TWI.tileMgr;
 
 import TWI.TWI;
 import TWI.TWIAnchorDot;
 import TWI.geom.TWIDot;
 import TWI.geom.TWIRectangle;
+import TWI.tile.TWISquareTile;
 
 public class TWISquareTileMgr extends TWITileMgr {
     // constants

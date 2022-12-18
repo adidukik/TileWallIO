@@ -2,11 +2,8 @@ package TWI;
 
 import javax.swing.JFrame;
 
-import TWI.geom.TWIGeomMgr;
-import TWI.preview.TWIPreviewMgr;
-import TWI.scenario.TWIScenarioMgr;
-import TWI.tile.TWISquareTileMgr;
-import TWI.tile.TWITileMgr;
+import TWI.tileMgr.TWISquareTileMgr;
+import TWI.tileMgr.TWITileMgr;
 import x.XApp;
 import x.XLogMgr;
 

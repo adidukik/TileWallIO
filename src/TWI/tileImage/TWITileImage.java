@@ -1,4 +1,4 @@
-package TWI.preview;
+package TWI.tileImage;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

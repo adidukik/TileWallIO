@@ -7,7 +7,7 @@ import TWI.TWI;
 import TWI.TWISelectionBox;
 import TWI.pattern.TWIPattern;
 import TWI.scenario.TWISelectScenario;
-import TWI.tile.TWITileMgr;
+import TWI.tileMgr.TWITileMgr;
 import x.XApp;
 import x.XLoggableCmd;
 

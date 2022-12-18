@@ -1,8 +1,11 @@
-package TWI.pattern;
+package TWI;
 
 import TWI.geom.TWIBezier;
 import TWI.geom.TWIGeom;
 import TWI.geom.TWILine;
+import TWI.pattern.TWIPattern;
+import TWI.pattern.TWIPatternBezier;
+import TWI.pattern.TWIPatternLine;
 
 public class TWIPatternFactory {
     public static TWIPattern getPattern(TWIGeom geom) {

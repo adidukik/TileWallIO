@@ -1,11 +1,11 @@
-package TWI.preview;
+package TWI;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import TWI.TWI;
-import TWI.TWIRenderable;
 import TWI.tile.TWITile;
+import TWI.tileImage.TWISquareTileImage;
+import TWI.tileImage.TWITileImage;
 
 public class TWIPreviewMgr implements TWIRenderable {
     // constant
@@ -40,8 +40,8 @@ public class TWIPreviewMgr implements TWIRenderable {
                 g2,
                 renderPt.x / TWIPreviewMgr.REDUCE_SCALE,
                 renderPt.y / TWIPreviewMgr.REDUCE_SCALE,
-                this.mTileImage.mImage.getWidth() / TWIPreviewMgr.REDUCE_SCALE,
-                this.mTileImage.mImage.getHeight() / TWIPreviewMgr.REDUCE_SCALE
+                this.mTileImage.getImage().getWidth() / TWIPreviewMgr.REDUCE_SCALE,
+                this.mTileImage.getImage().getHeight() / TWIPreviewMgr.REDUCE_SCALE
             );
         }
     }

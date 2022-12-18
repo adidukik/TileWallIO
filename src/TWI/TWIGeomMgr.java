@@ -1,4 +1,4 @@
-package TWI.geom;
+package TWI;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -6,11 +6,14 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
-import TWI.TWI;
-import TWI.TWIAnchorDot;
 import TWI.TWIAnchorDot.ClickableFlag;
 import TWI.TWIAnchorDot.SnappableFlag;
-import TWI.tile.TWITileMgr;
+import TWI.geom.TWIBezier;
+import TWI.geom.TWIDot;
+import TWI.geom.TWIEllipse;
+import TWI.geom.TWIGeom;
+import TWI.geom.TWILine;
+import TWI.tileMgr.TWITileMgr;
 
 public class TWIGeomMgr {
     // constant

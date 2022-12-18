@@ -1,4 +1,4 @@
-package TWI.tile;
+package TWI.tileMgr;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -9,11 +9,12 @@ import java.util.Hashtable;
 
 import TWI.TWI;
 import TWI.TWIAnchorDot;
+import TWI.TWIPatternFactory;
 import TWI.geom.TWIDot;
 import TWI.geom.TWIGeom;
 import TWI.geom.TWIRectangle;
 import TWI.pattern.TWIPattern;
-import TWI.pattern.TWIPatternFactory;
+import TWI.tile.TWITile;
 
 public abstract class TWITileMgr {
     // constant

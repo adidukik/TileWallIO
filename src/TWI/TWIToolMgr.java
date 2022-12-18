@@ -3,8 +3,6 @@ package TWI;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import TWI.geom.TWIGeomMgr;
-
 public class TWIToolMgr {
     // constants
     public enum Tool {
