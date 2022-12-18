@@ -98,8 +98,6 @@ public class TWISquareTileMgr extends TWITileMgr {
         assert (isDotOnEdge(dot));
 
         TWIRectangle rect = (TWIRectangle) this.mTile.getTileGeom();
-        Double tileHeight = rect.getHeight();
-        Double tileWidth = rect.getWidth();
 
         Point2D oppositePt;
         if (isDotOnTopEdge(dot)) {
