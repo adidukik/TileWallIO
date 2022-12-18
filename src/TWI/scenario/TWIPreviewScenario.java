@@ -105,6 +105,13 @@ public class TWIPreviewScenario extends XScenario {
                         this
                     );
                 }
+                case KeyEvent.VK_C -> {
+                    XCmdToChangeScene.execute(
+                        twi,
+                        TWIColorScenario.ColorPreviewScene.getSingleton(),
+                        this
+                    );
+                }
             }
         }
 

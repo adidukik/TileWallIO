@@ -115,7 +115,7 @@ public class TWI extends XApp {
 
         // build and show visual compoenents
         this.mFrame.add(this.mCanvas2D);
-        this.mFrame.setSize(800, 600);
+        this.mFrame.setSize(1080, 720);
         this.mFrame.setVisible(true);
         this.mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

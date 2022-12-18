@@ -85,10 +85,6 @@ public class TWICanvas2D extends JPanel {
         TWIScene curScene = (TWIScene) this.mTWI.getScenarioMgr().getCurScene();
         String curSceneName = curScene.getClass().getSimpleName();
 
-        // String curTool =
-        //     "TOOL: " +
-        //     String.valueOf(this.mTWI.getToolMgr().getCurTool());
-
         g2.setColor(TWICanvas2D.COLOR_INFO);
         g2.setFont(TWICanvas2D.FONT_INFO);
         g2.drawString(
@@ -96,12 +92,20 @@ public class TWICanvas2D extends JPanel {
             TWICanvas2D.INFO_TOP_ALIGNMENT_X,
             TWICanvas2D.INFO_TOP_ALIGNMENT_Y
         );
-        // g2.drawString(
-        //     curTool,
-        //     TWICanvas2D.INFO_TOP_ALIGNMENT_X,
-        //     TWICanvas2D.INFO_TOP_ALIGNMENT_Y +
-        //         2 * TWICanvas2D.INFO_NEWLINE_SPACE
-        // );
+
+
+        if (this.mTWI.getToolMgr() != null) {
+            String curTool =
+                "TOOL: " +
+                String.valueOf(this.mTWI.getToolMgr().getCurTool());
+
+            g2.drawString(
+                curTool,
+                TWICanvas2D.INFO_TOP_ALIGNMENT_X,
+                TWICanvas2D.INFO_TOP_ALIGNMENT_Y +
+                    2 * TWICanvas2D.INFO_NEWLINE_SPACE
+            );
+        }
     }
 
     public void exportImage(String name) {
